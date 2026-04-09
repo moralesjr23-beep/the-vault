@@ -1,0 +1,3369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Vault — AJ's Fragrance Collection</title>
+<style>
+:root{
+  --bg:#0b1020; --bg2:#111a2d; --panel:#162238; --panel2:#1d2b46; --border:#2d3d63;
+  --text:#f5f7fb; --muted:#9fb0c9; --accent:#c7a86a; --good:#76d7aa; --warn:#e8c266; --bad:#f29b9b;
+}
+:root[data-theme="light"]{
+  --bg:#f6f2ea; --bg2:#efe7db; --panel:#fffdf8; --panel2:#f5eee4; --border:#ddd1c0;
+  --text:#1f2937; --muted:#667085; --accent:#8b6a37; --good:#166534; --warn:#9a6700; --bad:#b42318;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,system-ui,sans-serif;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--text)}
+.app{max-width:1280px;margin:0 auto;padding:18px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.brand small{display:block;color:var(--accent);letter-spacing:.22em;text-transform:uppercase;font-size:11px}
+.brand h1{margin:.2rem 0;font-size:36px}
+.brand p{margin:0;color:var(--muted)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.grid{display:grid;gap:16px}
+.cols-2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.cols-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.cols-4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--border);border-radius:24px;padding:16px}
+button,input,select,textarea{font:inherit}
+button,.tab{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:16px;padding:10px 14px;cursor:pointer}
+.tab.active{border-color:var(--accent);background:var(--panel2)}
+:root[data-theme="light"] .tab.active{background:#eadfcd;color:#1f2937}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.kicker{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.muted{color:var(--muted)}
+.pill{display:inline-block;padding:5px 9px;border-radius:999px;border:1px solid var(--border);background:var(--panel2);font-size:12px;margin:2px 6px 2px 0}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:16px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
+:root[data-theme="light"] input,:root[data-theme="light"] select,:root[data-theme="light"] textarea{background:#fff;color:#1f2937}
+textarea{min-height:110px;resize:vertical}
+.field{display:flex;flex-direction:column;gap:6px;min-width:220px;flex:1}
+label{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted)}
+.listbtn{width:100%;text-align:left;background:var(--panel2);border:1px solid var(--border);border-radius:18px;padding:14px;color:var(--text)}
+.stat{padding:14px;border:1px solid var(--border);background:var(--panel2);border-radius:20px}
+.num{font-size:28px;font-weight:700}
+.good{color:var(--good)} .warn{color:var(--warn)} .bad{color:var(--bad)}
+.hidden{display:none}
+
+.small{font-size:12px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.subtle{font-size:13px;color:var(--muted)}
+.iconstat{display:flex;gap:12px;align-items:center;padding:16px;border:1px solid var(--border);background:linear-gradient(180deg,var(--panel2),var(--panel));border-radius:22px}
+.iconbubble{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(199,168,106,.16);font-size:22px}
+.badge{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid var(--border);font-size:12px;font-weight:600}
+.badge.good{background:rgba(118,215,170,.12)}
+.badge.warn{background:rgba(232,194,102,.12)}
+.badge.bad{background:rgba(242,155,155,.12)}
+.meter{height:10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid var(--border);overflow:hidden}
+:root[data-theme="light"] .meter{background:rgba(31,41,55,.06)}
+.meter>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),#f0d7a0)}
+.meter.good>span{background:linear-gradient(90deg,var(--good),#b5ebd0)}
+.meter.warn>span{background:linear-gradient(90deg,var(--warn),#f2df9e)}
+.meter.bad>span{background:linear-gradient(90deg,var(--bad),#f6c2c2)}
+.chart-card{padding:14px;border:1px solid var(--border);border-radius:22px;background:linear-gradient(180deg,var(--panel2),var(--panel))}
+.bar-list{display:grid;gap:10px}
+.bar-row{display:grid;grid-template-columns:minmax(90px,130px) 1fr 34px;align-items:center;gap:10px}
+.bar-label{font-size:12px;color:var(--muted)}
+.bar-track{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+:root[data-theme="light"] .bar-track{background:rgba(31,41,55,.08)}
+.bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),#f0d7a0)}
+.mini-note{font-size:12px;color:var(--muted);margin-top:6px}
+.shelf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.shelf-card{padding:14px;border-radius:20px;border:1px solid var(--border);background:linear-gradient(180deg,var(--panel2),var(--panel))}
+.frag-header{display:flex;justify-content:space-between;align-items:start;gap:10px}
+.favorite-btn{padding:6px 10px;border-radius:12px;min-width:44px}
+.empty-card{padding:24px;border:1px dashed var(--border);border-radius:22px;background:rgba(255,255,255,.02);text-align:center;color:var(--muted)}
+.stack{display:grid;gap:12px}
+
+
+@media (max-width: 760px){
+  .app{padding:12px}
+  .brand h1{font-size:28px}
+  .tabs{overflow-x:auto; padding-bottom:4px; -webkit-overflow-scrolling:touch}
+  .tabs .tab{flex:0 0 auto; white-space:nowrap}
+  .grid.cols-2,.grid.cols-3,.grid.cols-4{grid-template-columns:1fr}
+  .field{min-width:100%}
+  .card{padding:14px; border-radius:20px}
+  .listbtn{
+    display:block;
+    width:100%;
+    text-align:left;
+    padding:14px;
+    overflow:hidden;
+  }
+  .listbtn *{
+    white-space:normal !important;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+}
+
+
+.collection-fragrance-card{
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(0,0.9fr) minmax(0,1.1fr) minmax(0,1.6fr);
+  gap:14px;
+  align-items:start;
+}
+.collection-fragrance-card .cf-block{min-width:0}
+.collection-fragrance-card .cf-label{
+  font-size:12px;
+  color:var(--accent);
+  margin-bottom:4px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.collection-fragrance-card .cf-name{
+  font-weight:700;
+  font-size:1.05rem;
+  line-height:1.15;
+}
+.collection-fragrance-card .cf-house,
+.collection-fragrance-card .cf-meta{
+  color:var(--muted);
+}
+.collection-fragrance-card .cf-value{
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+@media (max-width: 760px){
+  .collection-fragrance-card{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  .collection-fragrance-card .cf-name{
+    font-size:1.15rem;
+  }
+}
+
+
+:root{
+  --bg:#f2f4f8;
+  --bg2:#e9edf4;
+  --panel:rgba(255,255,255,0.72);
+  --panel2:rgba(255,255,255,0.62);
+  --border:rgba(15,23,42,0.08);
+  --text:#0f172a;
+  --muted:#5b6473;
+  --accent:#2563eb;
+  --accent-soft:rgba(37,99,235,0.12);
+  --good:#16a34a;
+  --warn:#d97706;
+  --bad:#dc2626;
+  --shadow:0 18px 50px rgba(15,23,42,0.10), 0 4px 12px rgba(15,23,42,0.06);
+}
+:root[data-theme="dark"]{
+  --bg:#0b1220;
+  --bg2:#111827;
+  --panel:rgba(17,24,39,0.72);
+  --panel2:rgba(17,24,39,0.58);
+  --border:rgba(255,255,255,0.08);
+  --text:#f8fafc;
+  --muted:#a9b4c7;
+  --accent:#60a5fa;
+  --accent-soft:rgba(96,165,250,0.14);
+  --good:#4ade80;
+  --warn:#fbbf24;
+  --bad:#f87171;
+  --shadow:0 20px 60px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.25);
+}
+html,body{
+  background:
+    radial-gradient(circle at top left, rgba(96,165,250,0.12), transparent 32%),
+    radial-gradient(circle at top right, rgba(14,165,233,0.10), transparent 28%),
+    linear-gradient(180deg,var(--bg),var(--bg2));
+  color:var(--text);
+}
+.app{max-width:1320px;padding:18px 16px 48px}
+.top{
+  position:sticky; top:0; z-index:30; padding:10px 0 14px;
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  background:linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0));
+}
+:root[data-theme="dark"] .top{
+  background:linear-gradient(180deg, rgba(11,18,32,0.55), rgba(11,18,32,0));
+}
+.brand small{letter-spacing:.18em;font-size:10px}
+.brand h1{font-size:32px;font-weight:800;letter-spacing:-0.03em}
+.brand p{font-size:14px}
+.card{
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  border-radius:28px;
+  padding:18px;
+}
+button,input,select,textarea{transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease, background .18s ease}
+button,.tab{
+  border:1px solid var(--border);
+  background:linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.56));
+  color:var(--text);
+  border-radius:18px;
+  padding:11px 14px;
+  box-shadow:0 2px 6px rgba(15,23,42,0.06);
+}
+:root[data-theme="dark"] button,:root[data-theme="dark"] .tab{
+  background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+}
+button:hover,.tab:hover{transform:translateY(-1px)}
+button:active,.tab:active{transform:scale(.985)}
+.tab{
+  border-radius:999px;
+  padding:10px 16px;
+  background:transparent;
+}
+.tab.active{
+  background:var(--accent-soft);
+  color:var(--accent);
+  border-color:transparent;
+  box-shadow:none;
+}
+.tabs{
+  gap:8px;
+  padding:6px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.42);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border:1px solid var(--border);
+}
+:root[data-theme="dark"] .tabs{background:rgba(255,255,255,0.04)}
+.kicker{font-size:11px;letter-spacing:.16em;color:var(--accent);font-weight:700}
+.muted{color:var(--muted)}
+.pill{
+  padding:6px 10px;
+  border-radius:999px;
+  background:var(--accent-soft);
+  border:1px solid transparent;
+  color:var(--accent);
+  font-weight:600;
+}
+input,select,textarea{
+  width:100%;
+  padding:13px 14px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,0.7);
+  color:var(--text);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.35);
+}
+:root[data-theme="dark"] input,:root[data-theme="dark"] select,:root[data-theme="dark"] textarea{
+  background:rgba(255,255,255,0.05);
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px var(--accent-soft);
+}
+label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.listbtn{
+  width:100%;
+  text-align:left;
+  background:linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.68));
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:16px;
+  box-shadow:0 8px 24px rgba(15,23,42,0.06);
+}
+:root[data-theme="dark"] .listbtn{
+  background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+}
+.stat{
+  padding:16px;
+  border-radius:24px;
+  border:1px solid var(--border);
+  background:linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.68));
+  box-shadow:var(--shadow);
+}
+:root[data-theme="dark"] .stat{
+  background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+}
+.num{font-size:30px;font-weight:800;letter-spacing:-0.03em}
+.good{color:var(--good)} .warn{color:var(--warn)} .bad{color:var(--bad)}
+.collection-fragrance-card{
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(0,0.9fr) minmax(0,1.1fr) minmax(0,1.6fr);
+  gap:14px;
+  align-items:start;
+}
+.collection-fragrance-card .cf-block{min-width:0}
+.collection-fragrance-card .cf-label{font-size:11px;color:var(--accent);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.collection-fragrance-card .cf-name{font-weight:800;font-size:1.05rem;line-height:1.15;letter-spacing:-0.01em}
+.collection-fragrance-card .cf-house,.collection-fragrance-card .cf-meta{color:var(--muted)}
+.collection-fragrance-card .cf-value{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+@media (max-width:760px){
+  .app{padding:12px 12px 34px}
+  .top{padding-top:8px}
+  .brand h1{font-size:26px}
+  .tabs{overflow:auto;white-space:nowrap;flex-wrap:nowrap}
+  .tabs .tab{flex:0 0 auto}
+  .grid.cols-2,.grid.cols-3,.grid.cols-4{grid-template-columns:1fr}
+  .field{min-width:100%}
+  .card{border-radius:24px;padding:16px}
+  .stat{border-radius:22px}
+  .collection-fragrance-card{grid-template-columns:1fr;gap:10px}
+  .collection-fragrance-card .cf-name{font-size:1.12rem}
+  .listbtn *{white-space:normal!important;overflow-wrap:anywhere;word-break:break-word}
+}
+
+
+.toast-wrap{
+  position:fixed; left:50%; bottom:22px; transform:translateX(-50%);
+  z-index:200; display:flex; flex-direction:column; gap:10px; pointer-events:none;
+}
+.toast{
+  min-width:220px; max-width:min(92vw,420px);
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border-radius:18px; padding:12px 14px; color:var(--text);
+}
+.toast.success{border-color:rgba(22,163,74,.28)}
+.toast.warn{border-color:rgba(217,119,6,.28)}
+.toast.error{border-color:rgba(220,38,38,.28)}
+.sheet-backdrop{
+  position:fixed; inset:0; background:rgba(15,23,42,.22); z-index:120;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.sheet{
+  position:fixed; left:0; right:0; bottom:0; z-index:130;
+  max-height:84vh; overflow:auto;
+  border-top-left-radius:28px; border-top-right-radius:28px;
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  border:1px solid var(--border);
+  box-shadow:0 -14px 40px rgba(15,23,42,.18);
+  padding:18px 16px calc(18px + env(safe-area-inset-bottom));
+}
+.empty-state{
+  text-align:center; padding:22px 16px; border:1px dashed var(--border);
+  border-radius:22px; color:var(--muted); background:rgba(255,255,255,.18)
+}
+.action-row-sticky{
+  position:sticky; bottom:0; padding-top:10px;
+  background:linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.72) 38%, rgba(255,255,255,.88));
+}
+:root[data-theme="dark"] .action-row-sticky{
+  background:linear-gradient(180deg, rgba(11,18,32,0), rgba(11,18,32,.72) 38%, rgba(11,18,32,.88));
+}
+@media (max-width:760px){
+  .sheet{padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+}
+
+
+/* --- iPhone premium pass 2 --- */
+:root{
+  --hero-bg:linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,.58));
+  --card-highlight:rgba(255,255,255,.42);
+  --ring:0 0 0 4px var(--accent-soft);
+}
+:root[data-theme="dark"]{
+  --hero-bg:linear-gradient(180deg, rgba(17,24,39,.82), rgba(17,24,39,.66));
+  --card-highlight:rgba(255,255,255,.04);
+}
+html,body{min-height:100%}
+body{padding-bottom:env(safe-area-inset-bottom)}
+.app{max-width:1180px}
+.top{
+  position:sticky;
+  top:0;
+  z-index:40;
+  margin-bottom:14px;
+  padding:10px 0 12px;
+}
+.top::before{
+  content:"";
+  position:absolute;
+  inset:2px -6px 0 -6px;
+  border-radius:30px;
+  background:var(--hero-bg);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  z-index:-1;
+}
+.brand{padding:6px 6px 2px}
+.brand small{color:var(--accent);font-weight:700}
+.brand h1{font-size:clamp(28px, 4vw, 42px);letter-spacing:-0.04em;line-height:1.02}
+.brand p{font-size:15px}
+.tabs{
+  margin-top:8px;
+  padding:7px;
+  border-radius:999px;
+  background:rgba(255,255,255,.34);
+  border:1px solid var(--border);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
+}
+:root[data-theme="dark"] .tabs{background:rgba(255,255,255,.03)}
+.tab{
+  min-height:44px;
+  border-radius:999px;
+  font-size:15px;
+  padding:0 14px;
+}
+.tab.active{
+  background:linear-gradient(180deg, rgba(37,99,235,.18), rgba(37,99,235,.12));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 8px 18px rgba(37,99,235,.16);
+}
+.card,.stat,.listbtn{position:relative;overflow:hidden}
+.card::after,.stat::after,.listbtn::after{
+  content:"";
+  position:absolute;
+  inset:0 0 auto 0;
+  height:1px;
+  background:linear-gradient(90deg, transparent, var(--card-highlight), transparent);
+  opacity:.9;
+  pointer-events:none;
+}
+.card{border-radius:30px}
+.stat{border-radius:26px}
+.listbtn{border-radius:24px}
+h3{letter-spacing:-0.03em}
+.kicker{font-size:10px;letter-spacing:.22em}
+.section-subtitle{max-width:58ch}
+.icon-badge{
+  width:38px;
+  height:38px;
+  border-radius:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28);
+}
+button,.tab,.listbtn{-webkit-tap-highlight-color:transparent}
+button:focus-visible,.tab:focus-visible,.listbtn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:none;
+  box-shadow:var(--ring);
+}
+.score-meter{height:13px}
+.score-meter > span{filter:saturate(1.05)}
+.collection-fragrance-card .cf-name{font-size:1.08rem}
+.collection-fragrance-card .cf-house{font-size:15px}
+.empty-state strong{font-size:1.02rem}
+.sheet{
+  border-top-left-radius:32px;
+  border-top-right-radius:32px;
+  padding-top:20px;
+}
+.sheet::before{
+  content:"";
+  display:block;
+  width:42px;
+  height:5px;
+  border-radius:999px;
+  background:rgba(15,23,42,.16);
+  margin:0 auto 14px;
+}
+:root[data-theme="dark"] .sheet::before{background:rgba(255,255,255,.18)}
+.toast{border-radius:20px}
+.quick-actions{gap:10px}
+@media (max-width:760px){
+  .app{padding:10px 12px 30px}
+  .top{padding-top:6px}
+  .top::before{inset:0 -2px 0 -2px;border-radius:26px}
+  .brand{padding:6px 4px 2px}
+  .brand h1{font-size:23px}
+  .brand p{font-size:13px}
+  .tabs{padding:6px}
+  .tab{min-height:42px;font-size:14px;padding:0 13px}
+  .card{border-radius:26px}
+  .stat{border-radius:22px}
+  .listbtn{border-radius:22px}
+}
+
+
+/* --- Premium product identity pass --- */
+:root{
+  --brand-grad:linear-gradient(135deg, color-mix(in srgb, var(--accent) 88%, white), color-mix(in srgb, var(--accent) 52%, #7dd3fc));
+  --soft-surface:linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.72));
+  --hero-shadow:0 22px 60px rgba(15,23,42,.16), 0 6px 20px rgba(15,23,42,.08);
+}
+:root[data-theme="dark"]{
+  --soft-surface:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.035));
+  --hero-shadow:0 24px 60px rgba(0,0,0,.36), 0 6px 18px rgba(0,0,0,.24);
+}
+.brandmark{
+  width:42px;height:42px;border-radius:14px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand-grad); color:white; font-weight:800; box-shadow:var(--hero-shadow);
+}
+.brand-row{display:flex;align-items:center;gap:12px}
+.tabs .tab{
+  position:relative;
+  display:inline-flex;align-items:center;gap:8px;
+  min-height:42px;
+  font-weight:700;
+}
+.tab-ico{font-size:14px;opacity:.95}
+.tab.active .tab-ico{transform:translateY(-.5px)}
+.surface-card{
+  background:var(--soft-surface);
+  border:1px solid var(--border);
+  border-radius:30px;
+  box-shadow:var(--hero-shadow);
+  backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+}
+.frag-hero{
+  position:relative;
+  padding:20px;
+  border-radius:30px;
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--accent) 16%, transparent), transparent 34%),
+    linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0)),
+    var(--soft-surface);
+  border:1px solid var(--border);
+  box-shadow:var(--hero-shadow);
+}
+.frag-hero-title{
+  font-size:clamp(1.55rem,2vw,2rem);
+  line-height:1.02;
+  letter-spacing:-0.04em;
+  font-weight:800;
+  margin:0;
+}
+.frag-hero-house{
+  color:var(--muted);
+  margin-top:6px;
+  font-size:15px;
+}
+.frag-chip-row{
+  display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;
+}
+.frag-chip{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:8px 11px; border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.28);
+  font-size:12px; font-weight:700;
+}
+:root[data-theme="dark"] .frag-chip{background:rgba(255,255,255,.04)}
+.frag-hero-grid{
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:16px;
+}
+.detail-mini{
+  padding:14px; border-radius:20px; background:rgba(255,255,255,.24); border:1px solid var(--border);
+}
+:root[data-theme="dark"] .detail-mini{background:rgba(255,255,255,.04)}
+.detail-mini .kicker{font-size:10px}
+.detail-mini .val{margin-top:8px; font-weight:700}
+.section-card{
+  border-radius:24px;
+  padding:16px;
+}
+.inline-icon{
+  display:inline-flex; width:28px; height:28px; align-items:center; justify-content:center; border-radius:10px;
+  background:color-mix(in srgb, var(--accent) 14%, transparent); color:var(--accent);
+}
+.nav-shell{
+  position:relative;
+}
+@media (max-width:760px){
+  .tabs{
+    position:static;
+    width:100%;
+    justify-content:flex-start;
+    overflow-x:auto;
+    padding:6px;
+    border-radius:24px;
+    background:rgba(255,255,255,.34);
+    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
+  }
+  :root[data-theme="dark"] .tabs{
+    background:rgba(255,255,255,.03);
+  }
+  .tabs .tab{
+    flex:0 0 auto;
+    min-width:82px;
+    justify-content:center;
+    flex-direction:column;
+    gap:3px;
+    font-size:11px;
+    padding:8px 10px;
+    min-height:54px;
+  }
+  .tabs .tab span:last-child{
+    max-width:66px;
+    line-height:1.05;
+    text-align:center;
+  }
+  .app{padding-bottom:30px}
+  .frag-hero-grid{grid-template-columns:1fr 1fr}
+}
+
+
+/* --- Professional polish pass --- */
+.subnav{
+  display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;
+}
+.subnav button{
+  border-radius:999px;
+  min-height:38px;
+  padding:0 14px;
+  font-size:13px;
+  font-weight:700;
+}
+.subnav button.active{
+  background:var(--accent-soft);
+  color:var(--accent);
+  border-color:transparent;
+  box-shadow:none;
+}
+.section-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+.section-head .copy{
+  min-width:0;
+}
+.section-head .title{
+  margin:.15rem 0 .1rem;
+  font-size:1.15rem;
+  font-weight:800;
+  letter-spacing:-0.02em;
+}
+.section-head .desc{
+  color:var(--muted);
+  font-size:14px;
+}
+.sheety{
+  background:linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.12));
+  border:1px solid var(--border);
+  border-radius:24px;
+}
+:root[data-theme="dark"] .sheety{
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+}
+.accordion-card{
+  border-radius:24px;
+  overflow:hidden;
+}
+.accordion-toggle{
+  width:100%;
+  text-align:left;
+  background:transparent;
+  border:none;
+  box-shadow:none;
+  padding:0;
+}
+.accordion-body{
+  margin-top:12px;
+  animation:fadeUp .18s ease both;
+}
+.detail-hero-actions{
+  display:flex; gap:8px; flex-wrap:wrap;
+}
+.hero-summary{
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:16px;
+}
+.hero-stat{
+  padding:14px; border-radius:18px; border:1px solid var(--border); background:rgba(255,255,255,.18);
+}
+:root[data-theme="dark"] .hero-stat{background:rgba(255,255,255,.04)}
+.hero-stat .label{font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); font-weight:700}
+.hero-stat .value{margin-top:8px; font-weight:800}
+.top{
+  gap:12px;
+}
+.brand p{
+  opacity:.95;
+}
+.primary-surface{
+  border-radius:26px;
+}
+@media (max-width:760px){
+  .hero-summary{grid-template-columns:1fr 1fr}
+  .section-head .title{font-size:1.05rem}
+}
+
+
+.top{
+  align-items:stretch;
+}
+.tabs{
+  display:flex;
+  align-items:center;
+}
+
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const OCCASIONS=["Plane","Office","Date","Casual","Gym","Evening"];
+const ENVIRONMENTS=["Indoors","Mixed","Outdoors"];
+const VIEWS=["Home","Collection","Wear","Layer","More"];
+const WEATHER_KEY="vault_weather_pref";
+const THEME_KEY="vault_theme";
+const WEAR_KEY="vault_wear_log";
+const JOURNAL_KEY="vault_journal";
+const WISHLIST_KEY="vault_wishlist";
+
+function makeUserFragranceObject(item){
+  return {
+    id: item.id || ("uf_" + Date.now()),
+    h: item.house || "Custom",
+    n: item.name || "Unnamed Fragrance",
+    i: item.inspiration || "Original",
+    d: (item.dna || "").split(",").map(x=>x.trim()).filter(Boolean),
+    o: (item.occasions || "").split(",").map(x=>x.trim()).filter(Boolean),
+    s: item.season || "All Season",
+    r: Number(item.rating || 4),
+    _userAdded: true
+  };
+}
+
+function getAllCollection(){
+  const base = Array.isArray(COLLECTION) ? COLLECTION.slice() : [];
+  const added = (state.userFragrances||[]).map(makeUserFragranceObject);
+  return [...base, ...added];
+}
+
+function startEditUserFragrance(id){
+  const item = (state.userFragrances||[]).find(x=>x.id===id);
+  if (!item) return;
+  state.editingFragranceId = id;
+  state.newFragrance = {
+    house: item.house || "",
+    name: item.name || "",
+    inspiration: item.inspiration || "",
+    dna: item.dna || "",
+    occasions: item.occasions || "",
+    season: item.season || "All Season",
+    rating: String(item.rating || 4)
+  };
+}
+
+function clearFragranceForm(){
+  state.editingFragranceId = null;
+  state.newFragrance = {house:"",name:"",inspiration:"",dna:"",occasions:"",season:"All Season",rating:"4"};
+}
+
+function pushToast(message, kind="success"){
+  const id = "t_" + Date.now() + "_" + Math.random().toString(36).slice(2,7);
+  state.toasts = [...(state.toasts||[]), {id, message, kind}].slice(-3);
+  render();
+  setTimeout(()=>{
+    state.toasts = (state.toasts||[]).filter(t => t.id !== id);
+    render();
+  }, 2200);
+}
+
+function openSheet(name){
+  state.activeSheet = name;
+}
+
+function closeSheet(){
+  state.activeSheet = null;
+  state.pendingDelete = null;
+}
+
+function sortCollectionItems(items, mode){
+  const arr = items.slice();
+  if (mode === "House") return arr.sort((a,b)=>(a.h||"").localeCompare(b.h||"") || (a.n||"").localeCompare(b.n||""));
+  if (mode === "Season") return arr.sort((a,b)=>(a.s||"").localeCompare(b.s||"") || (a.n||"").localeCompare(b.n||""));
+  if (mode === "Favorites") return arr.sort((a,b)=>(isFavorite(b.n)?1:0)-(isFavorite(a.n)?1:0) || (a.n||"").localeCompare(b.n||""));
+  return arr.sort((a,b)=>(a.n||"").localeCompare(b.n||""));
+}
+
+function exportAllAppData(){
+  const payload = {
+    exportedAt: new Date().toISOString(),
+    userFragrances: state.userFragrances || [],
+    wearLog: state.wearLog || [],
+    savedLayerCombos: state.savedLayerCombos || [],
+    favorites: JSON.parse(localStorage.getItem("vault_favorites") || "[]"),
+    savedDisplays: JSON.parse(localStorage.getItem("vault_saved_displays") || "[]"),
+    settings: {
+      theme: state.theme,
+      weatherPref: state.weatherPref,
+      collectionSort: state.collectionSort
+    }
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "vault-backup.json";
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+
+function importAllAppDataFromText(textValue){
+  try{
+    const payload = JSON.parse(textValue);
+    if (!payload || typeof payload !== "object") return {ok:false, message:"Backup file is not valid."};
+    if (Array.isArray(payload.userFragrances)) state.userFragrances = payload.userFragrances;
+    if (Array.isArray(payload.wearLog)) state.wearLog = payload.wearLog;
+    if (Array.isArray(payload.savedLayerCombos)) state.savedLayerCombos = payload.savedLayerCombos;
+    if (Array.isArray(payload.favorites)) localStorage.setItem("vault_favorites", JSON.stringify(payload.favorites));
+    if (Array.isArray(payload.savedDisplays)) localStorage.setItem("vault_saved_displays", JSON.stringify(payload.savedDisplays));
+    if (payload.settings && typeof payload.settings === "object"){
+      if (payload.settings.theme) state.theme = payload.settings.theme;
+      if (payload.settings.weatherPref) state.weatherPref = payload.settings.weatherPref;
+      if (payload.settings.collectionSort) state.collectionSort = payload.settings.collectionSort;
+    }
+    saveUserFragrances();
+    saveWearLog();
+    saveLayerCombos();
+    saveTheme();
+    saveWeatherPref();
+    return {ok:true};
+  }catch(e){
+    return {ok:false, message:"Import file is not valid JSON."};
+  }
+}
+
+function confirmDeleteUserFragrance(id, name){
+  state.pendingDelete = {type:"userFragrance", id, name};
+  openSheet("confirmDelete");
+}
+
+function sheetView(){
+  if (!state.activeSheet) return "";
+  if (state.activeSheet === "addFragrance"){
+    return `<div class="sheet-backdrop" id="sheetBackdrop"></div>
+      <div class="sheet">
+        <div class="row" style="justify-content:space-between;align-items:start">
+          <div>
+            <div class="kicker">Collection</div>
+            <h3 style="margin:.2rem 0">${state.editingFragranceId ? "Edit fragrance" : "Add fragrance"}</h3>
+            <div class="muted">User-added fragrances are stored in this browser on this device.</div>
+          </div>
+          <button id="closeSheetBtn" type="button">Close</button>
+        </div>
+        <div class="grid cols-3" style="margin-top:14px">
+          <div class="field"><label>House</label><input id="newFragranceHouse" value="${esc(state.newFragrance.house)}"></div>
+          <div class="field"><label>Name</label><input id="newFragranceName" value="${esc(state.newFragrance.name)}"></div>
+          <div class="field"><label>Inspired by / style</label><input id="newFragranceInspiration" value="${esc(state.newFragrance.inspiration)}"></div>
+        </div>
+        <div class="grid cols-3" style="margin-top:12px">
+          <div class="field"><label>DNA (comma separated)</label><input id="newFragranceDNA" value="${esc(state.newFragrance.dna)}"></div>
+          <div class="field"><label>Occasions (comma separated)</label><input id="newFragranceOccasions" value="${esc(state.newFragrance.occasions)}"></div>
+          <div class="field"><label>Season</label><select id="newFragranceSeason">${["All Season","Spring","Summer","Fall","Winter","Year-round","Spring · Summer","Fall · Winter"].map(x=>`<option ${state.newFragrance.season===x?"selected":""}>${x}</option>`).join("")}</select></div>
+        </div>
+        <div class="grid cols-3" style="margin-top:12px">
+          <div class="field"><label>Rating</label><select id="newFragranceRating">${["1","2","3","4","5"].map(x=>`<option ${String(state.newFragrance.rating)===x?"selected":""}>${x}</option>`).join("")}</select></div>
+        </div>
+        <div class="action-row-sticky">
+          <div class="row" style="margin-top:12px">
+            <button id="saveNewFragrance" type="button">${state.editingFragranceId ? "Update fragrance" : "Add fragrance"}</button>
+            <button id="clearNewFragranceForm" type="button">Clear</button>
+          </div>
+        </div>
+      </div>`;
+  }
+  if (state.activeSheet === "backupTools"){
+    return `<div class="sheet-backdrop" id="sheetBackdrop"></div>
+      <div class="sheet">
+        <div class="row" style="justify-content:space-between;align-items:start">
+          <div><div class="kicker">Backup</div><h3 style="margin:.2rem 0">Export or import app data</h3><div class="muted">Includes user-added fragrances, favorites, wear log, saved combos, saved displays, and settings.</div></div>
+          <button id="closeSheetBtn" type="button">Close</button>
+        </div>
+        <div class="grid cols-2" style="margin-top:16px">
+          <div class="card"><div class="kicker">Export</div><div style="margin-top:8px">Create one backup file for the app.</div><div class="row" style="margin-top:12px"><button id="exportAllData" type="button">Export all data</button></div></div>
+          <div class="card"><div class="kicker">Import</div><div style="margin-top:8px">Restore from a previous backup file.</div><div class="row" style="margin-top:12px"><label class="tab" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer">Import backup<input id="importAllData" type="file" accept=".json,application/json" style="display:none"></label></div></div>
+        </div>
+      </div>`;
+  }
+  if (state.activeSheet === "confirmDelete" && state.pendingDelete){
+    return `<div class="sheet-backdrop" id="sheetBackdrop"></div>
+      <div class="sheet">
+        <div class="kicker">Confirm delete</div>
+        <h3 style="margin:.2rem 0">${esc(state.pendingDelete.name || "Delete item")}</h3>
+        <div class="muted">This will remove the item from your local app data on this device.</div>
+        <div class="row" style="margin-top:16px">
+          <button id="confirmDeleteBtn" type="button">Delete</button>
+          <button id="closeSheetBtn" type="button">Cancel</button>
+        </div>
+      </div>`;
+  }
+  return "";
+}
+
+
+function getMoreSections(){
+  return ["Display","Buy or Skip","Hobby Lab"];
+}
+function getPrimaryViewLabel(view){
+  if (view === "Wear Today") return "Wear";
+  if (view === "Layering") return "Layer";
+  if (getMoreSections().includes(view)) return "More";
+  return view;
+}
+function getCurrentMoreSection(){
+  return getMoreSections().includes(state.view) ? state.view : "Display";
+}
+function toastView(){
+  if (!state.toasts || !state.toasts.length) return "";
+  return `<div class="toast-wrap">
+    ${state.toasts.map(t=>`<div class="toast ${esc(t.kind)}">${esc(t.message)}</div>`).join("")}
+  </div>`;
+}
+
+function upsertUserFragranceFromForm(){
+  const payload = {
+    id: state.editingFragranceId || ("uf_" + Date.now()),
+    house: (state.newFragrance.house||"").trim(),
+    name: (state.newFragrance.name||"").trim(),
+    inspiration: (state.newFragrance.inspiration||"").trim(),
+    dna: (state.newFragrance.dna||"").trim(),
+    occasions: (state.newFragrance.occasions||"").trim(),
+    season: (state.newFragrance.season||"").trim() || "All Season",
+    rating: String(state.newFragrance.rating||"4").trim() || "4"
+  };
+  if (!payload.name) return {ok:false, message:"Name is required."};
+
+  state.userFragrances = state.userFragrances || [];
+  const idx = state.userFragrances.findIndex(x=>x.id===payload.id);
+  if (idx >= 0) state.userFragrances[idx] = payload;
+  else state.userFragrances.unshift(payload);
+  saveUserFragrances();
+  clearFragranceForm();
+  return {ok:true};
+}
+
+function deleteUserFragrance(id){
+  state.userFragrances = (state.userFragrances||[]).filter(x=>x.id!==id);
+  saveUserFragrances();
+  if (state.editingFragranceId === id) clearFragranceForm();
+}
+
+function exportUserFragrances(){
+  const blob = new Blob([JSON.stringify(state.userFragrances||[], null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "vault-user-fragrances.json";
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+
+function importUserFragrancesFromText(textValue){
+  try{
+    const parsed = JSON.parse(textValue);
+    if (!Array.isArray(parsed)) return {ok:false, message:"Import file must contain an array."};
+    state.userFragrances = parsed;
+    saveUserFragrances();
+    clearFragranceForm();
+    return {ok:true};
+  }catch(e){
+    return {ok:false, message:"Import file is not valid JSON."};
+  }
+}
+
+const FAVORITES_KEY="vault_favorites";
+const DISPLAY_KEY="vault_display_snapshots";
+
+const BASE_COLLECTION=[
+{h:"The Dua Brand",n:"#Imagine",i:"Louis Vuitton Imagination",d:["bright citrus","aromatic","tea","clean musky amber"],o:["Casual","daytime errands"],s:"Spring · Summer",r:4},
+{h:"The Dua Brand",n:"Acqua Di DUA",i:"Acqua di Gio OG / vintage style",d:["marine","citrus aromatic","watery woods","fresh masculine"],o:["Casual","beach","gym"],s:"Spring · Summer",r:3},
+{h:"The Dua Brand",n:"Bet On 67",i:"Ralph Lauren Polo 67",d:["sporty citrus woods","clean aromatic","easy daytime fresh"],o:["Casual outdoors","sport"],s:"Spring · Summer",r:3},
+{h:"The Dua Brand",n:"Bleu de Casino Elixir Extrait",i:"Bleu de Chanel x Aventus x Baccarat Rouge 540 Extrait",d:["blue incense woods","fruity smoky amber","sweet extrait richness"],o:["Date night","upscale casual"],s:"Fall · Winter",r:5},
+{h:"The Dua Brand",n:"Bleu de Dua Attar",i:"Bleu de Chanel Parfum",d:["deep blue woods","incense","citrus","smooth ambered masculinity"],o:["Office","smart casual"],s:"Year-round",r:5},
+{h:"The Dua Brand",n:"Bleu de Dua Exclusive Extrait",i:"Bleu de Chanel L'Exclusif",d:["elegant blue woods","refined incense","creamy polished depth"],o:["Business formal","special occasion"],s:"Fall · Winter",r:5},
+{h:"The Dua Brand",n:"Casino Royale Nights Extrait",i:"Baccarat Rouge 540 Extrait",d:["saffron amberwood","airy sweetness","glowing woody sugar"],o:["Date night","cocktail event"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"D Le Attar",i:"YSL Y Le Parfum",d:["dark blue aromatic","apple ginger woods","smooth sweet masculine"],o:["Office","date night"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"D Le Parfum Intense",i:"YSL Y Eau de Parfum Intense",d:["vibrant blue aromatic","crisp woods","richer modern freshness"],o:["Evening","formal"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Desert Reflection Extrait",i:"Amouage Reflection Man",d:["creamy white florals","sandalwood","elegant soapy refinement"],o:["Special occasion","formal"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Drowning in Bleu de Dua Attar",i:"Nishane Ani x Bleu de Chanel Parfum",d:["vanillic spicy citrus","blue woods","creamy incense sweetness"],o:["Date night","upscale"],s:"Spring · Fall",r:4},
+{h:"The Dua Brand",n:"Drowning in Bleu de Savage Fierce Extrait",i:"Nishane Ani × Dior Sauvage EDT × Abercrombie Fierce × Bleu de Chanel",d:["sweet spicy blue fresh","musky woods","club-ready hybrid"],o:["Night out","clubbing"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"His Intense Aspiration",i:"Chanel Allure Homme Edition Blanche x Allure Homme Sport Eau Extreme",d:["creamy lemon freshness","sporty woods","smooth musky citrus"],o:["Office","smart casual"],s:"Spring · Summer",r:4},
+{h:"The Dua Brand",n:"His Loyalty",i:"D&G Devotion Pour Homme",d:["citrus gourmand aromatic","smooth woods","modern sweet masculine"],o:["Casual","social"],s:"Spring · Summer",r:3},
+{h:"The Dua Brand",n:"Fierce Savage",i:"Abercrombie Fierce x Dior Sauvage EDT",d:["musky fresh citrus","ambroxan","casual loud clean masculine"],o:["Casual","gym","outdoors"],s:"Spring · Summer",r:3},
+{h:"The Dua Brand",n:"His Royalty",i:"Prada L'Homme L'Eau",d:["clean neroli iris","soft soapiness","refined airy office scent"],o:["Office","light date"],s:"Spring · Summer",r:4},
+{h:"The Dua Brand",n:"Error 410",i:"Paco Rabanne 1 Million Absolutely Gold",d:["sweet gold amber","rich spice","warm evening gloss"],o:["Date night","evening","upscale social"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Error 413",i:"Paco Rabanne 1 Million Lucky",d:["hazelnut plum sweetness","woody amber","playful night out vibe"],o:["Night out","social"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"His Aspiration Extreme Sport",i:"Chanel Allure Homme Sport Eau Extreme",d:["minty tonka citrus","sporty woods","versatile masculine freshness"],o:["Sport","casual","gym"],s:"Spring · Summer",r:4},
+{h:"The Dua Brand",n:"His OG Aspiration",i:"Chanel Allure Homme",d:["classic citrus woods","spicy creamy freshness","polished masculine"],o:["Office","smart casual"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"His Perspective",i:"Prada Paradigme",d:["clean aromatic woods","modern masculine freshness","smooth easy wear"],o:["Office","date night","layering base"],s:"Year-round",r:4},
+{h:"The Dua Brand",n:"Iconic Greenwich Village",i:"Bond No. 9 Greenwich Village",d:["fruity musky amber","urban sweet woods","stylish modern scent"],o:["Urban casual","creative social"],s:"Spring · Fall",r:4},
+{h:"The Dua Brand",n:"Imperial Blue",i:"Bleu de Chanel x Creed Millesime Imperial",d:["blue incense","salty melon musk","refined fresh luxury"],o:["Upscale casual","date"],s:"Spring · Summer",r:4},
+{h:"The Dua Brand",n:"Imperiale Casino Elixir",i:"Creed Millesime Imperial x Aventus x Baccarat Rouge 540 Extrait",d:["fruity marine amber","metallic sweetness","luxe hybrid sheen"],o:["Special occasion","formal"],s:"Spring · Fall",r:4},
+{h:"The Dua Brand",n:"Intuition Vision",i:"Acqua di Gio Profumo",d:["marine incense aromatic","dark mineral freshness","elegant masculinity"],o:["Smart casual","office"],s:"Spring · Summer",r:4},
+{h:"The Dua Brand",n:"Jazz",i:"Maison Margiela Jazz Club",d:["boozy tobacco vanilla","cozy amber","intimate lounge scent"],o:["Evening social","bar","lounge"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Mystical Amulet of Blue",i:"Ex Nihilo Blue Talisman",d:["sparkling citrus pear freshness","musky amber","upscale clean vibe"],o:["Casual","everyday"],s:"Spring · Summer",r:4},
+{h:"The Dua Brand",n:"Peace with Poseidon",i:"Bond No. 9 The Scent of Peace for Him x Creed Aventus",d:["bright fruity woods","aromatic freshness","easy compliment getter"],o:["Casual","outdoors","weekend"],s:"Spring · Summer",r:4},
+{h:"The Dua Brand",n:"Poseidon's Swimming Cologne",i:"Creed Aventus Cologne x Louis Vuitton Afternoon Swim",d:["sparkling citrus musk","fresh pineapple orange","bright summer energy"],o:["Casual","beach","sport","layering base"],s:"Spring · Summer",r:4},
+{h:"The Dua Brand",n:"Poseidon's Ocean Mist",i:"Creed Aventus Cologne x Nautica Voyage",d:["clean fruity aquatic","airy woods","effortless casual freshness"],o:["Casual","office","daytime","outdoors","weekend"],s:"Spring · Summer",r:4},
+{h:"The Dua Brand",n:"River Fougere",i:"YSL Rive Gauche Pour Homme",d:["barbershop fougere","lavender herbs","metallic shaving cream vibe"],o:["Office","smart casual","retro vibe"],s:"Spring · Fall",r:4},
+{h:"The Dua Brand",n:"Rome in Yellow Dream",i:"Valentino Uomo Born in Roma Yellow Dream",d:["citrus gingerbread warmth","sweet aromatic woods","easy date scent"],o:["Date","upscale casual"],s:"Spring · Summer",r:3},
+{h:"The Dua Brand",n:"Spice It Up: Metallic Musk",i:"Viktor & Rolf Spicebomb Metallic Musk",d:["spicy metallic musk","cool aromatic woods","sleek modern warmth"],o:["Smart casual","office"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Stronger With Azure Supernova 2.0",i:"Stronger With You x Acqua di Gio Profondo x Roja Elysium x Aventus",d:["sweet blue aromatic","fruity woods","mass appealing statement hybrid"],o:["Date night","evening"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"The Savage Attar",i:"Dior Sauvage Parfum",d:["smooth spicy citrus","darker woods","richer sauvage DNA"],o:["Date night","upscale casual"],s:"Year-round",r:4},
+{h:"The Dua Brand",n:"Iconic Plums By The Fire",i:"Bond No. 9 Andy Warhol x Maison Margiela By the Fireplace",d:["plum sweetness","smoky chestnut woods","cozy artistic warmth"],o:["Evening","cozy","lounge"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Poseidon's Fireplace",i:"Creed Aventus x Maison Margiela By the Fireplace",d:["fruity smoke","woods","cozy masculine campfire vibe"],o:["Evening","lounge","date"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Dua's SoHo",i:"Bond No. 9 SoHo",d:["fruity floral amber","creative urban sweetness","stylish social scent"],o:["Urban casual","creative social"],s:"Spring · Fall",r:3},
+{h:"The Dua Brand",n:"Gentleman's Club",i:"Givenchy Gentleman Society",d:["aromatic woods","fresh spice","polished modern gentleman profile"],o:["Business casual","date"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"True Self Absolute",i:"YSL MYSLF L'Absolu",d:["orange blossom woods","rich ambers","sleek modern masculinity"],o:["Date night","evening"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Poseidon's Cotton Candy",i:"Creed Aventus x Cotton Candy",d:["fruity woods","spun sugar sweetness","playful casual twist"],o:["Casual","fun social","playful"],s:"Spring · Summer",r:3},
+{h:"The Dua Brand",n:"Dua's Water Primal Essence",i:"Acqua di Gio Absolu",d:["fruity aquatic woods","juicy marine sweetness","wearable everyday fresh"],o:["Office","casual","gym"],s:"Spring · Summer",r:3},
+{h:"The Dua Brand",n:"Rome in Coral Fantasy",i:"Valentino Uomo Born in Roma Coral Fantasy",d:["red apple tobacco sweetness","fruity amber","playful warm-weather date scent"],o:["Date","warm-weather casual"],s:"Spring · Summer",r:3},
+{h:"The Dua Brand",n:"Midnight Candy For 1 & Only",i:"YSL La Nuit de L'Homme x Candies for Men x Dolce & Gabbana The One",d:["sweet spicy cardamom amber","seductive lounge DNA"],o:["Evening","date night","club"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"1 & Only Jazz Club",i:"Dolce & Gabbana The One x Maison Margiela Jazz Club",d:["warm tobacco amber","boozy spice","soft intimate evening scent"],o:["Evening","lounge","date"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Victorian Poseidon",i:"Creed Aventus x Xerjoff 1861 Renaissance",d:["fruity citrus woods","elegant Italian brightness","upscale fresh blend"],o:["Formal","special occasion"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Ottoman Breeze",i:"Nishane Hacivat",d:["pineapple chypre woods","mossy citrus brightness","sharp signature fresh"],o:["Casual","office","everyday","layering base"],s:"Spring · Summer",r:4},
+{h:"The Dua Brand",n:"Ottomans Vert Breeze",i:"Nishane Hacivat x Creed Green Irish Tweed",d:["green pineapple woods","fresh cut grass","polished outdoor elegance"],o:["Casual","office","outdoors","weekend"],s:"Spring · Summer · Early Fall",r:4},
+{h:"The Dua Brand",n:"Aphrodisiac",i:"Initio Psychedelic Love",d:["powdery floral vanilla","sensual musk","intimate sweet haze"],o:["Date night","intimate","evening"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Black Widow",i:"Kilian Black Phantom",d:["dark rum chocolate coffee","smoky sweetness","mysterious night scent"],o:["Evening","date night","club"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"City of Dua",i:"Louis Vuitton City of Stars",d:["citrus candy amber","radiant night city glow","playful brightness"],o:["Smart casual","evening"],s:"Fall · Winter",r:3},
+{h:"The Dua Brand",n:"Midnight Rendezvous",i:"YSL La Nuit de L'Homme",d:["cardamom lavender woods","soft seductive evening masculinity"],o:["Date night","evening","club"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Gone Swimming",i:"Louis Vuitton Afternoon Swim",d:["orange citrus burst","sparkling aquatic freshness","luxury summer energy"],o:["Casual","beach","poolside"],s:"Spring · Summer",r:4},
+{h:"The Dua Brand",n:"Cola Fizz Of Tonka Beans",i:"Mancera Tonka Cola",d:["cherry cola fizz","tonka warmth","fun sweet aromatic vibe"],o:["Casual","fun","social"],s:"Year-round",r:3},
+{h:"The Dua Brand",n:"Smoky Cuba Tabac",i:"Alghabra Cuban Tobacco",d:["smoky sweet tobacco","resinous woods","rich lounge warmth"],o:["Evening","lounge","special occasion"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Fortune",i:"Xerjoff Naxos",d:["honey tobacco lavender","sweet aromatic richness","elegant comfort scent"],o:["Date night","evening","romantic"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Supernova Cologne Intense",i:"Roja Elysium Eau Intense",d:["crisp citrus woods","airy musk","luxury blue fresh brightness"],o:["Smart casual","office","gym"],s:"Spring · Summer",r:4},
+{h:"The Dua Brand",n:"Wooden Lucky Charm",i:"Dior Bois Talisman",d:["woody amber","mystical soft sweetness","smooth modern niche feel"],o:["Smart casual","evening"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Rome in Green",i:"Valentino Uomo Born in Roma Green Stravaganza",d:["green aromatic coffee","fresh herbal woods","energetic modern casual"],o:["Casual","outdoors","weekend"],s:"Spring · Summer",r:3},
+{h:"The Dua Brand",n:"Queen Of The Chess",i:"Mind Games Queening",d:["fruity floral amber","upscale seductive sweetness","bold elegant aura"],o:["Date","upscale casual","evening"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"Midnight Fig",i:"Nest Indigo",d:["fig tea spice","dusky sweetness","smooth mysterious comfort scent"],o:["Evening","special occasion","mysterious"],s:"Fall · Winter",r:4},
+{h:"The Dua Brand",n:"The Mobster vs Poseidon",i:"Vintage Roja Creation-E × Creed Aventus",d:["boozy fruity woods","smooth tobacco amber","upscale masculine swagger"],o:["Date night","upscale casual","evening social"],s:"Fall · Spring / cooler evenings",r:4},
+{h:"The Dua Brand",n:"Aroma of Heaven",i:"Hermes Terre d'Hermes vintage style",d:["citrus vetiver mineral woods","mature earthy masculine elegance"],o:["Office","smart casual","daytime","outdoors"],s:"Spring · Fall · Year-round",r:5},
+{h:"The Dua Brand",n:"Imperialé Matrix",i:"Creed Millésime Impérial × Xerjoff Nio",d:["citrus marine musk","green neroli sparkle","polished luxury freshness"],o:["Office","smart casual","daytime","upscale casual","outdoors"],s:"Spring · Summer · Early Fall",r:4},
+
+{h:"Maison Alhambra",n:"Black Origami",i:"Tom Ford Black Orchid",d:["dark floral truffle patchouli","rich gothic sensuality"],o:["Evening","date night","special occasion"],s:"Fall · Winter",r:4},
+{h:"Maison Alhambra",n:"Daring Blue For Life",i:"Dolce & Gabbana Light Blue Forever",d:["grapefruit citrus woods","breezy marine freshness"],o:["Casual","beach","everyday"],s:"Spring · Summer",r:3},
+{h:"Maison Alhambra",n:"Glacier Bold",i:"JPG Le Beau Le Parfum",d:["coconut woods","sweet tropical amber","playful sensual freshness"],o:["Casual","social","gym"],s:"Spring · Summer",r:3},
+{h:"Maison Alhambra",n:"Glacier Le Noir",i:"JPG Le Male Le Parfum",d:["cardamom vanilla woods","dark sweet barbershop vibe"],o:["Date night","club","evening"],s:"Fall · Winter",r:4},
+{h:"Maison Alhambra",n:"Hercules",i:"Parfums de Marly Herod",d:["tobacco cinnamon vanilla","warm regal sweetness"],o:["Evening","formal","date"],s:"Fall · Winter",r:4},
+{h:"Maison Alhambra",n:"Jean Lowe Immortal",i:"Louis Vuitton L'Immensite",d:["ginger grapefruit ambrox freshness","upscale airy masculine"],o:["Smart casual","office","layering base"],s:"Spring · Summer",r:4},
+{h:"Maison Alhambra",n:"Jean Lowe Vibe",i:"Louis Vuitton Pacific Chill",d:["minty fruity citrus","juicy airy spa freshness"],o:["Casual","beach","weekend"],s:"Spring · Summer",r:3},
+{h:"Maison Alhambra",n:"Kismet Angel",i:"Kilian Angel's Share",d:["boozy cinnamon apple pie amber","cozy gourmand luxury"],o:["Evening","date night","cozy lounge"],s:"Fall · Winter",r:4},
+{h:"Maison Alhambra",n:"Perseus",i:"Parfums de Marly Pegasus",d:["almond vanilla metallic woods","polished sweet masculine"],o:["Office","smart casual","date"],s:"Year-round",r:4},
+{h:"Maison Alhambra",n:"Salvo Elixir",i:"Dior Sauvage Elixir",d:["dense spice","lavender woods","loud dark sauvage power"],o:["Date night","evening","special occasion"],s:"Fall · Winter",r:4},
+{h:"Maison Alhambra",n:"Salvo Intense",i:"Dior Sauvage EDP",d:["ambroxan citrus spice","versatile mainstream masculine"],o:["Casual","office","everyday"],s:"Year-round",r:4},
+{h:"Maison Alhambra",n:"Tobacco Touch",i:"Tom Ford Tobacco Vanille",d:["sweet pipe tobacco vanilla","spicy cozy richness"],o:["Evening","cozy","romantic","winter date"],s:"Fall · Winter",r:4},
+{h:"Maison Alhambra",n:"Victorioso",i:"Paco Rabanne Invictus",d:["aquatic bubblegum freshness","sporty youthful energy"],o:["Sport","casual","gym","daytime"],s:"Spring · Summer",r:3},
+{h:"Maison Alhambra",n:"Victorioso Myth",i:"Invictus Legend",d:["salty marine woods","darker sporty masculinity"],o:["Date night","upscale casual"],s:"Fall · Winter",r:3},
+{h:"Maison Alhambra",n:"Victorioso Nero",i:"Invictus Victory / Victory Elixir",d:["sweet amber vanilla","sporty club friendly warmth"],o:["Date night","evening","formal"],s:"Fall · Winter",r:4},
+{h:"Maison Alhambra",n:"Yeah Man",i:"YSL Y Eau de Parfum",d:["apple sage ambrox woods","crowd pleasing blue designer DNA"],o:["Office","casual","everyday"],s:"Year-round",r:4},
+{h:"Maison Alhambra",n:"Your Touch Amber",i:"Armani Stronger With You Amber",d:["sweet amber spice","warm modern date scent"],o:["Date night","cozy evening"],s:"Fall · Winter",r:4},
+{h:"Maison Alhambra",n:"Your Touch Oud",i:"Armani Stronger With You Oud",d:["sweet resinous oud amber","richer evening flanker vibe"],o:["Evening","special occasion","date"],s:"Fall · Winter",r:4},
+{h:"Maison Alhambra",n:"Your Touch Sandal",i:"Armani Stronger With You Sandalwood",d:["creamy sandalwood amber","soft cozy masculine sweetness"],o:["Smart casual","date","evening"],s:"Fall · Winter",r:4},
+
+{h:"Lattafa",n:"Opulent Dubai",i:"Stéphane Humbert Lucas God of Fire",d:["mango ginger tropical heat","juicy citrus woods","bold exotic sweetness"],o:["Special occasion","evening","statement"],s:"Fall · Winter",r:4},
+{h:"Lattafa",n:"Mashrabya",i:"Initio Smoking Hot",d:["apple tobacco smoke","dark boozy sweetness"],o:["Evening","club","date night"],s:"Fall · Winter",r:4},
+{h:"Lattafa",n:"Ameer Al Oudh Intense",i:"Maison Margiela By the Fireplace",d:["burnt woods vanilla","smoky cozy fireside warmth"],o:["Cozy evening","lounge","layering"],s:"Fall · Winter",r:4},
+{h:"Lattafa",n:"Vintage Radio",i:"Initio Paragon",d:["plum palo santo woods","smooth spiritual spicy sweetness"],o:["Date night","evening","special occasion"],s:"Fall · Winter",r:4},
+{h:"Lattafa",n:"Najdia Intense",i:"JPG Le Beau Paradise Garden",d:["green tropical sweetness","coconut freshness","playful vacation energy"],o:["Casual","daytime","social"],s:"Spring · Summer",r:3},
+{h:"Lattafa",n:"Qaed Al Fursan",i:"Creed Aventus",d:["pineapple woods","smoky fruity masculine","affordable aventus lane"],o:["Office","smart casual","daytime"],s:"Spring · Fall",r:3},
+{h:"Lattafa",n:"Hayaati Gold Elixir",i:"Armani Code Profumo",d:["sweet tonka amber","spicy mandarin warmth","seductive evening depth"],o:["Date night","evening","club"],s:"Fall · Winter",r:4},
+{h:"Lattafa",n:"Ana Abiyedh White Musk",i:"Original",d:["soft white musk","airy clean sweetness","skin-scent minimalism"],o:["Casual","office","everyday","skin scent"],s:"Year-round",r:3},
+{h:"Lattafa",n:"Teriaq Intense",i:"Original",d:["dense sweet amber spice","bold statement gourmand"],o:["Evening","statement","bold"],s:"Fall · Winter",r:4},
+{h:"Lattafa",n:"Liam Grey",i:"BDK Gris Charnel",d:["fig black tea woods","creamy cardamom elegance"],o:["Smart casual","date","minimalist chic"],s:"Fall · Winter",r:4},
+{h:"Lattafa",n:"Opulent Musk",i:"Baccarat Rouge 540 x Initio Instant Crush",d:["sweet saffron amber","loud synthetic woody sugar"],o:["Date night","social","evening"],s:"Year-round",r:4},
+{h:"Lattafa",n:"Bade'e Al Oud For Glory",i:"Initio Oud for Greatness",d:["saffron oud lavender","bold dark niche aura"],o:["Special occasion","evening","statement"],s:"Fall · Winter",r:4},
+{h:"Lattafa",n:"Bade'e Al Oud Sublime",i:"Kayali Eden Juicy Apple",d:["juicy apple fruity sweetness","playful bright modern vibe"],o:["Casual","fun","social","daytime"],s:"Spring · Summer",r:3},
+{h:"Lattafa",n:"Bade'e Al Oud Honor & Glory",i:"Original / house style",d:["pineapple creme brulee woods","sweet creamy statement scent"],o:["Evening","statement","bold"],s:"Fall · Winter",r:4},
+{h:"Lattafa",n:"Bade'e Al Oud Amethyst",i:"Initio Atomic Rose",d:["rose vanilla amber","lush floral richness"],o:["Date night","floral evening","romantic"],s:"Spring · Fall",r:4},
+{h:"Lattafa",n:"Khamrah Qahwa",i:"Original",d:["coffee cinnamon praline amber","cozy sweet gourmand"],o:["Cozy","evening","lounge","cold weather treat"],s:"Fall · Winter",r:4},
+
+{h:"Fragrance World",n:"Suits",i:"YSL Tuxedo",d:["patchouli amber spice","elegant dressed up luxury"],o:["Formal","evening","special occasion"],s:"Fall · Winter",r:5},
+{h:"Fragrance World",n:"Lust Cherry",i:"Tom Ford Lost Cherry",d:["boozy cherry almond sweetness","playful seductive gourmand"],o:["Date night","evening","romantic"],s:"Fall · Winter",r:4},
+{h:"Fragrance World",n:"Intense Peach",i:"Tom Ford Bitter Peach",d:["ripe peach rum woods","bold sweet fruit"],o:["Evening","bold social","date"],s:"Fall · Winter",r:4},
+{h:"Fragrance World",n:"Oud Wonder",i:"Tom Ford Oud Wood",d:["soft oud woods spice","polished refined masculinity"],o:["Smart casual","office","date"],s:"Fall · Winter",r:4},
+{h:"Fragrance World",n:"Ebony Fume",i:"Tom Ford Ebene Fume",d:["incense palo santo woods","smoky meditative warmth"],o:["Evening","formal","special occasion"],s:"Fall · Winter",r:4},
+{h:"Fragrance World",n:"Proud of You",i:"Armani Stronger With You",d:["chestnut vanilla spice","cozy modern sweetness"],o:["Office","casual","everyday"],s:"Fall · Winter",r:3},
+{h:"Fragrance World",n:"Proud of You Absolute",i:"Armani Stronger With You Absolutely",d:["boozy chestnut amber","richer sweeter date night warmth"],o:["Date night","evening","upscale"],s:"Fall · Winter",r:4},
+{h:"Fragrance World",n:"La Uno Million Elixir",i:"Paco Rabanne 1 Million Elixir",d:["sweet apple vanilla woods","thick golden club scent"],o:["Date night","club","evening"],s:"Fall · Winter",r:4},
+{h:"Fragrance World",n:"Neroli Riviera",i:"Tom Ford Neroli Portofino",d:["neroli citrus musk","luxe Mediterranean freshness"],o:["Casual","beach","vacation","daytime"],s:"Spring · Summer",r:4},
+
+{h:"Banana Republic",n:"Grassland",i:"Creed Green Irish Tweed style",d:["green aromatic woods","grassy clean upscale freshness"],o:["Smart casual","office","daytime"],s:"Spring · Summer",r:4},
+{h:"Banana Republic",n:"Linen Vetiver",i:"Original",d:["dry vetiver citrus","minimalist clean sophistication"],o:["Office","minimalist casual","summer work"],s:"Spring · Summer",r:4},
+{h:"Banana Republic",n:"Vintage Green 78",i:"Original",d:["green woody aromatic","airy relaxed spring freshness"],o:["Casual","weekend","outdoors"],s:"Spring · Summer",r:3},
+{h:"Banana Republic",n:"Tobacco & Tonka Bean",i:"Original",d:["sweet tonka tobacco warmth","cozy casual richness"],o:["Cozy evening","lounge","casual date"],s:"Fall · Winter",r:4},
+{h:"Banana Republic",n:"Midnight Hour",i:"Original",d:["dark woody amber","smooth evening casual depth"],o:["Evening","date","social"],s:"Fall · Winter",r:4},
+{h:"Banana Republic",n:"Dark Cherry & Amber",i:"Original",d:["dark cherry amber","smooth sweetness","cozy evening warmth"],o:["Date night","cozy evening"],s:"Fall · Winter",r:4},
+{h:"Banana Republic",n:"Metal Rain",i:"Original",d:["cool metallic woods","rain-soaked freshness","airy modern green"],o:["Casual","outdoors","fresh air vibe"],s:"Spring · Summer",r:4},
+
+{h:"Designer Originals",n:"Bleu de Chanel EDT",i:"Original",d:["citrus incense woods","crisp blue freshness","versatile polished masculine"],o:["Versatile","office","casual","date"],s:"Year-round",r:5},
+{h:"Designer Originals",n:"Montblanc Legend Spirit",i:"Original",d:["clean fruity musk","airy aquatic woods","easy everyday freshness"],o:["Casual","sport","everyday"],s:"Spring · Summer",r:3},
+{h:"Designer Originals",n:"Nautica Voyage",i:"Original",d:["watery green apple","breezy musk","casual gym freshness"],o:["Casual","fresh","everyday","gym"],s:"Spring · Summer",r:3},
+{h:"Designer Originals",n:"Dior Sauvage EDP",i:"Original",d:["ambroxan spice","bergamot woods","bold versatile masculine"],o:["Office","casual","date night"],s:"Year-round",r:4},
+{h:"Designer Originals",n:"Davidoff Cool Water",i:"Original",d:["minty aquatic lavender","marine freshness","classic sporty clean"],o:["Casual","sport","gym","beach"],s:"Spring · Summer",r:3},
+
+{h:"Valencia / Millionaire",n:"Valencia Uomo Intense",i:"Valentino Uomo Intense",d:["iris leather vanilla","smooth powdery warmth","classy evening depth"],o:["Date night","evening","romantic"],s:"Fall · Winter",r:4},
+{h:"Valencia / Millionaire",n:"Valencia Uomo Fantasy",i:"Valentino Uomo Born in Roma Coral Fantasy",d:["fruity red apple amber","playful sweet woods","casual date energy"],o:["Casual","daytime","warm weather"],s:"Spring · Summer",r:3},
+{h:"Valencia / Millionaire",n:"Valencia Uomo",i:"Valentino Uomo Born in Roma",d:["violet leaf mineral woods","modern sweet aromatic","youthful versatility"],o:["Casual","smart casual","daytime"],s:"Spring · Summer",r:3},
+{h:"Valencia / Millionaire",n:"Millionaire Royal",i:"Paco Rabanne 1 Million Royal",d:["lavender benzoin woods","fresh spicy amber","dressed-up nightlife appeal"],o:["Date night","club","evening"],s:"Fall · Winter",r:4},
+
+{h:"Khadlaj",n:"Island Dreams",i:"Louis Vuitton Symphony",d:["sparkling citrus musk","bright luxury freshness","clean upscale airiness"],o:["Upscale casual","date","evening"],s:"Spring · Fall",r:4},
+{h:"Khadlaj",n:"Shiyaaka Snow",i:"Louis Vuitton Météore",d:["citrus pepper neroli","bright clean woods","elegant daytime freshness"],o:["Smart casual","office","daytime"],s:"Spring · Summer",r:4},
+{h:"Khadlaj",n:"Shiyaaka Blue",i:"Bleu de Chanel style",d:["blue citrus woods","incense-lite freshness","clean office versatility"],o:["Office","casual","everyday"],s:"Year-round",r:4},
+{h:"Khadlaj",n:"Epoque Artistique",i:"Invictus Victory / Victory Elixir",d:["sweet vanilla amber","sporty freshness","bold night-out energy"],o:["Date night","evening","formal"],s:"Fall · Winter",r:4},
+
+{h:"Mod Fragrances",n:"Haven Eclipse",i:"Xerjoff Torino 22",d:["minty aromatic woods","bright freshness","upscale sporty elegance"],o:["Smart casual","date","evening"],s:"Fall · Winter",r:4},
+{h:"Mod Fragrances",n:"Secret Embers",i:"Initio Side Effect",d:["boozy cinnamon tobacco","dark amber woods","seductive evening heat"],o:["Date night","evening","seductive"],s:"Fall · Winter",r:4},
+{h:"Mod Fragrances",n:"Musk Melody",i:"Initio Musk Therapy",d:["clean white musk","citrus softness","calming skin-scent freshness"],o:["Casual","skin-close","everyday"],s:"Year-round",r:4},
+{h:"Mod Fragrances",n:"Reverence Extrait",i:"Parfums de Marly Percival",d:["fresh aromatic citrus","lavender woods","upscale clean versatility"],o:["Smart casual","office","date"],s:"Spring · Fall",r:4},
+{h:"Mod Fragrances",n:"The Exposed Extrait",i:"Mind Games En Prise",d:["dark fruity woods","spicy amber","statement evening richness"],o:["Evening","bold","statement"],s:"Fall · Winter",r:4},
+
+{h:"Rasasi",n:"Fattan",i:"Hermès Terre d’Hermès",d:["orange vetiver woods","dry mineral earthiness","smart casual elegance"],o:["Office","casual","everyday"],s:"Year-round",r:5},
+{h:"Rasasi",n:"Hawas Ice",i:"Original",d:["icy fruity aquatic","musky freshness","loud sporty summer energy"],o:["Sport","gym","casual","fresh"],s:"Spring · Summer",r:3},
+{h:"Rasasi",n:"Hawas Kobra",i:"Louis Vuitton Imagination",d:["soapy citrus tea","musky freshness","bright modern easy wear"],o:["Casual","daytime","social"],s:"Spring · Summer",r:4},
+
+{h:"Zimaya",n:"Itqan Noir",i:"YSL MYSLF",d:["clean orange blossom woods","smooth ambrox freshness","modern masculine ease"],o:["Smart casual","date","evening"],s:"Fall · Winter",r:4},
+{h:"Zimaya",n:"Reverie Aqua Pour Homme",i:"Valentino Uomo Born in Roma Intense",d:["sweet lavender vanilla woods","plush amber","dressed-up warmth"],o:["Casual","office","daytime"],s:"Spring · Summer",r:3},
+{h:"Zimaya",n:"Abadi Opulent",i:"YSL Y Elixir",d:["rich blue aromatic amber","sweet woods","powerful evening polish"],o:["Date night","upscale casual","evening"],s:"Fall · Winter",r:4},
+
+{h:"Yom & Layl",n:"Wazir",i:"Mind Games Queening",d:["luxurious fruity florals","ambered woods","elegant evening character"],o:["Date","upscale casual","evening"],s:"Fall · Winter",r:4},
+{h:"Yom & Layl",n:"Raazi",i:"Mind Games J'Adoube",d:["spiced fruity amber","smooth woods","refined social warmth"],o:["Smart casual","social","evening"],s:"Fall · Winter",r:4},
+{h:"Yom & Layl",n:"Rayees",i:"Mind Games Grand Masters",d:["aromatic woods","polished freshness","intellectual upscale versatility"],o:["Office","smart casual","daytime"],s:"Spring · Fall",r:4},
+{h:"Yom & Layl",n:"Nor",i:"Mind Games Lionora",d:["fresh airy florals","soft woods","clean spring elegance"],o:["Casual","fresh","daytime"],s:"Spring · Summer",r:3},
+{h:"Yom & Layl",n:"Limitless",i:"Mind Games Blockade",d:["green mango woods","vibrant freshness","bold modern statement"],o:["Evening","bold","statement"],s:"Fall · Winter",r:3},
+{h:"Yom & Layl",n:"Gladiator",i:"Argos Triumph of Bacchus",d:["fruity boozy tobacco","dense vanilla amber","grand dramatic richness"],o:["Special occasion","evening","grand statement"],s:"Fall · Winter",r:4},
+
+{h:"Armaf",n:"Le Parfait",i:"Creed Aventus × Creed Green Irish Tweed",d:["pineapple green woods","fresh smoky moss","classic masculine hybrid"],o:["Office","smart casual","daytime"],s:"Spring · Summer",r:4},
+{h:"Armaf",n:"Club de Nuit Milestone",i:"Creed Millésime Impérial",d:["salty melon musk","metallic marine freshness","beach-luxury vibe"],o:["Smart casual","beach","summer date"],s:"Spring · Summer",r:3},
+
+{h:"Anti Social Parfum Club",n:"Most Wanted",i:"Azzaro The Most Wanted",d:["toffee cardamom woods","sweet amber spice","club-ready warmth"],o:["Date night","casual evening","social"],s:"Fall · Winter",r:4},
+{h:"Afnan",n:"Supremacy Collector's Edition",i:"Creed Aventus Absolu",d:["fruity smoky woods","richer aventus DNA","smooth dark polish"],o:["Smart casual","office","date"],s:"Spring · Fall",r:4},
+{h:"Ajmal",n:"Evoke Gold",i:"Prada L’Homme",d:["clean neroli iris","powdery soapiness","refined office elegance"],o:["Office","smart casual","everyday"],s:"Year-round",r:4},
+{h:"Al Haramain",n:"Detour Noir",i:"Parfums de Marly Layton",d:["apple vanilla spice","smooth woods","versatile cool-weather richness"],o:["Date night","office","versatile dresser"],s:"Fall · Winter",r:4},
+{h:"Crown / Al-Rehab",n:"Silver (oil)",i:"Creed Silver Mountain Water",d:["inky citrus musk","cool tea freshness","crisp mountain-clean vibe"],o:["Casual","fresh","gym","daytime"],s:"Spring · Summer",r:4},
+{h:"Atralia",n:"Amazonas Avalanche",i:"Dior Homme Intense",d:["iris cacao woods","velvety powder","formal evening elegance"],o:["Date night","evening","formal"],s:"Fall · Winter",r:4},
+{h:"French Avenue",n:"Liquid Brun",i:"Parfums de Marly Althaïr",d:["vanilla cinnamon amber","creamy woods","luxurious cozy sweetness"],o:["Smart casual","date","evening"],s:"Fall · Winter",r:4},
+{h:"Game of Spades",n:"Wildcard",i:"Bond No. 9 Lafayette Street",d:["fruity amber woods","urban sweet spice","nightlife swagger"],o:["Urban social","evening","creative"],s:"Fall · Winter",r:4},
+{h:"Grandeur",n:"Iconic Built",i:"YSL Bleu Électrique",d:["lavender cardamom woods","blue-night sensuality","smooth evening freshness"],o:["Club","night out","bold evening"],s:"Fall · Winter",r:4},
+{h:"Paris Corner",n:"Rifaqat",i:"YSL Babycat",d:["vanilla suede incense","smoky amber warmth","cozy sensual depth"],o:["Casual","cozy","skin-close everyday"],s:"Fall · Winter",r:4},
+{h:"Rayhaan",n:"Aquatica",i:"Creed Virgin Island Water",d:["lime coconut rum freshness","tropical breezy sweetness","vacation energy"],o:["Beach","vacation","casual summer"],s:"Spring · Summer",r:3},
+{h:"Royalty by Maluma",n:"Onyx",i:"Paco Rabanne 1 Million Privé style",d:["sweet spicy amber","tobacco-cinnamon warmth","plush night-out feel"],o:["Date night","club","evening"],s:"Fall · Winter",r:4},
+{h:"Vurv",n:"Royce Black",i:"Paco Rabanne 1 Million Privé style",d:["sweet spicy amber","woody tobacco warmth","cozy seductive depth"],o:["Date night","club","evening"],s:"Fall · Winter",r:4},
+
+{h:"MIRIS Oils",n:"MIRIS No54602",i:"Nishane Hacivat",d:["pineapple chypre woods","bright mossy citrus","crisp upscale freshness"],o:["Casual","office","everyday","layering"],s:"Spring · Summer",r:3},
+{h:"MIRIS Oils",n:"MIRIS No56902",i:"Kilian Apple Brandy on the Rocks",d:["boozy apple woods","chilled sweetness","cozy social richness"],o:["Cozy evening","social","casual date"],s:"Fall · Winter",r:3},
+{h:"MIRIS Oils",n:"MIRIS No47319",i:"JPG Ultra Male",d:["pear vanilla spice","loud club sweetness","playful seductive energy"],o:["Night out","club","date"],s:"Fall · Winter",r:3},
+{h:"MIRIS Oils",n:"MIRIS No59797",i:"Carolina Herrera Bad Boy Cobalt Parfum Électrique",d:["plum lavender woods","mineral sweetness","modern electric masculinity"],o:["Date night","evening","bold"],s:"Fall · Winter",r:3}
+];
+
+const USER_FRAGRANCES_KEY = "vault_user_fragrances";
+
+function loadUserFragrances(){
+  try{
+    const raw = JSON.parse(localStorage.getItem(USER_FRAGRANCES_KEY) || "[]");
+    return Array.isArray(raw) ? raw : [];
+  }catch(e){
+    return [];
+  }
+}
+
+function saveUserFragrances(){
+  localStorage.setItem(USER_FRAGRANCES_KEY, JSON.stringify(state.userFragrances || []));
+}
+
+const COLLECTION=BASE_COLLECTION;
+
+
+
+const state = {
+  view:"Home",
+  theme:localStorage.getItem(THEME_KEY)||"dark",
+  weatherPref: JSON.parse(localStorage.getItem(WEATHER_KEY)||'{"mode":"auto","city":""}'),
+  weather:{loading:true,error:"",temp:null,code:null,wind:null,humidity:null,city:"Your area"},
+  collectionSearch:"",
+  editingFragranceId:null,
+  collectionTab:"All",
+  compareA: COLLECTION[0].n,
+  compareB: COLLECTION[1].n,
+  collectionHouseFilter:"All",
+  collectionOccasionFilter:"All",
+  collectionDNAFilter:"All",
+  collectionPlaneFilter:"All",
+  collectionInspirationFilter:"All",
+  selectedFragrance:null,
+  homeOccasion:"Office",
+  homeEnvironment:"Mixed",
+  wearStrategy:"Safest pick",
+  avoidRecentWear:true,
+  wearOccasion:"Office",
+  wearEnvironment:"Mixed",
+  wearMood:"Any",
+  wearSelected: COLLECTION[0].n,
+  wearDate:new Date().toISOString().slice(0,10),
+  wearAmount:"",
+  wearNotes:"",
+  wearLog: JSON.parse(localStorage.getItem(WEAR_KEY)||"[]"),
+  favoriteFragrances: JSON.parse(localStorage.getItem(FAVORITES_KEY)||"[]"),
+  displaySnapshots: JSON.parse(localStorage.getItem(DISPLAY_KEY)||"[]"),
+  userFragrances: JSON.parse(localStorage.getItem("vault_user_fragrances")||"[]"),
+  savedLayerCombos: JSON.parse(localStorage.getItem("vault_layer_combos")||"[]"),
+  layerBase: COLLECTION[0].n,
+  layerTop: COLLECTION[1].n,
+  layerBaseSprays:2,
+  layerTopSprays:1,
+  layerProjectionMode:"Balanced",
+  layerOccasion:"Office",
+  seasonMode:"Auto",
+  buy:{name:"",house:"",inspiration:"",dna:"",occasions:"",season:"All Season"},
+  buyDraft:{name:"",house:"",inspiration:"",dna:"",occasions:"",season:"All Season"},
+  newFragrance:{house:"",name:"",inspiration:"",dna:"",occasions:"Casual",season:"Year-round",rating:"4"},
+  wishlistDraft:{name:"",house:"",why:"",priority:"Sample First",price:""},
+  layerComboNote:"",
+  layerComboRating:"4"
+};
+
+function saveTheme(){ localStorage.setItem(THEME_KEY,state.theme); }
+function saveWeatherPref(){ localStorage.setItem(WEATHER_KEY, JSON.stringify(state.weatherPref)); }
+function saveWearLog(){ localStorage.setItem(WEAR_KEY, JSON.stringify(state.wearLog)); }
+
+function saveJournalData(){ localStorage.setItem(JOURNAL_KEY, JSON.stringify(state.journalData||{})); }
+function saveWishlist(){ localStorage.setItem(WISHLIST_KEY, JSON.stringify(state.wishlist||[])); }
+function getJournalEntry(name){
+  const entry = (state.journalData||{})[name] || {};
+  return {
+    notes: entry.notes || "",
+    moodTags: entry.moodTags || "",
+    scent: String(entry.scent || "0"),
+    performance: String(entry.performance || "0"),
+    compliments: String(entry.compliments || "0"),
+    uniqueness: String(entry.uniqueness || "0"),
+    comfort: String(entry.comfort || "0"),
+    photo: entry.photo || "",
+    format: entry.format || "Full Bottle",
+    complimentContext: entry.complimentContext || ""
+  };
+}
+function setJournalEntry(name, data){ state.journalData = state.journalData || {}; state.journalData[name] = {...getJournalEntry(name), ...data}; saveJournalData(); }
+function getWishlistItems(){ return state.wishlist || []; }
+function addWishlistItem(){
+  const item = { id:"w_"+Date.now(), name:(state.wishlistDraft.name||"").trim(), house:(state.wishlistDraft.house||"").trim(), why:(state.wishlistDraft.why||"").trim(), priority:(state.wishlistDraft.priority||"Sample First").trim(), price:(state.wishlistDraft.price||"").trim() };
+  if(!item.name) return {ok:false, message:"Wishlist name is required."};
+  state.wishlist = state.wishlist || [];
+  state.wishlist.unshift(item);
+  saveWishlist();
+  state.wishlistDraft = {name:"",house:"",why:"",priority:"Sample First",price:""};
+  return {ok:true};
+}
+function deleteWishlistItem(id){ state.wishlist = (state.wishlist||[]).filter(x=>x.id!==id); saveWishlist(); }
+function getNeglectedFragrances(limit=8){
+  const dates={};
+  for(const entry of (state.wearLog||[])){ if(!dates[entry.fragrance]) dates[entry.fragrance]=entry.date; }
+  return getAllCollection().map(f=>({item:f,last:dates[f.n]||""})).sort((a,b)=>{ if(!a.last && b.last) return -1; if(a.last && !b.last) return 1; return String(a.last).localeCompare(String(b.last)); }).slice(0,limit);
+}
+function getSignatureCandidates(limit=6){
+  return getAllCollection().map(f=>{ const dna=displayDNAList(f).map(norm); let score=0; if(simplifyOccasionList(f).includes("Office")) score+=3; if(simplifyOccasionList(f).includes("Casual")) score+=2; if((f.s||"").toLowerCase().includes("year")) score+=2; if(isFavorite(f.n)) score+=1; if(dna.some(x=>["fresh","woody","musk / powdery","fougere","vetiver / earthy","blue"].includes(x))) score+=2; if(dna.some(x=>["gourmand","sweet"].includes(x))) score-=1; return {item:f, score}; }).sort((a,b)=>b.score-a.score).slice(0,limit);
+}
+function getMoodCandidates(mood, limit=6){
+  const moodNorm = norm(mood || "Any");
+  const all = getAllCollection();
+
+  function moodDNAScore(dna, mood){
+    let score = 0;
+    if (mood === "clean"){
+      if (dna.includes("fresh")) score += 4;
+      if (dna.includes("citrus")) score += 3;
+      if (dna.includes("aquatic")) score += 3;
+      if (dna.includes("blue")) score += 2;
+      if (dna.includes("musk / powdery")) score += 3;
+      if (dna.includes("green")) score += 2;
+    } else if (mood === "cozy"){
+      if (dna.includes("amber")) score += 4;
+      if (dna.includes("sweet")) score += 3;
+      if (dna.includes("gourmand")) score += 4;
+      if (dna.includes("woody")) score += 2;
+      if (dna.includes("spicy")) score += 2;
+      if (dna.includes("musk / powdery")) score += 1;
+    } else if (mood === "seductive"){
+      if (dna.includes("amber")) score += 4;
+      if (dna.includes("sweet")) score += 3;
+      if (dna.includes("spicy")) score += 3;
+      if (dna.includes("gourmand")) score += 3;
+      if (dna.includes("woody")) score += 2;
+      if (dna.includes("blue")) score += 1;
+    } else if (mood === "classy"){
+      if (dna.includes("woody")) score += 4;
+      if (dna.includes("fougere")) score += 4;
+      if (dna.includes("vetiver / earthy")) score += 4;
+      if (dna.includes("musk / powdery")) score += 3;
+      if (dna.includes("fresh")) score += 1;
+      if (dna.includes("blue")) score += 1;
+    } else if (mood === "loud"){
+      if (dna.includes("amber")) score += 4;
+      if (dna.includes("sweet")) score += 4;
+      if (dna.includes("gourmand")) score += 4;
+      if (dna.includes("spicy")) score += 3;
+      if (dna.includes("blue")) score += 1;
+    } else if (mood === "relaxing"){
+      if (dna.includes("musk / powdery")) score += 4;
+      if (dna.includes("green")) score += 3;
+      if (dna.includes("fresh")) score += 2;
+      if (dna.includes("woody")) score += 2;
+      if (dna.includes("aquatic")) score += 1;
+      if (dna.includes("vetiver / earthy")) score += 2;
+    }
+    return score;
+  }
+
+  function moodOccasionScore(occasions, mood){
+    let score = 0;
+    if (mood === "clean" && (occasions.includes("Office") || occasions.includes("Casual") || occasions.includes("Gym"))) score += 3;
+    if (mood === "cozy" && (occasions.includes("Casual") || occasions.includes("Evening"))) score += 2;
+    if (mood === "seductive" && (occasions.includes("Date") || occasions.includes("Evening"))) score += 4;
+    if (mood === "classy" && (occasions.includes("Office") || occasions.includes("Date"))) score += 3;
+    if (mood === "loud" && occasions.includes("Evening")) score += 4;
+    if (mood === "relaxing" && (occasions.includes("Casual") || occasions.includes("Office"))) score += 2;
+    return score;
+  }
+
+  function moodSeasonScore(seasonText, mood){
+    const season = norm(seasonText || "");
+    let score = 0;
+    if (mood === "cozy" && (/fall|winter/.test(season))) score += 3;
+    if (mood === "clean" && (/spring|summer|year-round|all season/.test(season))) score += 2;
+    if (mood === "classy" && (/year-round|all season|spring|fall/.test(season))) score += 2;
+    if (mood === "relaxing" && (/spring|summer|year-round|all season/.test(season))) score += 1;
+    if (mood === "loud" && (/fall|winter|evening/.test(season))) score += 1;
+    return score;
+  }
+
+  function moodJournalScore(journal, mood){
+    const tags = norm(journal.moodTags || "");
+    const notes = norm(journal.notes || "");
+    const context = norm(journal.complimentContext || "");
+    const bag = `${tags} ${notes} ${context}`;
+    let score = 0;
+    if (bag.includes(mood)) score += 6;
+    if (mood === "classy" && /office|formal|sharp|polished|refined|luxury/.test(bag)) score += 3;
+    if (mood === "clean" && /clean|fresh|shower|crisp|easy/.test(bag)) score += 3;
+    if (mood === "cozy" && /cozy|warm|comfort|soft/.test(bag)) score += 3;
+    if (mood === "seductive" && /date|sexy|seductive|close/.test(bag)) score += 3;
+    if (mood === "loud" && /loud|beast|strong|projection|attention/.test(bag)) score += 3;
+    if (mood === "relaxing" && /relax|calm|easy|soft|peaceful/.test(bag)) score += 3;
+    return score;
+  }
+
+  function moodHistoryScore(name){
+    const log = (state.wearLog || []).filter(x => x.fragrance === name);
+    if (!log.length) return 2;
+    return 0;
+  }
+
+  function moodFavoriteScore(name){
+    return (typeof isFavorite === "function" && isFavorite(name)) ? 2 : 0;
+  }
+
+  function moodUniquenessScore(fragrance, mood){
+    const dna = displayDNAList(fragrance).map(norm);
+    const overlapScores = all.filter(x => x.n !== fragrance.n).map(x => {
+      let overlap = 0;
+      displayDNAList(x).map(norm).forEach(tag => { if (dna.includes(tag)) overlap += 1; });
+      return overlap;
+    }).sort((a,b)=>b-a);
+    const topOverlap = overlapScores[0] || 0;
+    if (mood === "classy" || mood === "seductive") return topOverlap <= 2 ? 2 : 0;
+    if (mood === "clean" || mood === "relaxing") return topOverlap <= 3 ? 1 : 0;
+    return 0;
+  }
+
+  if (moodNorm === "any"){
+    return all.slice(0, limit);
+  }
+
+  const ranked = all.map(f => {
+    const dna = displayDNAList(f).map(norm);
+    const occasions = simplifyOccasionList(f);
+    const journal = getJournalEntry(f.n);
+    let score = 0;
+
+    score += moodDNAScore(dna, moodNorm);
+    score += moodOccasionScore(occasions, moodNorm);
+    score += moodSeasonScore(f.s || "", moodNorm);
+    score += moodJournalScore(journal, moodNorm);
+    score += moodFavoriteScore(f.n);
+    score += moodHistoryScore(f.n);
+    score += moodUniquenessScore(f, moodNorm);
+
+    return { item: f, score };
+  }).sort((a,b) => b.score - a.score || a.item.n.localeCompare(b.item.n));
+
+  return ranked.slice(0, limit).map(x => x.item);
+}
+function compareFragrances(aName,bName){
+  const all=getAllCollection(), a=all.find(x=>x.n===aName), b=all.find(x=>x.n===bName); if(!a || !b) return null;
+  const ad=displayDNAList(a), bd=displayDNAList(b), shared=ad.filter(x=>bd.includes(x)), uniqueA=ad.filter(x=>!bd.includes(x)), uniqueB=bd.filter(x=>!ad.includes(x)), ao=simplifyOccasionList(a), bo=simplifyOccasionList(b);
+  return {a,b,shared,uniqueA,uniqueB,sharedOcc:ao.filter(x=>bo.includes(x))};
+}
+function getCollectionStory(){
+  const all=getAllCollection(), houseCounts={}; all.forEach(f=>houseCounts[f.h]=(houseCounts[f.h]||0)+1);
+  const topHouse=Object.entries(houseCounts).sort((a,b)=>b[1]-a[1])[0];
+  const mostWorn=((state.wearLog||[]).reduce((acc,e)=>{acc[e.fragrance]=(acc[e.fragrance]||0)+1; return acc;},{}));
+  const mostWornName=Object.entries(mostWorn).sort((a,b)=>b[1]-a[1])[0]?.[0] || "No wears yet";
+  const fav=(state.favoriteFragrances||[])[0] || "Pick a favorite";
+  return { first: all[0]?.n || "—", topHouse: topHouse ? `${topHouse[0]} (${topHouse[1]})` : "—", mostWorn: mostWornName, favorite: fav, hiddenGem: getNeglectedFragrances(1)[0]?.item?.n || "—" };
+}
+
+function saveFavorites(){ localStorage.setItem(FAVORITES_KEY, JSON.stringify(state.favoriteFragrances||[])); }
+function saveDisplaySnapshots(){ localStorage.setItem(DISPLAY_KEY, JSON.stringify(state.displaySnapshots||[])); }
+function toggleFavorite(name){ const arr = new Set(state.favoriteFragrances||[]); if(arr.has(name)) arr.delete(name); else arr.add(name); state.favoriteFragrances=[...arr]; saveFavorites(); }
+function isFavorite(name){ return (state.favoriteFragrances||[]).includes(name); }
+function esc(s){ return String(s??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;"); }
+function norm(s){ return String(s||"").toLowerCase().trim(); }
+function dnatags(f){ return (f.d||[]).map(norm); }
+function isOil(f){ return /oil/i.test(f.h||"") || /oil/i.test(f.n||""); }
+
+function displayDNAList(f){
+  const raw = dnatags(f);
+  const scores = {
+    "Fresh":0,
+    "Citrus":0,
+    "Aquatic":0,
+    "Blue":0,
+    "Green":0,
+    "Woody":0,
+    "Vetiver / Earthy":0,
+    "Fougere":0,
+    "Musk / Powdery":0,
+    "Amber":0,
+    "Sweet":0,
+    "Spicy":0,
+    "Gourmand":0
+  };
+
+  const bump = (key, n=1) => { scores[key] += n; };
+  const hasAny = (text, words) => words.some(word => text.includes(word));
+
+  raw.forEach(tag => {
+    const t = norm(tag);
+
+    if (hasAny(t, ["fresh","clean","airy","soap","soapy","tea","crisp","bright","easy wear","freshness"])) bump("Fresh", 2);
+    if (hasAny(t, ["citrus","orange","bergamot","lemon","lime","grapefruit","neroli","orange blossom","mandarin"])) bump("Citrus", 2);
+    if (hasAny(t, ["aquatic","marine","watery","salty","ocean","beach"])) bump("Aquatic", 2);
+    if (hasAny(t, ["blue"])) bump("Blue", 2);
+    if (hasAny(t, ["green","grassy","herbal","mossy","minty"])) bump("Green", 2);
+    if (hasAny(t, ["woody","woods","wood","patchouli","sandalwood","cedar","palo santo"])) bump("Woody", 2);
+    if (hasAny(t, ["vetiver","earthy","mineral","earthiness"])) bump("Vetiver / Earthy", 3);
+    if (hasAny(t, ["fougere","aromatic","lavender","barbershop","shaving cream"])) bump("Fougere", 2);
+    if (hasAny(t, ["musk","musky","powdery","powder","iris"])) bump("Musk / Powdery", 2);
+    if (hasAny(t, ["amber","ambered","amberwood","benzoin","resinous","incense"])) bump("Amber", 2);
+    if (hasAny(t, ["sweet","sweetness","vanilla","sugary","sugar","hazelnut","honey","praline","fruity","apple","pear","pineapple","melon","mango","plum","cherry","coconut","floral","rose"])) bump("Sweet", 1);
+    if (hasAny(t, ["spice","spicy","pepper","ginger","cinnamon","cardamom","saffron"])) bump("Spicy", 2);
+    if (hasAny(t, ["gourmand","coffee","chocolate","caramel","dessert","boozy","rum","tonka","tobacco","oud","smoke","smoky","chestnut","cacao"])) bump("Gourmand", 2);
+
+    // relationship nudges
+    if (hasAny(t, ["aquatic","marine"])) bump("Fresh", 1)
+    if (hasAny(t, ["citrus"])) bump("Fresh", 1)
+    if (hasAny(t, ["neroli","iris","musk"])) bump("Musk / Powdery", 1)
+    if (hasAny(t, ["lavender","aromatic"])) bump("Fougere", 1)
+    if (hasAny(t, ["amber","vanilla","benzoin"])) bump("Sweet", 1)
+    if (hasAny(t, ["tobacco","oud","coffee","chocolate"])) bump("Amber", 1)
+  });
+
+  // avoid noisy overlaps
+  if (scores["Aquatic"] > 0) scores["Fresh"] += 1;
+  if (scores["Citrus"] > 0) scores["Fresh"] += 1;
+  if (scores["Vetiver / Earthy"] > 0) scores["Woody"] += 1;
+  if (scores["Fougere"] > 0) scores["Fresh"] += 1;
+  if (scores["Gourmand"] > 0 && scores["Sweet"] > 0) scores["Sweet"] += 1;
+
+  // choose the strongest buckets only
+  let ranked = Object.entries(scores)
+    .filter(([,score]) => score > 0)
+    .sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([name]) => name);
+
+  // clean up common over-tagging patterns
+  if (ranked.includes("Gourmand") && ranked.includes("Sweet")) {
+    ranked = ranked.filter(x => x !== "Sweet").concat(["Sweet"]);
+  }
+  if (ranked.includes("Vetiver / Earthy") && ranked.includes("Woody")) {
+    // keep both, but Vetiver / Earthy should stay ahead
+    ranked = ranked.filter(x => x !== "Vetiver / Earthy");
+    ranked.unshift("Vetiver / Earthy");
+  }
+  if (ranked.includes("Aquatic") && ranked.includes("Blue") && ranked.includes("Fresh")) {
+    // keep all three only if they are genuinely core
+    ranked = ranked.slice(0, 4);
+  }
+
+  // keep DNA cleaner and more intentional
+  ranked = ranked.slice(0, 3);
+
+  return ranked.length ? ranked : ["Fresh"];
+}
+
+function getWeatherAdjustedWeights(baseWeights, weather){
+  const w = {...baseWeights};
+  const temp = weather && typeof weather.temp==="number" ? weather.temp : null;
+  if (temp !== null){
+    if (temp <= 55){
+      w["amber"] = (w["amber"]||0) + 2;
+      w["woody"] = (w["woody"]||0) + 1;
+      w["spicy"] = (w["spicy"]||0) + 1;
+      w["fresh"] = (w["fresh"]||0) - 1;
+      w["aquatic"] = (w["aquatic"]||0) - 2;
+    }
+    if (temp >= 82){
+      w["fresh"] = (w["fresh"]||0) + 2;
+      w["citrus"] = (w["citrus"]||0) + 1;
+      w["aquatic"] = (w["aquatic"]||0) + 1;
+      w["amber"] = (w["amber"]||0) - 2;
+      w["gourmand"] = (w["gourmand"]||0) - 3;
+    }
+  }
+  return w;
+}
+
+function scoreFragrance(f, weights, weather=null, environment="Mixed"){
+  const dna = displayDNAList(f).map(norm);
+  let score = f.r || 0;
+  dna.forEach(tag=> score += (weights[tag]||0));
+  const temp = weather && typeof weather.temp==="number" ? weather.temp : null;
+  if (temp !== null){
+    if (temp <= 55){
+      if (norm(f.s).includes("fall") || norm(f.s).includes("winter") || norm(f.s).includes("year-round")) score += 2;
+      if (dna.includes("aquatic")) score -= 2;
+      if (dna.includes("amber") || dna.includes("woody") || dna.includes("spicy")) score += 1;
+    }
+    if (temp >= 82){
+      if (dna.includes("fresh") || dna.includes("citrus") || dna.includes("aquatic") || dna.includes("blue")) score += 2;
+      if (dna.includes("amber") || dna.includes("gourmand")) score -= 3;
+    }
+  }
+  if (environment==="Indoors"){
+    if (dna.includes("gourmand")) score -= 2;
+    if (dna.includes("fresh") || dna.includes("woody") || dna.includes("musk / powdery")) score += 1;
+  }
+  return score;
+}
+
+const WEIGHTS = {
+  "Travel":{"fresh":3,"citrus":2,"aquatic":2,"woody":1,"blue":1},
+  "Plane":{"fresh":4,"citrus":3,"musk / powdery":3,"woody":2,"vetiver / earthy":2,"blue":1,"aquatic":1,"amber":-3,"sweet":-4,"gourmand":-5,"spicy":-1},
+  "Office":{"fresh":3,"woody":3,"musk / powdery":2,"fougere":2,"blue":1,"amber":-1},
+  "Buttoned Up":{"woody":4,"musk / powdery":3,"fougere":2,"amber":1,"sweet":-1},
+  "Date":{"amber":3,"sweet":2,"woody":2,"spicy":2,"fresh":1},
+  "Casual":{"fresh":3,"citrus":2,"blue":2,"green":2,"woody":1},
+  "Gym":{"fresh":4,"citrus":3,"aquatic":2,"blue":2,"green":1,"sweet":-3,"amber":-3,"gourmand":-4},
+  "Outdoors":{"fresh":3,"green":3,"citrus":2,"aquatic":2,"woody":1},
+  "Evening":{"amber":3,"sweet":2,"woody":2,"spicy":2,"gourmand":2},
+  "Special Event":{"amber":3,"woody":3,"spicy":2,"musk / powdery":2,"gourmand":1}
+};
+
+function pickTop(items, weights, count=3, weather=null, environment="Mixed"){
+  const ranked = [...items].map(item=>({item, score:scoreFragrance(item, weights, weather, environment)})).sort((a,b)=>b.score-a.score);
+  const out=[], seen=new Set();
+  for (const row of ranked){
+    if (seen.has(row.item.n)) continue;
+    seen.add(row.item.n);
+    out.push(row.item);
+    if (out.length>=count) break;
+  }
+  return out;
+}
+
+function getPlaneSafetyLevel(f){
+  const dna = displayDNAList(f).map(norm);
+  const occasions = simplifyOccasionList(f);
+  const rich = dna.includes("amber") || dna.includes("sweet") || dna.includes("gourmand") || dna.includes("spicy");
+  const veryRisky = dna.includes("gourmand") || ((f.i||"").toLowerCase().includes("oud"));
+  const freshCore = dna.some(x=>["fresh","citrus","musk / powdery","woody","vetiver / earthy","blue","aquatic","green","fougere"].includes(x));
+  const officeLike = occasions.includes("Office") || occasions.includes("Casual") || occasions.includes("Gym");
+
+  if (veryRisky) return "Not Plane Safe";
+  if (freshCore && !rich) return "Plane Safe";
+  if ((freshCore && rich) || officeLike) return "Safe Enough";
+  return "Not Plane Safe";
+}
+
+function saveLayerCombos(){
+  localStorage.setItem("vault_layer_combos", JSON.stringify(state.savedLayerCombos||[]));
+}
+
+function getLayerWeatherGuidance(weather){
+  const temp = weather && typeof weather.temp === "number" ? weather.temp : null;
+  const humidity = weather && typeof weather.humidity === "number" ? weather.humidity : null;
+  const wind = weather && typeof weather.wind === "number" ? weather.wind : null;
+  const rain = weather ? [61,63,65,80,81,82].includes(weather.code) : false;
+
+  if (humidity !== null && humidity >= 70) {
+    return {badge:"High humidity — go light", note:"Humidity amplifies projection and weight, so keep the blend cleaner and lighter than you would in dry air."};
+  }
+  if (temp !== null && temp <= 50) {
+    return {badge:"Cool air — richer works", note:"Cooler air gives richer or woodier blends more room to breathe without feeling overwhelming."};
+  }
+  if (temp !== null && temp >= 82) {
+    return {badge:"Heat — stay fresh", note:"Warm weather makes dense blends expand faster, so fresher and cleaner layering works better."};
+  }
+  if (rain) {
+    return {badge:"Rainy weather — keep it smooth", note:"Rain favors cleaner woods, musks, fougeres, and vetiver styles over loud sugary blends."};
+  }
+  if (wind !== null && wind >= 15) {
+    return {badge:"Windy — use structure", note:"Wind can thin out very soft scents, so blends with some woody or aromatic backbone hold up better."};
+  }
+  return {badge:"Balanced conditions", note:"The weather is neutral enough that balance matters more than raw strength."};
+}
+
+function getLayerSuggestions(collection, occasion, weather, count=8){
+  const pool = getWearTodayPicks(collection, occasion === "Plane" ? "Office" : occasion, weather, "Mixed", 14);
+  const combos = [];
+  for (let i = 0; i < pool.length; i++) {
+    for (let j = 0; j < pool.length; j++) {
+      if (i === j) continue;
+      const base = pool[i];
+      const top = pool[j];
+      const res = getLayeringAnalysis(base, top);
+      if (res.score >= 6) combos.push({base, top, res});
+    }
+  }
+  combos.sort((a,b)=>b.res.score-a.res.score);
+  const out = [];
+  const seen = new Set();
+  for (const combo of combos) {
+    const key = combo.base.n + "||" + combo.top.n;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(combo);
+    if (out.length >= count) break;
+  }
+  return out;
+}
+
+function getLayerProjectionMode(base, top, mode){
+  const bd = displayDNAList(base).map(norm);
+  const td = displayDNAList(top).map(norm);
+  if (mode === "Close"){
+    return "Keep the blend skin-close. Favor chest placement and avoid overspraying the neck or shirt.";
+  }
+  if (mode === "Louder"){
+    return "Use the fresher or brighter side a little higher and let the richer side anchor the blend underneath.";
+  }
+  return "Keep the blend balanced. Let the base lead and use the top as support.";
+}
+
+function getLayerTags(base, top, weather){
+  const bd = displayDNAList(base).map(norm);
+  const td = displayDNAList(top).map(norm);
+  const tags = [];
+  const add = t => { if (t && !tags.includes(t)) tags.push(t); };
+
+  if ((bd.includes("fresh") || bd.includes("citrus") || bd.includes("aquatic") || bd.includes("blue")) &&
+      (td.includes("woody") || td.includes("musk / powdery") || td.includes("fougere"))) add("freshen up");
+  if ((bd.includes("woody") || bd.includes("vetiver / earthy") || bd.includes("fougere")) &&
+      (td.includes("musk / powdery") || td.includes("fresh"))) add("smooth out");
+  if (td.includes("amber") || td.includes("sweet") || td.includes("gourmand") || td.includes("spicy")) add("darken up");
+  if (td.includes("sweet") || td.includes("gourmand")) add("sweeten up");
+  if (td.includes("fresh") || td.includes("citrus") || td.includes("blue")) add("sharpen the opening");
+
+  const temp = weather && typeof weather.temp === "number" ? weather.temp : null;
+  if (temp !== null && temp >= 82 && (bd.includes("sweet") || td.includes("sweet") || bd.includes("gourmand") || td.includes("gourmand"))) add("too sweet for heat");
+  if ((bd.includes("gourmand") && td.includes("aquatic")) || (bd.includes("amber") && td.includes("aquatic")) || (bd.includes("gourmand") && td.includes("green"))) add("muddy drydown risk");
+  if ((td.includes("fresh") || td.includes("citrus") || td.includes("aquatic")) && !(bd.includes("woody") || bd.includes("amber") || bd.includes("fougere"))) add("top may disappear fast");
+
+  return tags;
+}
+
+function getLayerOccasionLabels(base, top){
+  const bOcc = simplifyOccasionList(base);
+  const tOcc = simplifyOccasionList(top);
+  const labels = [];
+  const add = x => { if (x && !labels.includes(x)) labels.push(x); };
+
+  if (bOcc.includes("Office") && tOcc.includes("Office")) add("office-safe");
+  if (bOcc.includes("Date") || tOcc.includes("Date")) add("date");
+  if (bOcc.includes("Evening") || tOcc.includes("Evening")) add("evening");
+  if (bOcc.includes("Casual") || tOcc.includes("Casual")) add("casual");
+  if (getPlaneSafetyLevel(base) === "Plane Safe" && getPlaneSafetyLevel(top) === "Plane Safe") add("plane possible");
+  else add("plane skip");
+
+  return labels.slice(0,4);
+}
+
+function getLayerPlacementDetailed(base, top){
+  const td = displayDNAList(top).map(norm);
+  if (td.includes("fresh") || td.includes("citrus") || td.includes("aquatic") || td.includes("blue")) {
+    return {
+      general: "Use the fresher top higher and lighter so it lifts the opening without replacing the base.",
+      skin: "Base on chest and lower neck. Top on one side of neck only.",
+      shirt: "One light shirt spray from the top only if you want extra lift."
+    };
+  }
+  if (td.includes("amber") || td.includes("sweet") || td.includes("gourmand") || td.includes("spicy")) {
+    return {
+      general: "Keep the richer top lower and lighter so it warms the blend without swallowing it.",
+      skin: "Base on chest and neck. Top only on chest or one lower neck point.",
+      shirt: "Skip shirt sprays unless you want the sweeter side to dominate."
+    };
+  }
+  return {
+    general: "Apply the base first, then add the top more lightly so one scent clearly leads.",
+    skin: "Base on chest and neck. Top on one side of neck or wrist only.",
+    shirt: "Use a shirt spray only if you want more projection."
+  };
+}
+
+function generateLayerCombo(collection, occasion, weather){
+  const suggestions = getLayerSuggestions(collection, occasion, weather, 12);
+  return suggestions.length ? suggestions[0] : null;
+}
+
+function getPlaneReason(f){
+  const dna = displayDNAList(f).map(norm);
+  const level = getPlaneSafetyLevel(f);
+  if (level === "Plane Safe"){
+    return "This works for a plane because it stays cleaner, lighter, and more controlled in enclosed seating.";
+  }
+  if (level === "Safe Enough"){
+    return "This is workable on a plane if you keep the application very light and close to skin.";
+  }
+  if (dna.includes("gourmand") || dna.includes("sweet") || dna.includes("amber")){
+    return "This is riskier for a plane because the sweeter or heavier profile can feel louder in enclosed air.";
+  }
+  return "This is not a first-choice plane scent because it is less controlled or more attention-grabbing than safer options.";
+}
+
+function getLayerRoleSummary(f){
+  const dna = displayDNAList(f).map(norm);
+  if (dna.includes("fresh") || dna.includes("citrus") || dna.includes("aquatic") || dna.includes("blue")) {
+    return "Adds lift, brightness, and a cleaner opening.";
+  }
+  if (dna.includes("musk / powdery")) {
+    return "Smooths the blend and makes the drydown feel cleaner.";
+  }
+  if (dna.includes("woody") || dna.includes("vetiver / earthy") || dna.includes("fougere")) {
+    return "Adds structure and backbone so the blend feels more grounded.";
+  }
+  if (dna.includes("amber") || dna.includes("sweet") || dna.includes("gourmand") || dna.includes("spicy")) {
+    return "Adds warmth, density, and more evening character.";
+  }
+  return "Adds a supporting nuance to the blend.";
+}
+
+function getLayerPlacement(base, top){
+  const bd = displayDNAList(base).map(norm);
+  const td = displayDNAList(top).map(norm);
+  if (td.includes("fresh") || td.includes("citrus") || td.includes("aquatic") || td.includes("blue")) {
+    return "Put the base on chest and neck, then keep the top lighter and higher so the fresher side lifts the opening.";
+  }
+  if (td.includes("amber") || td.includes("sweet") || td.includes("gourmand")) {
+    return "Keep the richer top lower and lighter so it warms the blend without swallowing the base.";
+  }
+  return "Apply the base first, then add the top more lightly so one scent clearly leads.";
+}
+
+function getDisplayCategoryReason(f, category, season){
+  const dna = displayDNAList(f).map(norm);
+  if (category === "Anchors") return "High-confidence seasonal pillar with stronger all-around fit.";
+  if (category === "Daily Drivers") return dna.some(x=>["fresh","woody","citrus","blue","green","fougere","musk / powdery","vetiver / earthy"].includes(x))
+    ? "Easy reach for regular wear in this season."
+    : "Versatile enough to stay in rotation.";
+  return dna.some(x=>["amber","sweet","spicy","gourmand"].includes(x))
+    ? "More distinctive profile for statement wear."
+    : "Adds variety and character to the shelf.";
+}
+
+function getCandidateOverlap(candidate, existing){
+  const cdna = (candidate.dna||[]).map(x => x.toLowerCase());
+  const edna = displayDNAList(existing).map(x => x.toLowerCase());
+  const sharedDNA = cdna.filter(x => edna.includes(x));
+  const sharedOccasion = (candidate.occasions||[]).filter(x => simplifyOccasionList(existing).includes(x));
+  let score = sharedDNA.length * 2 + sharedOccasion.length;
+  if ((candidate.inspiration||"").trim() && (existing.i||"").trim() && candidate.inspiration.trim().toLowerCase() === existing.i.trim().toLowerCase()) score += 4;
+  if ((candidate.season||"").trim() && (existing.s||"").toLowerCase().includes((candidate.season||"").trim().toLowerCase())) score += 1;
+  return {score, sharedDNA, sharedOccasion};
+}
+
+function getBuySkipAnalysis(){
+  const source = (state.buy && (state.buy.name || state.buy.house || state.buy.inspiration || state.buy.dna || state.buy.occasions)) ? state.buy : (state.buyDraft || state.buy);
+  const candidate = {
+    name: (source.name||"").trim(),
+    house: (source.house||"").trim(),
+    inspiration: (source.inspiration||"").trim(),
+    dna: (source.dna||"").split(",").map(x=>x.trim()).filter(Boolean),
+    occasions: (source.occasions||"").split(",").map(x=>x.trim()).filter(Boolean),
+    season: (source.season||"").trim()
+  };
+  if (!candidate.name && !candidate.inspiration && !candidate.dna.length) {
+    return {verdict:"Add candidate details", reason:"Enter at least a name plus DNA or inspiration to compare it.", overlaps:[]};
+  }
+
+  const overlaps = getAllCollection().map(item => ({
+    item,
+    overlap: getCandidateOverlap(candidate, item)
+  })).sort((a,b)=>b.overlap.score-a.overlap.score).slice(0,5);
+
+  const best = overlaps[0];
+  let verdict = "Worth considering";
+  let reason = "It looks different enough to fill a useful gap.";
+
+  if (best) {
+    if (best.overlap.score >= 9) {
+      verdict = "Good but redundant";
+      reason = `It overlaps heavily with ${best.item.n}, so it does not add much new value unless you want a different twist on that lane.`;
+    } else if (best.overlap.score >= 6) {
+      verdict = "Interesting but unnecessary";
+      reason = `It still sits fairly close to ${best.item.n}, so it is more of a sidegrade than a true gap filler.`;
+    } else if (best.overlap.score >= 3) {
+      verdict = "Worth considering";
+      reason = `There is some overlap with ${best.item.n}, but it still looks different enough to justify itself if you want that profile.`;
+    } else {
+      verdict = "Strong add";
+      reason = "It does not appear heavily covered by what you already own.";
+    }
+  }
+
+  return {candidate, verdict, reason, overlaps};
+}
+
+function resetBuyForm(){
+  state.buy = {name:"",house:"",inspiration:"",dna:"",occasions:"",season:"All Season"};
+  state.buyDraft = {name:"",house:"",inspiration:"",dna:"",occasions:"",season:"All Season"};
+}
+
+function getPlanePicks(items, weather, environment, count=5){
+  const ranked = [...items]
+    .map(f => ({
+      item: f,
+      level: getPlaneSafetyLevel(f),
+      score: scoreFragrance(f, getWeatherAdjustedWeights(WEIGHTS["Plane"], weather), weather, environment)
+    }))
+    .filter(x => x.level === "Plane Safe" || x.level === "Safe Enough")
+    .sort((a, b) => {
+      const order = {"Plane Safe": 2, "Safe Enough": 1};
+      return (order[b.level] - order[a.level]) || (b.score - a.score);
+    });
+
+  const out = [];
+  const seen = new Set();
+  for (const row of ranked) {
+    if (seen.has(row.item.n)) continue;
+    seen.add(row.item.n);
+    out.push(row.item);
+    if (out.length >= count) break;
+  }
+  return out;
+}
+
+function getWeatherContext(weather, environment){
+  const temp = weather && typeof weather.temp === "number" ? weather.temp : null;
+  const wind = weather && typeof weather.wind === "number" ? weather.wind : null;
+  const humidity = weather && typeof weather.humidity === "number" ? weather.humidity : null;
+  const rain = weather ? [61,63,65,80,81,82].includes(weather.code) : false;
+  return {temp, wind, humidity, rain, environment};
+}
+
+function getWearTodayScore(f, occasion, weather, environment){
+  const dna = displayDNAList(f).map(norm);
+  const ctx = getWeatherContext(weather, environment);
+  let score = scoreFragrance(f, getWeatherAdjustedWeights(WEIGHTS[occasion]||{}, weather), weather, environment);
+
+  if (ctx.temp !== null){
+    if (ctx.temp <= 50){
+      if (dna.some(x=>["amber","woody","spicy","gourmand","vetiver / earthy"].includes(x))) score += 3;
+      if (dna.some(x=>["aquatic","fresh","citrus"].includes(x)) && environment !== "Indoors") score -= 2;
+    } else if (ctx.temp <= 65){
+      if (dna.some(x=>["woody","fresh","fougere","vetiver / earthy","musk / powdery"].includes(x))) score += 2;
+    } else if (ctx.temp <= 80){
+      if (dna.some(x=>["fresh","citrus","blue","green","musk / powdery"].includes(x))) score += 2;
+      if (dna.includes("gourmand")) score -= 1;
+    } else {
+      if (dna.some(x=>["fresh","citrus","aquatic","blue","green"].includes(x))) score += 3;
+      if (dna.some(x=>["amber","gourmand","spicy"].includes(x))) score -= 3;
+    }
+  }
+
+  if (ctx.humidity !== null){
+    if (ctx.humidity >= 75){
+      if (dna.some(x=>["fresh","citrus","aquatic","green","musk / powdery"].includes(x))) score += 2;
+      if (dna.some(x=>["amber","gourmand","sweet"].includes(x))) score -= 2;
+    }
+  }
+
+  if (ctx.wind !== null){
+    if (ctx.wind >= 12 && environment !== "Indoors"){
+      if (dna.some(x=>["woody","amber","blue","fougere"].includes(x))) score += 1;
+      if (dna.some(x=>["musk / powdery","aquatic"].includes(x))) score -= 1;
+    }
+  }
+
+  if (ctx.rain){
+    if (dna.some(x=>["woody","vetiver / earthy","fougere","musk / powdery"].includes(x))) score += 2;
+    if (dna.some(x=>["aquatic","marine"].includes(x))) score -= 1;
+  }
+
+  if (environment === "Indoors"){
+    if (dna.some(x=>["musk / powdery","woody","fougere","fresh"].includes(x))) score += 2;
+    if (dna.some(x=>["gourmand","sweet","amber"].includes(x))) score -= 1;
+  } else if (environment === "Outdoors"){
+    if (dna.some(x=>["fresh","green","blue","woody"].includes(x))) score += 1;
+  }
+
+  const occasions = simplifyOccasionList(f);
+  if (occasions.includes(occasion)) score += 2;
+
+  return score;
+}
+
+function getWearTodayPicks(collection, occasion, weather, environment, count=5){
+  let basePool = collection.slice();
+
+  if (state.wearMood && state.wearMood !== "Any") {
+    const moodRanked = getMoodCandidates(state.wearMood, collection.length || 200);
+    if (moodRanked.length) {
+      basePool = moodRanked;
+    }
+  }
+
+  const occasionPool = basePool.filter(f => simplifyOccasionList(f).includes(occasion));
+  let pool = occasionPool.length ? occasionPool : basePool;
+
+  const ranked = [...pool]
+    .map(f => ({
+      item: f,
+      score: occasion === "Plane"
+        ? getWearTodayScore(f, "Plane", weather, environment) + (getPlaneSafetyLevel(f)==="Plane Safe" ? 4 : getPlaneSafetyLevel(f)==="Safe Enough" ? 1 : -10)
+        : getWearTodayScore(f, occasion, weather, environment)
+    }))
+    .filter(x => occasion !== "Plane" || getPlaneSafetyLevel(x.item) !== "Not Plane Safe")
+    .sort((a,b)=>b.score-a.score);
+
+  const out = [];
+  const seen = new Set();
+  for (const row of ranked){
+    if (seen.has(row.item.n)) continue;
+    seen.add(row.item.n);
+    out.push(row.item);
+    if (out.length >= count) break;
+  }
+  return out;
+}
+
+function getLastWornDate(name){
+  const hit = state.wearLog.find(entry => entry.fragrance === name);
+  return hit ? hit.date : "Never logged";
+}
+
+function getWearPickLabel(i){
+  return ["Safest pick","Most unique","Best performer","Strong backup","Fifth option"][i] || `Pick ${i+1}`;
+}
+
+function getWearTodayReason(f, occasion, weather, environment){
+  if (occasion === "Plane") return getPlaneReason(f);
+  const dna = displayDNAList(f).map(norm);
+  const ctx = getWeatherContext(weather, environment);
+  const bits = [];
+
+  if (ctx.temp !== null){
+    if (ctx.temp <= 50 && dna.some(x=>["amber","woody","spicy","vetiver / earthy"].includes(x))) bits.push("it fits cooler air better than a bright summer scent");
+    if (ctx.temp >= 80 && dna.some(x=>["fresh","citrus","aquatic","blue","green"].includes(x))) bits.push("it stays more comfortable in warm weather");
+  }
+  if (ctx.humidity !== null && ctx.humidity >= 75 && dna.some(x=>["fresh","citrus","green","musk / powdery"].includes(x))) bits.push("it handles humidity better than something thicker or sweeter");
+  if (ctx.rain && dna.some(x=>["woody","vetiver / earthy","fougere","musk / powdery"].includes(x))) bits.push("it makes more sense in rainy weather than an airy beach-style scent");
+  if (environment === "Indoors" && dna.some(x=>["musk / powdery","woody","fougere","fresh"].includes(x))) bits.push("it stays more controlled indoors");
+  if (environment === "Outdoors" && dna.some(x=>["fresh","green","blue","woody"].includes(x))) bits.push("it has enough lift and structure for outdoor wear");
+
+  const standard = getWhyWear(f, occasion);
+  if (standard) bits.unshift(standard.replace(/\.$/, ""));
+  return bits.length ? bits.join(". ") + "." : "It fits the selected occasion and conditions.";
+}
+
+function isPlaneSafeFragrance(f){
+  return getPlaneSafetyLevel(f) === "Plane Safe" || getPlaneSafetyLevel(f) === "Safe Enough";
+}
+
+function getSprayAdvice(f, occasion){
+  const dna = displayDNAList(f).map(norm);
+  const rich = dna.includes("amber") || dna.includes("sweet") || dna.includes("gourmand") || dna.includes("spicy");
+  if (isOil(f)){
+    if (occasion==="Plane") return rich ? "Apply 1 small dab only, on chest." : "Apply 1 to 2 very small dabs, kept close to skin.";
+    if (occasion==="Gym") return "Apply 1 very small dab max.";
+    return rich ? "Apply 1 to 2 small dabs." : "Apply 2 small dabs.";
+  }
+  if (occasion==="Plane") return rich ? "1 spray max on chest only." : "1 to 2 light sprays max, kept close to skin.";
+  if (occasion==="Gym") return rich ? "Skip richer scents for the gym. Choose something fresher instead." : "2 to 3 light sprays max.";
+  if (occasion==="Office") return rich ? "2 sprays. Keep it controlled." : "3 sprays. Chest, neck, and one light shirt spray.";
+  if (occasion==="Date") return rich ? "4 sprays. Chest, both sides of neck, one wrist." : "3 sprays. Chest and neck.";
+  return "3 sprays as a safe default.";
+}
+
+
+
+function getCountsBy(fn){
+  const m = new Map();
+  COLLECTION.forEach(item=>{
+    const vals = fn(item);
+    (Array.isArray(vals)?vals:[vals]).filter(Boolean).forEach(v=>m.set(v,(m.get(v)||0)+1));
+  });
+  return [...m.entries()].sort((a,b)=>b[1]-a[1]);
+}
+
+function renderBarList(items, maxItems=5){
+  const rows = (items||[]).slice(0,maxItems);
+  if (!rows.length) return '<div class="empty-card">No data yet.</div>';
+  const max = Math.max(...rows.map(x=>x[1]),1);
+  return `<div class="bar-list">${rows.map(([label,val])=>`<div class="bar-row"><div class="bar-label">${esc(label)}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.max(8,(val/max)*100)}%"></div></div><div class="small">${val}</div></div>`).join("")}</div>`;
+}
+
+function getDashboardCharts(){
+  return {
+    seasons: getCountsBy(f => (f.s||'').split('·').map(x=>x.trim()).filter(Boolean)),
+    dnas: getCountsBy(f => displayDNAList(f)),
+    houses: getCountsBy(f => f.h),
+    occasions: getCountsBy(f => simplifyOccasionList(f))
+  };
+}
+
+function getVerdictClass(verdict){
+  const v = String(verdict||'').toLowerCase();
+  if (v.includes('strong add') || v.includes('must buy')) return 'good';
+  if (v.includes('redundant') || v.includes('skip')) return 'bad';
+  return 'warn';
+}
+
+function renderScoreMeter(score, maxScore=10, cls='good'){
+  const pct = Math.max(0, Math.min(100, (score/maxScore)*100));
+  return `<div class="meter ${cls}"><span style="width:${pct}%"></span></div>`;
+}
+
+function getCollectionInsights(){
+  const total = COLLECTION.length;
+  const favs = (state.favoriteFragrances||[]).length;
+  const byDNA = {};
+  const byOccasion = {};
+  const byHouse = {};
+  COLLECTION.forEach(f=>{
+    displayDNAList(f).forEach(d=>byDNA[d]=(byDNA[d]||0)+1);
+    simplifyOccasionList(f).forEach(o=>byOccasion[o]=(byOccasion[o]||0)+1);
+    byHouse[f.h]=(byHouse[f.h]||0)+1;
+  });
+  const topDNA = Object.entries(byDNA).sort((a,b)=>b[1]-a[1])[0]?.[0] || "—";
+  const topHouse = Object.entries(byHouse).sort((a,b)=>b[1]-a[1])[0]?.[0] || "—";
+  const weakOccasion = ["Office","Date","Casual","Gym","Evening","Plane"].map(k=>[k, byOccasion[k]||0]).sort((a,b)=>a[1]-b[1])[0]?.[0] || "—";
+  const planeCount = COLLECTION.filter(isPlaneSafeFragrance).length;
+  return {total,favs,topDNA,topHouse,weakOccasion,planeCount};
+}
+
+function getRecentlyWornNames(limit=5){
+  return [...new Set((state.wearLog||[]).slice(0,limit).map(x=>x.fragrance))];
+}
+
+function getFavoriteItems(){
+  return COLLECTION.filter(f=>isFavorite(f.n));
+}
+
+function saveCurrentDisplaySnapshot(season, sections){
+  const snapshot = {
+    id: Date.now().toString(),
+    date: new Date().toISOString().slice(0,10),
+    season,
+    anchors: sections.anchors.map(f=>f.n),
+    daily: sections.daily.map(f=>f.n),
+    statement: sections.statement.map(f=>f.n),
+  };
+  state.displaySnapshots = [snapshot, ...(state.displaySnapshots||[])].slice(0,12);
+  saveDisplaySnapshots();
+}
+
+function loadDisplaySnapshot(id){
+  return (state.displaySnapshots||[]).find(x=>x.id===id);
+}
+
+function resetNewFragranceForm(){
+  state.newFragrance = {house:"",name:"",inspiration:"",dna:"",occasions:"Casual",season:"Year-round",rating:"4"};
+}
+
+function addNewFragranceFromForm(){
+  const f = state.newFragrance || {};
+  const name = (f.name || "").trim();
+  const house = (f.house || "").trim();
+  if (!name || !house) return {ok:false, message:"Name and house are required."};
+
+  const item = {
+    h: house,
+    n: name,
+    i: (f.inspiration || "Original").trim() || "Original",
+    d: (f.dna || "").split(",").map(x=>x.trim()).filter(Boolean),
+    o: (f.occasions || "").split(",").map(x=>x.trim()).filter(Boolean),
+    s: (f.season || "Year-round").trim() || "Year-round",
+    r: Math.max(1, Math.min(5, Number(f.rating || 4) || 4)),
+    userAdded: true
+  };
+  if (!item.d.length) item.d = ["fresh"];
+  if (!item.o.length) item.o = ["Casual"];
+
+  COLLECTION.push(item);
+  saveUserFragrances(COLLECTION.filter(x=>x.userAdded));
+  resetNewFragranceForm();
+  return {ok:true, message:`Added ${item.n}.`};
+}
+
+function resetCollectionFilters(){
+  state.collectionSearch = "";
+  state.collectionHouseFilter = "All";
+  state.collectionOccasionFilter = "All";
+  state.collectionDNAFilter = "All";
+  state.collectionPlaneFilter = "All";
+  state.collectionInspirationFilter = "All";
+}
+function simplifyOccasionList(f){
+  const raw = (f.o||[]).map(norm);
+  const out = [];
+  const add = x => { if (x && !out.includes(x)) out.push(x); };
+
+  raw.forEach(o => {
+    if (/plane|flight|airplane/.test(o)) add("Plane");
+    if (/gym|sport|workout|active|poolside/.test(o)) add("Gym");
+    if (/office|work|business|smart casual|daytime|professional|everyday office/.test(o)) add("Office");
+    if (/date|romantic|upscale casual|close-range|intimate/.test(o)) add("Date");
+    if (/evening|night|formal|special occasion|special|cocktail|club|lounge|bar|statement|bold|social night/.test(o)) add("Evening");
+    if (/casual|everyday|weekend|social|outdoors|outdoor|beach|vacation|fresh|playful|day off|errands/.test(o)) add("Casual");
+  });
+
+  if (!out.length) add("Casual");
+
+  const order = ["Plane","Office","Date","Casual","Gym","Evening"];
+  return order.filter(x => out.includes(x)).slice(0,3);
+}
+
+function getBestUse(f){
+  const occ = simplifyOccasionList(f);
+  if (occ.includes("Plane")) return "Plane / enclosed seating";
+  if (occ.includes("Office")) return "Office / professional daytime";
+  if (occ.includes("Date")) return "Date / close-range social";
+  if (occ.includes("Gym")) return "Gym / active casual";
+  if (occ.includes("Evening")) return "Evening / dressed-up wear";
+  return "Casual / everyday reach";
+}
+
+function getPerformanceStyle(f){
+  const dna = displayDNAList(f).map(norm);
+  if (dna.includes("gourmand") || dna.includes("amber") || dna.includes("spicy")) return "Medium-strong presence";
+  if (dna.includes("fresh") || dna.includes("citrus") || dna.includes("aquatic")) return "Fresh moderate presence";
+  if (dna.includes("musk / powdery")) return "Soft to moderate, cleaner scent trail";
+  return "Moderate all-around presence";
+}
+
+function getSafestSetting(f){
+  if (isPlaneSafeFragrance(f)) return "Plane / office safe";
+  const occ = simplifyOccasionList(f);
+  if (occ.includes("Office")) return "Office safe";
+  if (occ.includes("Gym")) return "Gym / casual safe";
+  if (occ.includes("Date")) return "Date night";
+  if (occ.includes("Evening")) return "Evening / cooler air";
+  return "Casual daytime";
+}
+
+function getMostRedundantWith(f){
+  const targetDNA = new Set(displayDNAList(f));
+  let best = null;
+  let bestScore = -1;
+  COLLECTION.forEach(other => {
+    if (other.n === f.n) return;
+    let score = 0;
+    displayDNAList(other).forEach(tag => { if (targetDNA.has(tag)) score += 2; });
+    if ((other.i||"") === (f.i||"")) score += 4;
+    simplifyOccasionList(other).forEach(tag => { if (simplifyOccasionList(f).includes(tag)) score += 1; });
+    if (score > bestScore){
+      bestScore = score;
+      best = other;
+    }
+  });
+  return best ? best.n : "Nothing obvious";
+}
+
+function getFragranceFitSummary(f){
+  const dna = displayDNAList(f).map(norm);
+  const bits = [];
+  if (dna.includes("fresh") || dna.includes("citrus") || dna.includes("aquatic") || dna.includes("blue")) {
+    bits.push("It leans fresher and more lifted, so it feels easier to wear and less heavy on skin.");
+  }
+  if (dna.includes("woody") || dna.includes("vetiver / earthy") || dna.includes("fougere")) {
+    bits.push("It has enough structure underneath the freshness to feel polished instead of generic.");
+  }
+  if (dna.includes("musk / powdery")) {
+    bits.push("The musky or powdery side keeps it smooth and more refined in the drydown.");
+  }
+  if (dna.includes("amber") || dna.includes("sweet") || dna.includes("spicy") || dna.includes("gourmand")) {
+    bits.push("Its warmer side gives it more presence, so it reads better for evenings, cooler weather, or a more dressed-up setting.");
+  }
+
+  const season = (f.s || "").toLowerCase();
+  if (season.includes("spring") || season.includes("summer")) {
+    bits.push("Its season profile makes the most sense when you want something brighter, cleaner, or more open in the air.");
+  } else if (season.includes("fall") || season.includes("winter")) {
+    bits.push("Its season profile makes the most sense when you want something richer, smoother, and more grounded.");
+  } else if (season.includes("year-round")) {
+    bits.push("It also has enough balance to work across more than one season, which makes it easier to keep in rotation.");
+  }
+
+  if (bits.length === 0) {
+    return "It fits because the scent profile is balanced enough to feel versatile, wearable, and easy to place in the collection.";
+  }
+  return bits.join(" ");
+}
+
+function getWhyWear(f, occasion){
+  const dna = displayDNAList(f).map(norm), bits=[];
+  if (["Office","Plane","Gym","Casual"].includes(occasion)){
+    if (dna.some(x=>["fresh","citrus","blue","musk / powdery","aquatic"].includes(x))) bits.push("it smells clean, polished, and easy to wear");
+    if (dna.some(x=>["woody","vetiver / earthy","fougere","green"].includes(x))) bits.push("it keeps a structured edge without turning heavy");
+    if (occasion==="Plane") bits.push("it stays lower-risk for enclosed seating");
+    if (occasion==="Gym") bits.push("it stays fresher and cleaner when heat and movement can amplify a scent");
+    if (occasion==="Casual") bits.push("it is easy to wear without feeling overdressed");
+  }
+  if (["Date","Evening"].includes(occasion)){
+    if (dna.some(x=>["amber","sweet","woody","spicy","gourmand"].includes(x))) bits.push("it has enough warmth and texture to feel intentional");
+  }
+  return bits.length ? bits.join(". ") + "." : "It fits the selected occasion and conditions.";
+}
+
+function getLayeringAnalysis(base, top){
+  if (!base || !top) return {score:0, verdict:"Pick two fragrances to analyze.", why:"", ratio:"", sprays:"", baseRole:"", topRole:"", placement:""};
+  const bd = displayDNAList(base).map(norm), td = displayDNAList(top).map(norm);
+  const shared = bd.filter(x=>td.includes(x));
+  const complementary = (bd.includes("fresh") && td.includes("woody")) || (bd.includes("citrus") && td.includes("musk / powdery")) || (bd.includes("blue") && td.includes("amber")) || (bd.includes("vetiver / earthy") && td.includes("citrus")) || (bd.includes("woody") && td.includes("fresh"));
+  const clash = (bd.includes("gourmand") && td.includes("aquatic")) || (bd.includes("amber") && td.includes("aquatic")) || (bd.includes("gourmand") && td.includes("green"));
+  let raw = 5 + shared.length*1.5 + (complementary?1.5:0) - (clash?2.5:0);
+  const sameInspiration = (base.i||"").trim() && (top.i||"").trim() && (base.i||"").trim().toLowerCase() === (top.i||"").trim().toLowerCase();
+  if (sameInspiration) raw += 1;
+  let score = Math.max(1, Math.min(10, Math.round(raw)));
+  let verdict = score>=9 ? "Excellent layering match" : score>=7 ? "Very good layering match" : score>=5 ? "Workable with control" : "Do not layer these";
+  let ratio = score<=4 ? "Not recommended" : score>=8 ? "2 sprays base + 2 sprays top" : "2 sprays base + 1 light spray top";
+  let sprays = score<=4 ? "Skip this layering combo. Wear one of them on its own instead." : score>=8 ? "Use the base for structure, then add the top evenly for lift and dimension." : "Let the base lead and keep the top clearly lighter.";
+  let why = "";
+
+  if (score>=8){
+    why += "This pairing works because both fragrances connect strongly enough to smell intentional together rather than layered just for novelty. ";
+    why += "There is enough overlap in structure for the blend to stay coherent, but enough contrast to add shape, movement, or extra texture. ";
+  } else if (score>=5){
+    why += "This pairing can work, but it depends on discipline. ";
+    why += "The base should carry most of the identity, while the top should only sharpen the opening, add lift, or introduce a small tonal change. ";
+    why += "If both are sprayed too heavily, the result will lose clarity and start to feel more crowded than blended. ";
+  } else {
+    why += "This pairing is weak because the two fragrances do not support each other naturally. ";
+    why += "Instead of blending into a smoother profile, they are more likely to compete in the air and create a confused drydown. ";
+  }
+
+  if (shared.length){
+    why += `They share ${shared.join(", ")}, which gives the blend a common backbone. `;
+  } else {
+    why += "They do not share much direct DNA, so the blend depends heavily on spray balance. ";
+  }
+
+  if (complementary){
+    why += "The contrast is useful here because one fragrance adds brightness or lift while the other adds body and structure. ";
+  }
+  if (clash){
+    why += "There is also a real clash risk in the composition, so the spray plan has to stay conservative. ";
+  }
+
+  const baseRole = getLayerRoleSummary(base);
+  const topRole = getLayerRoleSummary(top);
+  const placement = getLayerPlacement(base, top);
+
+  return {score, verdict, why:why.trim(), ratio, sprays, baseRole, topRole, placement};
+}
+
+function getSeasonMode(){
+  const m = new Date().getMonth()+1;
+  if ([3,4,5].includes(m)) return "Spring";
+  if ([6,7,8].includes(m)) return "Summer";
+  if ([9,10,11].includes(m)) return "Fall";
+  return "Winter";
+}
+function scoreDisplay(f, season){
+  const dna = displayDNAList(f).map(norm), s=norm(f.s); let score=f.r||0;
+  if (season==="Spring"){ if (s.includes("spring")) score+=5; if (s.includes("year-round")) score+=2; if (dna.some(x=>["fresh","citrus","green","woody","vetiver / earthy"].includes(x))) score+=2; }
+  if (season==="Summer"){ if (s.includes("summer")) score+=5; if (s.includes("year-round")) score+=2; if (dna.some(x=>["fresh","citrus","aquatic","blue","green"].includes(x))) score+=2; }
+  if (season==="Fall"){ if (s.includes("fall")) score+=5; if (s.includes("year-round")) score+=2; if (dna.some(x=>["woody","amber","spicy","vetiver / earthy","fougere"].includes(x))) score+=2; }
+  if (season==="Winter"){ if (s.includes("winter")) score+=5; if (s.includes("year-round")) score+=2; if (dna.some(x=>["amber","woody","sweet","spicy","gourmand"].includes(x))) score+=2; }
+  return score;
+}
+function getDisplaySections(collection, season){
+  const ranked=[...collection].map(f=>({item:f,score:scoreDisplay(f,season)})).sort((a,b)=>b.score-a.score);
+  const display=ranked.slice(0,30).map(x=>x.item);
+  const anchors=[],daily=[],statement=[];
+  display.forEach(f=>{
+    const dna=displayDNAList(f).map(norm);
+    if ((f.r||0)>=4 && anchors.length<8) anchors.push(f);
+    else if (dna.some(x=>["fresh","woody","citrus","blue","green","vetiver / earthy","musk / powdery","fougere","aquatic"].includes(x)) && daily.length<12) daily.push(f);
+    else if (statement.length<10) statement.push(f);
+  });
+  display.forEach(f=>{
+    if (!anchors.includes(f) && !daily.includes(f) && !statement.includes(f)){
+      if (daily.length<12) daily.push(f); else if (statement.length<10) statement.push(f); else if (anchors.length<8) anchors.push(f);
+    }
+  });
+  return {anchors,daily,statement,display};
+}
+
+async function fetchWeather(pref){
+  try{
+    if (pref.mode==="manual" && pref.city){
+      const ge = await fetch("https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(pref.city)+"&count=1&language=en&format=json").then(r=>r.json());
+      if (ge.results && ge.results[0]){
+        const g=ge.results[0];
+        return await fetchWeatherByCoords(g.latitude,g.longitude,g.name+(g.admin1?", "+g.admin1:""));
+      }
+    }
+    return new Promise(resolve=>{
+      if (!navigator.geolocation) return fetchWeatherByCoords(38.8816,-77.091,"Arlington area").then(resolve);
+      navigator.geolocation.getCurrentPosition(
+        pos=>fetchWeatherByCoords(pos.coords.latitude,pos.coords.longitude).then(resolve),
+        _=>fetchWeatherByCoords(38.8816,-77.091,"Arlington area").then(resolve),
+        {enableHighAccuracy:false,timeout:8000,maximumAge:300000}
+      );
+    });
+  }catch(e){
+    return {loading:false,error:"Unable to load weather.",temp:null,code:null,wind:null,humidity:null,city:"Your area"};
+  }
+}
+async function fetchWeatherByCoords(lat,lon,label=""){
+  const wd = await fetch("https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lon+"&current=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m&temperature_unit=fahrenheit&wind_speed_unit=mph").then(r=>r.json());
+  return {loading:false,error:"",temp:wd.current?.temperature_2m??null,code:wd.current?.weather_code??null,wind:wd.current?.wind_speed_10m??null,humidity:wd.current?.relative_humidity_2m??null,city:label||"Your area"};
+}
+function getWeatherLabel(code){
+  if (code===0) return "Clear";
+  if ([1,2,3].includes(code)) return "Partly cloudy";
+  if ([61,63,65,80,81,82].includes(code)) return "Rain";
+  return "Current conditions";
+}
+
+function homeView(){
+  const source = COLLECTION.filter(f=>simplifyOccasionList(f).includes(state.homeOccasion));
+  const items = source.length ? source : COLLECTION;
+  const picks = state.homeOccasion==="Plane"
+    ? getPlanePicks(items, state.weather, state.homeEnvironment, 3)
+    : pickTop(items, getWeatherAdjustedWeights(WEIGHTS[state.homeOccasion]||{}, state.weather), 3, state.weather, state.homeEnvironment);
+  const insights = getCollectionInsights();
+  const favorites = getFavoriteItems().slice(0,6);
+  const charts = getDashboardCharts();
+  return `
+    <div class="grid">
+      <div class="grid cols-4">
+        <div class="iconstat"><div class="iconbubble">🧴</div><div><div class="kicker">Collection size</div><div class="num">${insights.total}</div></div></div>
+        <div class="iconstat"><div class="iconbubble">★</div><div><div class="kicker">Favorites</div><div class="num">${insights.favs}</div></div></div>
+        <div class="iconstat"><div class="iconbubble">🧬</div><div><div class="kicker">Top DNA</div><div style="font-size:20px;font-weight:700">${esc(insights.topDNA)}</div></div></div>
+        <div class="iconstat"><div class="iconbubble">📉</div><div><div class="kicker">Weakest lane</div><div style="font-size:20px;font-weight:700">${esc(insights.weakOccasion)}</div></div></div>
+      </div>
+
+      <div class="grid cols-2">
+        <div class="card">
+          <div class="section-head">
+            <div><div class="kicker">Live weather</div><h3>${esc(state.weather.city)}</h3><div class="muted">${state.weather.loading?"Loading weather...":(state.weather.error||getWeatherLabel(state.weather.code))}</div></div>
+            <button id="themeToggle">${state.theme==="dark"?"Light Mode":"Dark Mode"}</button>
+          </div>
+          <div class="row" style="margin-top:12px">
+            <div class="field"><label>Weather source</label><select id="weatherMode"><option value="auto" ${state.weatherPref.mode==="auto"?"selected":""}>Use current location</option><option value="manual" ${state.weatherPref.mode==="manual"?"selected":""}>Use manual city</option></select></div>
+            ${state.weatherPref.mode==="manual" ? `<div class="field"><label>Manual city</label><input id="manualCity" value="${esc(state.weatherPref.city)}"></div>` : ``}
+          </div>
+          <div class="grid cols-4" style="margin-top:12px">
+            <div class="stat"><div class="kicker">Temp</div><div class="num">${state.weather.temp!=null?Math.round(state.weather.temp)+"°F":"--"}</div></div>
+            <div class="stat"><div class="kicker">Wind</div><div class="num" style="font-size:22px">${state.weather.wind!=null?Math.round(state.weather.wind)+" mph":"--"}</div></div>
+            <div class="stat"><div class="kicker">Humidity</div><div class="num" style="font-size:22px">${state.weather.humidity!=null?Math.round(state.weather.humidity)+"%":"--"}</div></div>
+            <div class="stat"><div class="kicker">Rain</div><div class="num" style="font-size:18px">${[61,63,65,80,81,82].includes(state.weather.code)?"Yes":"No"}</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-head">
+            <div><div class="kicker">Quick recommendation</div><h3>Collection-first advisor</h3></div>
+          </div>
+          <div class="row">
+            <div class="field"><label>Occasion</label><select id="homeOccasion">${OCCASIONS.map(x=>`<option ${state.homeOccasion===x?"selected":""}>${x}</option>`).join("")}</select></div>
+            <div class="field"><label>Environment</label><select id="homeEnvironment">${ENVIRONMENTS.map(x=>`<option ${state.homeEnvironment===x?"selected":""}>${x}</option>`).join("")}</select></div>
+          </div>
+          <div class="grid cols-3" style="margin-top:14px">
+            ${picks.map((f,i)=>`<div class="shelf-card"><div class="frag-header"><div><div class="kicker">${["Safest","Most unique","Best performer"][i]||`Pick ${i+1}`}</div><h4>${esc(f.n)} ${isFavorite(f.n)?"★":""}</h4><div class="muted">${esc(f.h)}</div></div><span class="badge ${state.homeOccasion==="Plane"?getVerdictClass(getPlaneSafetyLevel(f)): 'good'}">${esc(state.homeOccasion==="Plane"?getPlaneSafetyLevel(f):'Recommended')}</span></div><div>${displayDNAList(f).map(x=>`<span class="pill">${esc(x)}</span>`).join("")}</div><p>${esc(state.homeOccasion==="Plane" ? getPlaneReason(f) : getWhyWear(f,state.homeOccasion))}</p><p><strong>Guidance:</strong> ${esc(getSprayAdvice(f,state.homeOccasion))}</p></div>`).join("")}
+          </div>
+        </div>
+      </div>
+
+      <div class="grid cols-4">
+        <div class="chart-card"><div class="kicker">Season mix</div>${renderBarList(charts.seasons,4)}</div>
+        <div class="chart-card"><div class="kicker">Top DNA</div>${renderBarList(charts.dnas,5)}</div>
+        <div class="chart-card"><div class="kicker">Top houses</div>${renderBarList(charts.houses,5)}</div>
+        <div class="chart-card"><div class="kicker">Occasion mix</div>${renderBarList(charts.occasions,6)}</div>
+      </div>
+
+      <div class="card">
+        <div class="section-head"><div><div class="kicker">Favorites shelf</div><h3>Your standout bottles</h3></div></div>
+        <div class="shelf-grid">
+          ${favorites.length ? favorites.map(f=>`<button class="listbtn" data-open-fragrance="${esc(f.n)}"><div class="frag-header"><div class="frag-header"><strong>${esc(f.n)}</strong><span class="badge good">Favorite</span></div><div class="muted">${esc(f.h)}</div><div style="margin-top:8px">${displayDNAList(f).map(x=>`<span class="pill">${esc(x)}</span>`).join("")}</div></button>`).join("") : '<div class="empty-card">No favorites yet. Tap a star in Collection to start building your favorites shelf.</div>'}
+        </div>
+      </div>
+    </div>`;
+}
+
+function collectionView(){
+  const allCollection = getAllCollection();
+  const houses = ["All", ...Array.from(new Set(allCollection.map(f => f.h).filter(Boolean))).sort((a,b)=>a.localeCompare(b))];
+  const occasionOptions = ["All","Office","Date","Casual","Gym","Evening","Plane"];
+  const dnaOptions = ["All", ...Array.from(new Set(allCollection.flatMap(f => displayDNAList(f)))).sort((a,b)=>a.localeCompare(b))];
+  const inspirationOptions = ["All", ...Array.from(new Set(allCollection.map(f => f.i || "Original"))).sort((a,b)=>a.localeCompare(b))];
+  const planeOptions = ["All","Plane Safe","Safe Enough","Not Plane Safe"];
+
+  let filtered = !state.collectionSearch
+    ? allCollection
+    : allCollection.filter(f=>[f.n,f.h,f.i,...displayDNAList(f),...simplifyOccasionList(f),...(f.o||[])].join(" ").toLowerCase().includes(norm(state.collectionSearch)));
+
+  if (state.collectionHouseFilter !== "All"){
+    filtered = filtered.filter(f => f.h === state.collectionHouseFilter);
+  }
+  if (state.collectionOccasionFilter !== "All"){
+    filtered = filtered.filter(f => simplifyOccasionList(f).includes(state.collectionOccasionFilter));
+  }
+  if (state.collectionDNAFilter !== "All"){
+    filtered = filtered.filter(f => displayDNAList(f).includes(state.collectionDNAFilter));
+  }
+  if (state.collectionInspirationFilter !== "All"){
+    filtered = filtered.filter(f => (f.i || "Original") === state.collectionInspirationFilter);
+  }
+  if (state.collectionPlaneFilter === "Plane Safe"){
+    filtered = filtered.filter(f => getPlaneSafetyLevel(f) === "Plane Safe");
+  } else if (state.collectionPlaneFilter === "Safe Enough"){
+    filtered = filtered.filter(f => getPlaneSafetyLevel(f) === "Safe Enough");
+  } else if (state.collectionPlaneFilter === "Not Plane Safe"){
+    filtered = filtered.filter(f => getPlaneSafetyLevel(f) === "Not Plane Safe");
+  }
+
+  let groups = [];
+  if (state.collectionTab === "All"){
+    groups = [["All Fragrances", filtered]];
+  } else if (state.collectionTab === "House"){
+    const m = new Map();
+    filtered.forEach(f => {
+      const key = f.h || "Unknown";
+      if (!m.has(key)) m.set(key, []);
+      m.get(key).push(f);
+    });
+    groups = [...m.entries()].sort((a,b)=>a[0].localeCompare(b[0]));
+  } else if (state.collectionTab === "DNA"){
+    const m = new Map();
+    filtered.forEach(f => {
+      displayDNAList(f).forEach(tag => {
+        if (!m.has(tag)) m.set(tag, []);
+        m.get(tag).push(f);
+      });
+    });
+    groups = [...m.entries()].sort((a,b)=>a[0].localeCompare(b[0]));
+  } else if (state.collectionTab === "Occasion"){
+    const m = new Map();
+    filtered.forEach(f => {
+      simplifyOccasionList(f).forEach(tag => {
+        if (!m.has(tag)) m.set(tag, []);
+        m.get(tag).push(f);
+      });
+    });
+    groups = [...m.entries()].sort((a,b)=>a[0].localeCompare(b[0]));
+  } else if (state.collectionTab === "Plane"){
+    const safe = filtered.filter(f => getPlaneSafetyLevel(f) === "Plane Safe");
+    const safeEnough = filtered.filter(f => getPlaneSafetyLevel(f) === "Safe Enough");
+    const notSafe = filtered.filter(f => getPlaneSafetyLevel(f) === "Not Plane Safe");
+    groups = [["Plane Safe", safe], ["Safe Enough", safeEnough], ["Not Plane Safe", notSafe]];
+  } else if (state.collectionTab === "Inspiration"){
+    const m = new Map();
+    filtered.forEach(f => {
+      const key = f.i || "Original";
+      if (!m.has(key)) m.set(key, []);
+      m.get(key).push(f);
+    });
+    groups = [...m.entries()].sort((a,b)=>a[0].localeCompare(b[0]));
+  }
+
+  const selected = state.selectedFragrance;
+  const activeFilters = [
+    state.collectionHouseFilter !== "All" ? `House: ${state.collectionHouseFilter}` : "",
+    state.collectionOccasionFilter !== "All" ? `Occasion: ${state.collectionOccasionFilter}` : "",
+    state.collectionDNAFilter !== "All" ? `DNA: ${state.collectionDNAFilter}` : "",
+    state.collectionPlaneFilter !== "All" ? `Plane: ${state.collectionPlaneFilter}` : "",
+    state.collectionInspirationFilter !== "All" ? `Inspiration: ${state.collectionInspirationFilter}` : "",
+    state.collectionSearch ? `Search: ${state.collectionSearch}` : ""
+  ].filter(Boolean);
+
+  return `<div class="card">
+    <div class="row" style="justify-content:space-between;align-items:end">
+      <div>
+        <div class="kicker">Collection</div>
+        <h3>${filtered.length} shown</h3>
+      </div>
+      <div class="field" style="max-width:380px">
+        <label>Search</label>
+        <input id="collectionSearch" value="${esc(state.collectionSearch)}">
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:14px">
+      <div class="field" style="max-width:220px">
+        <label>Collection view</label>
+        <select id="collectionTab">
+          ${["All","House","DNA","Occasion","Plane","Inspiration"].map(tab => `<option ${state.collectionTab===tab?'selected':''}>${tab}</option>`).join("")}
+        </select>
+      </div>
+      <div class="field" style="max-width:240px">
+        <label>House</label>
+        <select id="collectionHouseFilter">
+          ${houses.map(house => `<option ${state.collectionHouseFilter===house?'selected':''}>${esc(house)}</option>`).join("")}
+        </select>
+      </div>
+      <div class="field" style="max-width:200px">
+        <label>Occasion</label>
+        <select id="collectionOccasionFilter">
+          ${occasionOptions.map(occasion => `<option ${state.collectionOccasionFilter===occasion?'selected':''}>${esc(occasion)}</option>`).join("")}
+        </select>
+      </div>
+      <div class="field" style="max-width:220px">
+        <label>DNA</label>
+        <select id="collectionDNAFilter">
+          ${dnaOptions.map(dna => `<option ${state.collectionDNAFilter===dna?'selected':''}>${esc(dna)}</option>`).join("")}
+        </select>
+      </div>
+      <div class="field" style="max-width:220px">
+        <label>Plane</label>
+        <select id="collectionPlaneFilter">
+          ${planeOptions.map(opt => `<option ${state.collectionPlaneFilter===opt?'selected':''}>${esc(opt)}</option>`).join("")}
+        </select>
+      </div>
+      <div class="field" style="max-width:220px">
+        <label>Sort</label>
+        <select id="collectionSort">${["Name","House","Season","Favorites"].map(opt => `<option ${state.collectionSort===opt?'selected':''}>${opt}</option>`).join("")}</select>
+      </div>
+      <div class="field" style="max-width:280px">
+        <label>Inspiration</label>
+        <select id="collectionInspirationFilter">
+          ${inspirationOptions.map(opt => `<option ${state.collectionInspirationFilter===opt?'selected':''}>${esc(opt)}</option>`).join("")}
+        </select>
+      </div>
+    </div>
+
+
+    <div class="card" style="margin-top:16px">
+      <div class="kicker">Add fragrance</div>
+      <h4 style="margin:.3rem 0 0">Add a new bottle without editing code</h4>
+      <div class="grid cols-3" style="margin-top:12px">
+        <div class="field"><label>House</label><input id="newFragHouse" value="${esc(state.newFragrance.house)}" placeholder="The Dua Brand"></div>
+        <div class="field"><label>Name</label><input id="newFragName" value="${esc(state.newFragrance.name)}" placeholder="Fragrance Name"></div>
+        <div class="field"><label>Inspired by / style</label><input id="newFragInspiration" value="${esc(state.newFragrance.inspiration)}" placeholder="Original or inspiration"></div>
+      </div>
+      <div class="grid cols-3" style="margin-top:12px">
+        <div class="field"><label>DNA (comma separated)</label><input id="newFragDNA" value="${esc(state.newFragrance.dna)}" placeholder="fresh, citrus, woody"></div>
+        <div class="field"><label>Occasions (comma separated)</label><input id="newFragOccasions" value="${esc(state.newFragrance.occasions)}" placeholder="Office, Casual"></div>
+        <div class="field"><label>Season</label><select id="newFragSeason">${["Year-round","Spring","Summer","Fall","Winter","Spring · Summer","Fall · Winter"].map(x=>`<option ${state.newFragrance.season===x?"selected":""}>${x}</option>`).join("")}</select></div>
+      </div>
+      <div class="row" style="margin-top:12px;align-items:end">
+        <div class="field" style="max-width:160px"><label>Rating</label><select id="newFragRating">${["1","2","3","4","5"].map(x=>`<option ${String(state.newFragrance.rating)===x?"selected":""}>${x}</option>`).join("")}</select></div>
+        <button id="addFragranceBtn">Add fragrance</button>
+        <button id="resetNewFragranceBtn">Reset form</button>
+      </div>
+      <div class="small muted" style="margin-top:10px">Saved in your browser on this device. Use comma-separated DNA and occasion values.</div>
+    </div>
+
+    <div class="row" style="margin-top:12px;align-items:center">
+      <button id="resetCollectionFilters">Reset filters</button>
+      ${activeFilters.length ? `<div>${activeFilters.map(x=>`<span class="pill">${esc(x)}</span>`).join("")}</div>` : `<div class="muted">No filters active</div>`}
+    </div>
+
+    ${selected ? `
+      <div class="frag-hero primary-surface" style="margin-top:16px">
+        <div class="row" style="justify-content:space-between;align-items:start">
+          <div>
+            <div class="kicker">Fragrance detail</div>
+            <h3 class="frag-hero-title">${esc(selected.n)}</h3>
+            <div class="frag-hero-house">${esc(selected.h)}</div>
+            <div class="frag-chip-row">
+              <span class="frag-chip">✦ ${esc(selected.i || "Original")}</span>
+              <span class="frag-chip">◔ ${esc(selected.s || "Unspecified")}</span>
+              <span class="frag-chip">◆ ${esc(simplifyOccasionList(selected).join(" / ") || "Unspecified")}</span>
+              <span class="frag-chip">${isFavorite(selected.n) ? "★ Favorite" : "☆ Not favorite"}</span>
+            </div>
+          </div>
+          <div class="detail-hero-actions">
+            <button id="toggleFavoriteSelected" type="button">${isFavorite(selected.n)?"★ Favorite":"☆ Favorite"}</button>
+            <button id="clearSelectedFragrance" type="button">Close</button>
+            ${selected && selected._userAdded ? `<button id="editSelectedFragrance" type="button">Edit</button><button id="deleteSelectedFragrance" type="button">Delete</button>` : ``}
+          </div>
+        </div>
+
+        <div class="hero-summary">
+          <div class="hero-stat"><div class="label">DNA</div><div class="value">${displayDNAList(selected).map(x=>`<span class="pill">${esc(x)}</span>`).join("")}</div></div>
+          <div class="hero-stat"><div class="label">Best use</div><div class="value">${esc(getBestUse(selected))}</div></div>
+          <div class="hero-stat"><div class="label">Performance</div><div class="value">${esc(getPerformanceStyle(selected))}</div></div>
+          <div class="hero-stat"><div class="label">Safest setting</div><div class="value">${esc(getSafestSetting(selected))}</div></div>
+        </div>
+      </div>
+
+      <div class="grid cols-1" style="margin-top:14px">
+        <div class="card accordion-card section-card">
+          <button class="accordion-toggle" data-detail-toggle="advisor" type="button">
+            <div class="section-head">
+              <div class="copy">
+                <div class="kicker">Collection advisor</div>
+                <div class="title">Where this fragrance sits</div>
+                <div class="desc">Collection context, redundancy, and positioning.</div>
+              </div>
+              <div class="inline-icon">${state.detailOpen?.advisor ? "–" : "+"}</div>
+            </div>
+          </button>
+          ${state.detailOpen?.advisor ? `<div class="accordion-body"><div>${esc(getFragranceFitSummary(selected))}</div><div class="sheety" style="margin-top:12px; padding:14px"><div class="kicker">Closest overlap</div><div style="margin-top:8px">${esc(getMostRedundantWith(selected))}</div></div></div>` : ``}
+        </div>
+
+        <div class="card accordion-card section-card">
+          <button class="accordion-toggle" data-detail-toggle="guidance" type="button">
+            <div class="section-head">
+              <div class="copy">
+                <div class="kicker">Guidance</div>
+                <div class="title">How to wear it</div>
+                <div class="desc">Office, plane, and gym guidance in one place.</div>
+              </div>
+              <div class="inline-icon">${state.detailOpen?.guidance ? "–" : "+"}</div>
+            </div>
+          </button>
+          ${state.detailOpen?.guidance ? `<div class="accordion-body"><div class="grid cols-3"><div class="sheety" style="padding:14px"><div class="kicker">Office</div><div style="margin-top:8px">${esc(getSprayAdvice(selected,"Office"))}</div></div><div class="sheety" style="padding:14px"><div class="kicker">Plane</div><div style="margin-top:8px">${esc(getPlaneSafetyLevel(selected))}</div><div class="muted" style="margin-top:8px">${esc(getPlaneReason(selected))}</div><div style="margin-top:8px">${isPlaneSafeFragrance(selected) ? esc(getSprayAdvice(selected,"Plane")) : "Skip this one for plane travel."}</div></div><div class="sheety" style="padding:14px"><div class="kicker">Gym</div><div style="margin-top:8px">${esc(getSprayAdvice(selected,"Gym"))}</div></div></div></div>` : ``}
+        </div>
+
+        <div class="card accordion-card section-card">
+          <button class="accordion-toggle" data-detail-toggle="journal" type="button">
+            <div class="section-head">
+              <div class="copy">
+                <div class="kicker">Scent journal</div>
+                <div class="title">Track your relationship with it</div>
+                <div class="desc">Notes, ratings, mood tags, compliment tracking, and format.</div>
+              </div>
+              <div class="inline-icon">${state.detailOpen?.journal ? "–" : "+"}</div>
+            </div>
+          </button>
+          ${state.detailOpen?.journal ? `${(() => { const journal = getJournalEntry(selected.n); return `
+          <div class="accordion-body">
+            <div class="grid cols-3">
+              <div class="field"><label>Format</label><select id="journalFormat">${["Full Bottle","Decant","Travel Spray","Sample","Finished","Sold","Gifted Away"].map(x=>`<option ${journal.format===x?"selected":""}>${x}</option>`).join("")}</select></div>
+              <div class="field"><label>Photo URL</label><input id="journalPhoto" value="${esc(journal.photo)}" placeholder="https://..."></div>
+              <div class="field"><label>Mood tags</label><input id="journalMoodTags" value="${esc(journal.moodTags)}" placeholder="clean, cozy, classy"></div>
+            </div>
+            <div class="grid cols-5" style="margin-top:12px">
+              <div class="field"><label>Scent</label><select id="journalScent">${["0","1","2","3","4","5"].map(x=>`<option ${journal.scent===x?"selected":""}>${x}</option>`).join("")}</select></div>
+              <div class="field"><label>Performance</label><select id="journalPerformance">${["0","1","2","3","4","5"].map(x=>`<option ${journal.performance===x?"selected":""}>${x}</option>`).join("")}</select></div>
+              <div class="field"><label>Compliment rating</label><select id="journalCompliments">${["0","1","2","3","4","5"].map(x=>`<option ${journal.compliments===x?"selected":""}>${x}</option>`).join("")}</select></div>
+              <div class="field"><label>Uniqueness</label><select id="journalUniqueness">${["0","1","2","3","4","5"].map(x=>`<option ${journal.uniqueness===x?"selected":""}>${x}</option>`).join("")}</select></div>
+              <div class="field"><label>Comfort</label><select id="journalComfort">${["0","1","2","3","4","5"].map(x=>`<option ${journal.comfort===x?"selected":""}>${x}</option>`).join("")}</select></div>
+            </div>
+            <div class="grid cols-2" style="margin-top:12px">
+              <div class="field"><label>Compliment context</label><input id="journalComplimentContext" value="${esc(journal.complimentContext)}" placeholder="Office, date, dinner..."></div>
+              <div class="field"><label>Notes</label><textarea id="journalNotes">${esc(journal.notes)}</textarea></div>
+            </div>
+            ${journal.photo ? `<div class="card compact" style="margin-top:12px"><div class="kicker">Photo preview</div><img src="${esc(journal.photo)}" alt="Fragrance photo" style="margin-top:10px; max-width:100%; border-radius:18px; border:1px solid var(--border)"></div>` : ``}
+            <div class="row" style="margin-top:12px"><button id="saveJournalEntry" type="button">Save journal</button></div>
+          </div>
+          `; })()}` : ``}
+        </div>
+      </div>
+    ` : ""}
+
+    <div class="grid" style="margin-top:16px">
+      ${groups.length ? groups.map(([groupName, items]) => `
+        <div class="card">
+          <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:10px">
+            <div>
+              <div class="kicker">${esc(state.collectionTab)}</div>
+              <h4 style="margin:.15rem 0">${esc(groupName)}</h4>
+            </div>
+            <div class="muted">${items.length}</div>
+          </div>
+          <div class="grid cols-3">
+            ${sortCollectionItems(items, state.collectionSort).map(f => `
+              <button class="listbtn" data-open-fragrance="${esc(f.n)}">
+                <div class="collection-fragrance-card">
+                  <div class="cf-block">
+                    <div class="cf-label">Fragrance</div>
+                    <div class="cf-name cf-value">${esc(f.n)} ${isFavorite(f.n)?"★":""}</div>
+                    <div class="cf-house cf-value" style="margin-top:6px">${esc(f.h)}</div>
+                  </div>
+                  <div class="cf-block">
+                    <div class="cf-label">DNA</div>
+                    <div class="cf-value">${displayDNAList(f).map(x=>`<span class="pill">${esc(x)}</span>`).join("")}</div>
+                  </div>
+                  <div class="cf-block">
+                    <div class="cf-label">Occasion</div>
+                    <div class="cf-meta cf-value">${esc(simplifyOccasionList(f).join(" / "))}</div>
+                    ${state.collectionTab==="Plane" ? `<div class="cf-label" style="margin-top:10px">Plane</div><div class="cf-meta cf-value">${esc(getPlaneSafetyLevel(f))}</div>` : ``}
+                  </div>
+                  <div class="cf-block">
+                    <div class="cf-label">Inspired by / style</div>
+                    <div class="cf-meta cf-value">${esc(f.i)}</div>
+                    ${state.collectionTab==="Plane" ? `<div class="cf-label" style="margin-top:10px">Guidance</div><div class="cf-meta cf-value">${esc(isPlaneSafeFragrance(f)?getSprayAdvice(f,"Plane"):"Skip for plane")}</div><div class="cf-meta cf-value" style="margin-top:6px">${esc(getPlaneReason(f))}</div>` : ``}
+                  </div>
+                </div>
+              </button>
+            `).join("")}
+          </div>
+        </div>
+      `).join("") : `<div class="empty-state"><div style="font-size:28px; margin-bottom:8px">🔎</div><div><strong>No fragrances match these filters.</strong></div><div style="margin-top:6px">Try resetting your filters or broadening the search.</div><div class="row" style="justify-content:center; margin-top:12px"><button id="resetCollectionFiltersEmpty" type="button">Reset filters</button></div></div>`}
+    </div>
+  </div>`;
+}
+
+function wearTodayView(){
+  const picks = getWearTodayPicks(getAllCollection(), state.wearOccasion, state.weather, state.wearEnvironment, 5);
+  const selected = getAllCollection().find(f=>f.n===state.wearSelected);
+
+  return `<div class="grid">
+    <div class="card">
+      <div class="kicker">Wear today</div><h3>Pick generator + manual log</h3>
+      <div class="row">
+        <div class="field"><label>Occasion</label><select id="wearOccasion">${OCCASIONS.map(x=>`<option ${state.wearOccasion===x?"selected":""}>${x}</option>`).join("")}</select></div>
+        <div class="field"><label>Environment</label><select id="wearEnvironment">${ENVIRONMENTS.map(x=>`<option ${state.wearEnvironment===x?"selected":""}>${x}</option>`).join("")}</select></div>
+        <div class="field"><label>Strategy</label><select id="wearStrategy">${["Safest pick","Most unique","Best performer"].map(x=>`<option ${state.wearStrategy===x?"selected":""}>${x}</option>`).join("")}</select></div><div class="field"><label>Mood</label><select id="wearMood">${["Any","Clean","Cozy","Seductive","Classy","Loud","Relaxing"].map(x=>`<option ${state.wearMood===x?"selected":""}>${x}</option>`).join("")}</select><div class="small muted" style="margin-top:6px">Ranks your full collection for this mood, then refines by occasion and weather.</div></div>
+      </div>
+      <div class="row" style="margin-top:12px;align-items:center">
+        <button id="toggleAvoidRecent">${state.avoidRecentWear ? "Avoid recently worn: On" : "Avoid recently worn: Off"}</button>
+        <div class="muted">Recent wear avoidance helps stop repeat suggestions.</div>
+      </div>
+      <div class="card" style="margin-top:12px"><div class="kicker">Weather-aware suggestions</div><div class="muted">${state.weather.loading?"Loading weather...":`${esc(state.weather.city)} · ${state.weather.temp!=null?Math.round(state.weather.temp)+"°F":"--"} · ${esc(getWeatherLabel(state.weather.code))} · Wind ${state.weather.wind!=null?Math.round(state.weather.wind)+" mph":"--"} · Humidity ${state.weather.humidity!=null?Math.round(state.weather.humidity)+"%":"--"} · Rain ${[61,63,65,80,81,82].includes(state.weather.code)?"Yes":"No"}`}</div>
+        <div class="grid cols-3" style="margin-top:12px">
+          ${picks.map((f,i)=>`<button class="listbtn" data-apply-pick="${esc(f.n)}"><div class="kicker">${esc(getWearPickLabel(i))}</div><strong>${esc(f.n)} ${isFavorite(f.n)?"★":""}</strong><div class="muted">${esc(f.h)}</div><div style="margin-top:6px">${displayDNAList(f).map(x=>`<span class="pill">${esc(x)}</span>`).join("")}</div><div class="small muted" style="margin-top:8px">Last worn: ${esc(getLastWornDate(f.n))}</div><div style="margin-top:8px">${esc(getWearTodayReason(f,state.wearOccasion,state.weather,state.wearEnvironment))}</div><div style="margin-top:8px"><strong>${esc(getSprayAdvice(f,state.wearOccasion))}</strong></div></button>`).join("")}
+        </div>
+      </div>
+    </div>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="kicker">Manual log</div>
+        <div class="field" style="margin-top:12px"><label>Fragrance</label><select id="wearSelected">${getAllCollection().slice().sort((a,b)=>a.n.localeCompare(b.n)).map(f=>`<option ${state.wearSelected===f.n?"selected":""}>${esc(f.n)}</option>`).join("")}</select></div>
+        <div class="row" style="margin-top:12px">
+          <div class="field"><label>Date</label><input id="wearDate" type="date" value="${esc(state.wearDate)}"></div>
+          <div class="field"><label>${isOil(selected)?"Amount to apply":"Sprays / amount"}</label><input id="wearAmount" value="${esc(state.wearAmount)}" placeholder="${esc(getSprayAdvice(selected,state.wearOccasion))}"></div>
+        </div>
+        <div class="card" style="margin-top:12px"><div class="kicker">Selected fragrance details</div><div><strong>${esc(selected.n)} ${isFavorite(selected.n)?"★":""}</strong></div><div class="muted">${esc(selected.h)}</div><div class="small muted" style="margin-top:6px">Last worn: ${esc(getLastWornDate(selected.n))}</div></div>
+        <div class="field" style="margin-top:12px"><label>Notes</label><textarea id="wearNotes">${esc(state.wearNotes)}</textarea></div>
+        <div class="row" style="margin-top:12px">
+          <button id="saveWear">Save wear</button>
+          <button id="openSelectedFromWear">Open fragrance info</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="kicker">Wear history</div><h3>${state.wearLog.length} entries</h3>
+        <div class="grid">${state.wearLog.length ? state.wearLog.map((w,idx)=>`<button class="listbtn" data-open-history="${idx}">
+          <div><strong>${esc(w.fragrance)}</strong></div>
+          <div class="muted">${esc(w.house)}</div>
+          <div class="small muted" style="margin-top:6px">${esc(w.date)} · ${esc(w.occasion)}</div>
+          <div style="margin-top:6px">${esc(w.amount)}</div>
+          ${w.notes?`<div class="small" style="margin-top:6px">${esc(w.notes)}</div>`:""}
+          <div style="margin-top:10px"><span class="pill">Tap for quick re-wear</span></div>
+        </button>`).join("") : '<div class="muted">No wears logged yet.</div>'}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function layeringView(){
+  const base = COLLECTION.find(f=>f.n===state.layerBase);
+  const top = COLLECTION.find(f=>f.n===state.layerTop);
+  const weatherGuide = getLayerWeatherGuidance(state.weather);
+  const placement = getLayerPlacementDetailed(base, top);
+  const analysis = state.layerOccasion==="Plane"
+    ? {score:0, verdict:"Layering is not recommended for plane travel.", ratio:"Use one fragrance only", sprays:"Choose one low-risk scent instead.", why:"For plane travel, even a good layering idea can become too noticeable in enclosed seating. The safer move is to use one clean, lower-risk scent that stays controlled and predictable in the air.", baseRole:"", topRole:"", placement:""}
+    : getLayeringAnalysis(base, top);
+
+  const suggestions = state.layerOccasion==="Plane" ? [] : getLayerSuggestions(COLLECTION, state.layerOccasion, state.weather, 10);
+  const tags = getLayerTags(base, top, state.weather);
+  const comboLabels = getLayerOccasionLabels(base, top);
+
+  return `<div class="grid">
+    <div class="card">
+      <div class="kicker">Smart layering suggestions</div>
+      <h3>Choose your base and top, set your spray count, and generate AI pairings from your collection.</h3>
+      <div class="card" style="margin-top:14px">
+        <div class="row" style="align-items:center;justify-content:space-between">
+          <div>
+            <div class="num">${state.weather.temp!=null ? Math.round(state.weather.temp)+"°F" : "--"}</div>
+            <div class="muted">${esc(getWeatherLabel(state.weather.code))} · ${state.weather.humidity!=null ? Math.round(state.weather.humidity)+"%" : "--"} humidity · ${state.weather.wind!=null ? Math.round(state.weather.wind)+" mph" : "--"} wind</div>
+          </div>
+          <div style="font-size:38px">🌦️</div>
+        </div>
+        <div style="margin-top:10px">${esc(weatherGuide.note)}</div>
+        <div style="margin-top:14px"><span class="pill">${esc(weatherGuide.badge)}</span></div>
+      </div>
+
+      <div class="grid cols-2" style="margin-top:16px">
+        <div class="field">
+          <label>Base fragrance</label>
+          <select id="layerBase">${getAllCollection().map(f=>`<option ${state.layerBase===f.n?"selected":""}>${esc(f.n)}</option>`).join("")}</select>
+        </div>
+        <div class="field">
+          <label>Top fragrance</label>
+          <select id="layerTop">${getAllCollection().map(f=>`<option ${state.layerTop===f.n?"selected":""}>${esc(f.n)}</option>`).join("")}</select>
+        </div>
+      </div>
+
+      <div class="grid cols-4" style="margin-top:16px">
+        <div class="field">
+          <label>Base sprays</label>
+          <div class="row">
+            <button type="button" id="layerBaseMinus">−</button>
+            <div class="stat" style="min-width:84px;text-align:center"><div class="num">${state.layerBaseSprays}</div></div>
+            <button type="button" id="layerBasePlus">+</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Top sprays</label>
+          <div class="row">
+            <button type="button" id="layerTopMinus">−</button>
+            <div class="stat" style="min-width:84px;text-align:center"><div class="num">${state.layerTopSprays}</div></div>
+            <button type="button" id="layerTopPlus">+</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Projection mode</label>
+          <select id="layerProjectionMode">${["Close","Balanced","Louder"].map(x=>`<option ${state.layerProjectionMode===x?"selected":""}>${x}</option>`).join("")}</select>
+        </div>
+        <div class="field">
+          <label>Occasion</label>
+          <select id="layerOccasion">${OCCASIONS.map(x=>`<option ${state.layerOccasion===x?"selected":""}>${x}</option>`).join("")}</select>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:12px">
+        <button id="generateLayerCombo">Generate for me</button>
+        <button id="saveLayerCombo">Save combo</button>
+      </div>
+    </div>
+
+    <div class="grid cols-3">
+      <div class="stat"><div class="kicker">Synergy score</div><div class="num">${analysis.score}/10</div>${renderScoreMeter(analysis.score,10,analysis.score>=7?'good':analysis.score>=5?'warn':'bad')}<div style="margin-top:8px"><span class="badge ${analysis.score>=7?'good':analysis.score>=5?'warn':'bad'}">${esc(analysis.verdict)}</span></div></div>
+      <div class="stat"><div class="kicker">Recommended ratio</div><div style="font-size:20px;font-weight:700">${esc(`${state.layerBaseSprays} spray${state.layerBaseSprays===1?"":"s"} base + ${state.layerTopSprays} spray${state.layerTopSprays===1?"":"s"} top`)}</div></div>
+      <div class="stat"><div class="kicker">Projection</div><div>${esc(getLayerProjectionMode(base, top, state.layerProjectionMode))}</div></div>
+    </div>
+
+    <div class="grid cols-2">
+      <div class="card"><div class="kicker">What the base adds</div><div style="margin-top:8px">${esc(analysis.baseRole || "")}</div></div>
+      <div class="card"><div class="kicker">What the top adds</div><div style="margin-top:8px">${esc(analysis.topRole || "")}</div></div>
+    </div>
+
+    <div class="grid cols-3">
+      <div class="card"><div class="kicker">General placement</div><div style="margin-top:8px">${esc(placement.general)}</div></div>
+      <div class="card"><div class="kicker">Skin placement</div><div style="margin-top:8px">${esc(placement.skin)}</div></div>
+      <div class="card"><div class="kicker">Shirt placement</div><div style="margin-top:8px">${esc(placement.shirt)}</div></div>
+    </div>
+
+    <div class="card"><div class="kicker">Why this works</div><p>${esc(analysis.why)}</p></div>
+
+    <div class="card">
+      <div class="kicker">Combo tags</div>
+      <div style="margin-top:8px">${tags.length ? tags.map(t=>`<span class="pill">${esc(t)}</span>`).join("") : '<span class="muted">No special tags</span>'}</div>
+      <div class="kicker" style="margin-top:16px">Best for</div>
+      <div style="margin-top:8px">${comboLabels.map(t=>`<span class="pill">${esc(t)}</span>`).join("")}</div>
+    </div>
+
+    <div class="card">
+      <div class="kicker">Saved combos</div>
+      <div class="grid cols-2" style="margin-top:12px">
+        ${state.savedLayerCombos && state.savedLayerCombos.length ? state.savedLayerCombos.map((s, i)=>`<button class="listbtn" data-load-saved-layer="${i}">
+          <div class="kicker">Saved ${i+1}</div>
+          <strong>${esc(s.base)}</strong><div class="muted">Base</div>
+          <div style="margin-top:8px"><strong>${esc(s.top)}</strong></div><div class="muted">Top</div>
+          <div class="small muted" style="margin-top:6px">${esc(s.occasion)} · ${esc(s.projection)}</div>
+        </button>`).join("") : '<div class="muted">No saved combos yet.</div>'}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="kicker">More pairing suggestions</div>
+      <div class="grid cols-2" style="margin-top:12px">
+        ${suggestions.length ? suggestions.map((s, i)=>`<button class="listbtn" data-apply-layer="${esc(s.base.n)}||${esc(s.top.n)}">
+          <div class="kicker">Suggestion ${i+1}</div>
+          <strong>${esc(s.base.n)}</strong>
+          <div class="muted">Base</div>
+          <div style="margin-top:8px"><strong>${esc(s.top.n)}</strong></div>
+          <div class="muted">Top</div>
+          <div style="margin-top:8px">${esc(s.res.verdict)}</div>
+          <div class="small muted" style="margin-top:6px">${esc(s.res.why)}</div>
+        </button>`).join("") : '<div class="muted">No strong layering suggestions right now.</div>'}
+      </div>
+    </div>
+  </div>`;
+}
+
+function displayView(){
+  const active = state.seasonMode==="Auto" ? getSeasonMode() : state.seasonMode;
+  const sections = getDisplaySections(getAllCollection(), active);
+  const displayNames = new Set([...(sections.anchors||[]), ...(sections.daily||[]), ...(sections.statement||[])].map(f=>f.n));
+  const putAway = COLLECTION.filter(f=>!displayNames.has(f.n)).slice(0,10);
+  return `<div class="grid">
+    <div class="card">
+      <div class="section-head"><div><div class="kicker">Display planner</div><h3>${active} 30-bottle display</h3><div class="muted">Built to feel like a real shelf plan, not just a score sort.</div></div><div class="field" style="max-width:220px"><label>Season mode</label><select id="seasonMode"><option ${state.seasonMode==="Auto"?"selected":""}>Auto</option><option ${(state.seasonMode==="Spring")?"selected":""}>Spring</option><option ${(state.seasonMode==="Summer")?"selected":""}>Summer</option><option ${(state.seasonMode==="Fall")?"selected":""}>Fall</option><option ${(state.seasonMode==="Winter")?"selected":""}>Winter</option></select></div></div>
+      <div class="row" style="margin-top:12px"><button id="saveDisplaySnapshot">Save this display</button></div>
+    </div>
+    <div class="grid cols-3">
+      <div class="card"><div class="kicker">Anchors</div><div class="subtle">${sections.anchors.length} bottles</div><div class="stack" style="margin-top:10px">${sections.anchors.map(f=>`<div class="shelf-card"><div class="frag-header"><strong>${esc(f.n)} ${isFavorite(f.n)?"★":""}</strong><span class="badge good">Anchor</span></div><div class="muted">${esc(f.h)}</div><div class="mini-note">${esc(getDisplayCategoryReason(f,"Anchors",active))}</div></div>`).join("")}</div></div>
+      <div class="card"><div class="kicker">Daily Drivers</div><div class="subtle">${sections.daily.length} bottles</div><div class="stack" style="margin-top:10px">${sections.daily.map(f=>`<div class="shelf-card"><div class="frag-header"><strong>${esc(f.n)} ${isFavorite(f.n)?"★":""}</strong><span class="badge warn">Daily</span></div><div class="muted">${esc(f.h)}</div><div class="mini-note">${esc(getDisplayCategoryReason(f,"Daily Drivers",active))}</div></div>`).join("")}</div></div>
+      <div class="card"><div class="kicker">Statement Pieces</div><div class="subtle">${sections.statement.length} bottles</div><div class="stack" style="margin-top:10px">${sections.statement.map(f=>`<div class="shelf-card"><div class="frag-header"><strong>${esc(f.n)} ${isFavorite(f.n)?"★":""}</strong><span class="badge bad">Statement</span></div><div class="muted">${esc(f.h)}</div><div class="mini-note">${esc(getDisplayCategoryReason(f,"Statement Pieces",active))}</div></div>`).join("")}</div></div>
+    </div>
+    <div class="grid cols-2">
+      <div class="card"><div class="kicker">Put away for now</div>${putAway.length?`<div class="shelf-grid" style="margin-top:10px">${putAway.map(f=>`<div class="shelf-card"><strong>${esc(f.n)}</strong><div class="muted">${esc(f.h)}</div></div>`).join("")}</div>`:'<div class="empty-card">Everything is currently in rotation.</div>'}</div>
+      <div class="card"><div class="kicker">Saved displays</div>${state.displaySnapshots && state.displaySnapshots.length ? `<div class="stack" style="margin-top:10px">${state.displaySnapshots.map((s,i)=>`<button class="listbtn" data-load-display="${s.id}"><div class="frag-header"><strong>${esc(s.season)} display</strong><span class="badge good">Saved</span></div><div class="muted">${esc(s.date)}</div><div class="mini-note">Anchors ${s.anchors.length} · Daily ${s.daily.length} · Statement ${s.statement.length}</div></button>`).join("")}</div>` : '<div class="empty-card">No saved displays yet.</div>'}</div>
+    </div>
+  </div>`;
+}
+
+function buySkipView(){
+  const analysis = getBuySkipAnalysis();
+  const verdictClass = getVerdictClass(analysis.verdict);
+  const topScore = analysis.overlaps.length ? Math.max(analysis.overlaps[0].overlap.score,1) : 1;
+  return `<div class="card">
+    <div class="section-head"><div><div class="kicker">Buy or Skip</div><h3>Gap fill or redundancy check</h3></div></div>
+    <div class="row">
+      <div class="field"><label>Fragrance name</label><input id="buyName" value="${esc((state.buyDraft||state.buy).name)}"></div>
+      <div class="field"><label>House</label><input id="buyHouse" value="${esc((state.buyDraft||state.buy).house)}"></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <div class="field"><label>Inspired by / style</label><input id="buyInspiration" value="${esc((state.buyDraft||state.buy).inspiration)}"></div>
+      <div class="field"><label>DNA (comma separated)</label><input id="buyDNA" value="${esc((state.buyDraft||state.buy).dna)}"></div>
+      <div class="field"><label>Occasions (comma separated)</label><input id="buyOccasions" value="${esc((state.buyDraft||state.buy).occasions)}"></div>
+      <div class="field"><label>Season</label><select id="buySeason">${["All Season","Spring","Summer","Fall","Winter","Year-round"].map(x=>`<option ${(((state.buyDraft||state.buy).season)||"All Season")===x?"selected":""}>${x}</option>`).join("")}</select></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button id="analyzeBuySkip">Analyze</button>
+      <button id="resetBuyForm">Reset</button>
+    </div>
+
+    <div class="grid cols-3" style="margin-top:16px">
+      <div class="card"><div class="kicker">Verdict</div><div style="margin-top:8px"><span class="badge ${verdictClass}">${esc(analysis.verdict)}</span></div></div>
+      <div class="card"><div class="kicker">Why</div><div style="margin-top:8px">${esc(analysis.reason)}</div></div>
+      <div class="card"><div class="kicker">Closest overlap</div><div style="margin-top:8px">${analysis.overlaps.length ? esc(analysis.overlaps[0].item.n) : "—"}</div></div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="kicker">Top overlaps</div>
+      <div class="grid cols-3" style="margin-top:12px">
+        ${analysis.overlaps.length ? analysis.overlaps.slice(0,3).map(o=>`<div class="shelf-card"><div class="frag-header"><strong>${esc(o.item.n)}</strong><span class="badge ${o.overlap.score>=8?'bad':o.overlap.score>=5?'warn':'good'}">${o.overlap.score>=8?'Heavy overlap':o.overlap.score>=5?'Moderate':'Light'}</span></div><div class="muted">${esc(o.item.h)}</div><div class="mini-note">Overlap score: ${o.overlap.score}</div>${renderScoreMeter(o.overlap.score, 12, o.overlap.score>=8?'bad':o.overlap.score>=5?'warn':'good')}<div class="mini-note">Shared DNA: ${esc(o.overlap.sharedDNA.join(", ") || "none")}</div><div class="mini-note">Shared occasion: ${esc(o.overlap.sharedOccasion.join(", ") || "none")}</div></div>`).join("") : '<div class="empty-card">Add some candidate details to compare it against your collection.</div>'}
+      </div>
+    </div>
+  </div>`;
+}
+
+
+function hobbyView(){
+  const neglected = getNeglectedFragrances(8);
+  const signature = getSignatureCandidates(6);
+  const story = getCollectionStory();
+  const compare = compareFragrances(state.compareA, state.compareB);
+  const wish = getWishlistItems();
+  const weekly = getWearTodayPicks(getAllCollection(), (getSeasonMode()==="Winter"||getSeasonMode()==="Fall") ? "Evening" : "Casual", state.weather, "Mixed", 8);
+  const moodPicks = getMoodCandidates(state.wearMood || "Any", 6);
+  return `<div class="grid">
+    <div class="grid cols-4">
+      <div class="stat"><div class="kicker">First fragrance</div><div style="margin-top:8px;font-weight:700">${esc(story.first)}</div></div>
+      <div class="stat"><div class="kicker">Favorite</div><div style="margin-top:8px;font-weight:700">${esc(story.favorite)}</div></div>
+      <div class="stat"><div class="kicker">Most worn</div><div style="margin-top:8px;font-weight:700">${esc(story.mostWorn)}</div></div>
+      <div class="stat"><div class="kicker">Top house</div><div style="margin-top:8px;font-weight:700">${esc(story.topHouse)}</div></div>
+    </div>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="kicker">Wishlist</div><h3>Plan future pickups</h3>
+        <div class="grid cols-2" style="margin-top:12px">
+          <div class="field"><label>Name</label><input id="wishlistName" value="${esc(state.wishlistDraft.name)}"></div>
+          <div class="field"><label>House</label><input id="wishlistHouse" value="${esc(state.wishlistDraft.house)}"></div>
+        </div>
+        <div class="grid cols-3" style="margin-top:12px">
+          <div class="field"><label>Why</label><input id="wishlistWhy" value="${esc(state.wishlistDraft.why)}"></div>
+          <div class="field"><label>Priority</label><select id="wishlistPriority">${["Sample First","Full Bottle","Backup Bottle","Decant First"].map(x=>`<option ${state.wishlistDraft.priority===x?"selected":""}>${x}</option>`).join("")}</select></div>
+          <div class="field"><label>Price target</label><input id="wishlistPrice" value="${esc(state.wishlistDraft.price)}" placeholder="$"></div>
+        </div>
+        <div class="row" style="margin-top:12px"><button id="addWishlistItem" type="button">Add to wishlist</button></div>
+        <div class="grid" style="margin-top:14px">
+          ${wish.length ? wish.map(w=>`<div class="card"><div class="row" style="justify-content:space-between;align-items:start"><div><strong>${esc(w.name)}</strong><div class="muted">${esc(w.house || "Wishlist")}</div><div class="small muted" style="margin-top:6px">${esc(w.priority)}${w.price ? " · " + esc(w.price) : ""}</div><div style="margin-top:6px">${esc(w.why || "")}</div></div><button type="button" data-delete-wishlist="${esc(w.id)}">Delete</button></div></div>`).join("") : `<div class="empty-state"><div><strong>No wishlist items yet.</strong></div><div style="margin-top:6px">Track samples, full bottles, and backup bottles here.</div></div>`}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="kicker">Compare</div><h3>Side-by-side comparison</h3>
+        <div class="grid cols-2" style="margin-top:12px">
+          <div class="field"><label>Fragrance A</label><select id="compareA">${getAllCollection().map(f=>`<option ${state.compareA===f.n?"selected":""}>${esc(f.n)}</option>`).join("")}</select></div>
+          <div class="field"><label>Fragrance B</label><select id="compareB">${getAllCollection().map(f=>`<option ${state.compareB===f.n?"selected":""}>${esc(f.n)}</option>`).join("")}</select></div>
+        </div>
+        ${compare ? `<div class="grid cols-2" style="margin-top:14px">
+          <div class="card"><div class="kicker">A unique DNA</div><div style="margin-top:8px">${compare.uniqueA.length ? compare.uniqueA.map(x=>`<span class="pill">${esc(x)}</span>`).join("") : '<span class="muted">No major unique lane</span>'}</div><div class="small muted" style="margin-top:8px">${esc(compare.a.h)}</div></div>
+          <div class="card"><div class="kicker">B unique DNA</div><div style="margin-top:8px">${compare.uniqueB.length ? compare.uniqueB.map(x=>`<span class="pill">${esc(x)}</span>`).join("") : '<span class="muted">No major unique lane</span>'}</div><div class="small muted" style="margin-top:8px">${esc(compare.b.h)}</div></div>
+        </div>
+        <div class="card" style="margin-top:12px"><div class="kicker">Shared DNA and occasions</div><div style="margin-top:8px">${compare.shared.length ? compare.shared.map(x=>`<span class="pill">${esc(x)}</span>`).join("") : '<span class="muted">Very little shared DNA</span>'}</div><div class="small muted" style="margin-top:8px">Shared occasions: ${esc(compare.sharedOcc.join(" / ") || "None")}</div></div>` : ``}
+      </div>
+    </div>
+
+    <div class="grid cols-3">
+      <div class="card"><div class="kicker">Rotation tracker</div><h3>Neglected bottles</h3>${neglected.map(row=>`<div style="margin-top:10px"><strong>${esc(row.item.n)}</strong><div class="muted">${row.last ? `Last worn: ${esc(row.last)}` : "Never logged"}</div></div>`).join("")}</div>
+      <div class="card"><div class="kicker">Signature scent tools</div><h3>Best signature candidates</h3>${signature.map(row=>`<div style="margin-top:10px"><strong>${esc(row.item.n)}</strong><div class="muted">${esc(row.item.h)}</div></div>`).join("")}</div>
+      <div class="card"><div class="kicker">Seasonal wardrobe mode</div><h3>What to pull forward this week</h3>${weekly.map(f=>`<div style="margin-top:10px"><strong>${esc(f.n)}</strong><div class="muted">${esc(f.h)}</div></div>`).join("")}</div>
+    </div>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="kicker">Mood-based wearing</div>
+        <h3>Mood-aligned picks</h3>
+        <div class="field" style="margin-top:12px; max-width:320px">
+          <label>Choose mood</label>
+          <select id="hobbyMoodSelect">${["Any","Clean","Cozy","Seductive","Classy","Loud","Relaxing"].map(x=>`<option ${state.wearMood===x?"selected":""}>${x}</option>`).join("")}</select>
+        </div>
+        <div class="muted" style="margin-top:10px">Current mood: ${esc(state.wearMood || "Any")} · ranked across your full collection</div>
+        <div class="grid cols-2" style="margin-top:12px">
+          ${moodPicks.map(f=>`<div class="card"><strong>${esc(f.n)}</strong><div class="muted">${esc(f.h)}</div><div style="margin-top:8px">${displayDNAList(f).map(x=>`<span class="pill">${esc(x)}</span>`).join("")}</div></div>`).join("")}
+        </div>
+      </div>
+      <div class="card">
+        <div class="kicker">Collection story</div>
+        <h3>Your collection at a glance</h3>
+        <div style="margin-top:8px"><strong>Hidden gem:</strong> ${esc(story.hiddenGem)}</div>
+        <div style="margin-top:8px"><strong>Favorite:</strong> ${esc(story.favorite)}</div>
+        <div style="margin-top:8px"><strong>Top house:</strong> ${esc(story.topHouse)}</div>
+        <div style="margin-top:8px"><strong>Most worn:</strong> ${esc(story.mostWorn)}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function render(){
+  document.documentElement.setAttribute("data-theme", state.theme==="dark" ? "dark" : "light");
+  document.getElementById("app").innerHTML = `
+    <div class="top">
+      <div class="brand"><div class="brand-row"><div class="brandmark">V</div><div><small>The Vault</small><h1>AJ’s Fragrance Collection</h1><p>Private fragrance collection studio</p></div></div></div>
+      <div class="tabs">${VIEWS.map(v=>`<button type="button" class="tab ${getPrimaryViewLabel(state.view)===v?'active':''}" data-view="${v}"><span class="tab-ico">${({Home:"⌂",Collection:"◫",Wear:"☼",Layer:"◌",More:"⋯"}[v]||"•")}</span><span>${v}</span></button>`).join("")}</div>
+      ${getPrimaryViewLabel(state.view)==="More" ? `<div class="subnav">${getMoreSections().map(v=>`<button type="button" class="${state.view===v?'active':''}" data-more-view="${v}">${v}</button>`).join("")}</div>` : ``}
+    </div>
+    ${state.view==="Home"?homeView():""}
+    ${state.view==="Collection"?collectionView():""}
+    ${state.view==="Wear Today"?wearTodayView():""}
+    ${state.view==="Layering"?layeringView():""}
+    ${state.view==="Display"?displayView():""}
+    ${state.view==="Buy or Skip"?buySkipView():""}
+    ${state.view==="Hobby Lab"?hobbyView():""}
+    ${sheetView()}
+    ${toastView()}
+  `;
+  bindEvents();
+}
+
+function bindValue(id, fn){
+  const el=document.getElementById(id);
+  if (!el) return;
+  el.oninput = el.onchange = e => fn(e.target.value);
+}
+function bindEvents(){
+  document.querySelectorAll("[data-view]").forEach(btn=>btn.onclick=(e)=>{
+  e.preventDefault();
+  const v = btn.dataset.view;
+  if (v === "Wear") state.view = "Wear Today";
+  else if (v === "Layer") state.view = "Layering";
+  else if (v === "More") state.view = getCurrentMoreSection();
+  else state.view = v;
+  render();
+});
+  document.querySelectorAll("[data-more-view]").forEach(btn=>btn.onclick=(e)=>{ e.preventDefault(); state.view=btn.dataset.moreView; render(); });
+  document.querySelectorAll("[data-open-fragrance]").forEach(btn=>btn.onclick=()=>{ const f=getAllCollection().find(x=>x.n===btn.dataset.openFragrance); if(f){ state.selectedFragrance=f; render(); } });
+  const clearSelected=document.getElementById("clearSelectedFragrance"); if(clearSelected) clearSelected.onclick=()=>{ state.selectedFragrance=null; render(); };
+
+  const editSelected=document.getElementById("editSelectedFragrance");
+  if(editSelected) editSelected.onclick=()=>{
+    if (state.selectedFragrance && state.selectedFragrance.id) startEditUserFragrance(state.selectedFragrance.id);
+    openSheet("addFragrance");
+    render();
+  };
+  const deleteSelected=document.getElementById("deleteSelectedFragrance");
+  if(deleteSelected) deleteSelected.onclick=()=>{
+    if (state.selectedFragrance && state.selectedFragrance.id) {
+      confirmDeleteUserFragrance(state.selectedFragrance.id, state.selectedFragrance.n);
+      render();
+    }
+  };
+  const openAddFragranceSheet=document.getElementById("openAddFragranceSheet");
+  if(openAddFragranceSheet) openAddFragranceSheet.onclick=()=>{ openSheet("addFragrance"); render(); };
+  const openBackupSheet=document.getElementById("openBackupSheet");
+  if(openBackupSheet) openBackupSheet.onclick=()=>{ openSheet("backupTools"); render(); };
+  const closeSheetBtn=document.getElementById("closeSheetBtn");
+  if(closeSheetBtn) closeSheetBtn.onclick=()=>{ closeSheet(); render(); };
+  const sheetBackdrop=document.getElementById("sheetBackdrop");
+  if(sheetBackdrop) sheetBackdrop.onclick=()=>{ closeSheet(); render(); };
+  const resetCollectionFiltersEmpty=document.getElementById("resetCollectionFiltersEmpty");
+  if(resetCollectionFiltersEmpty) resetCollectionFiltersEmpty.onclick=()=>{ resetCollectionFilters(); render(); };
+
+  const saveNewFragrance=document.getElementById("saveNewFragrance");
+  if(saveNewFragrance) saveNewFragrance.onclick=()=>{
+    const res = upsertUserFragranceFromForm();
+    if (res.ok){
+      closeSheet();
+      pushToast(state.editingFragranceId ? "Fragrance updated" : "Fragrance added", "success");
+      render();
+    } else {
+      pushToast(res.message || "Could not save fragrance", "error");
+    }
+  };
+  const clearNewFragranceForm=document.getElementById("clearNewFragranceForm");
+  if(clearNewFragranceForm) clearNewFragranceForm.onclick=()=>{ clearFragranceForm(); render(); };
+
+  const exportAllData=document.getElementById("exportAllData");
+  if(exportAllData) exportAllData.onclick=()=>{ exportAllAppData(); pushToast("Backup exported", "success"); };
+
+  const importAllData=document.getElementById("importAllData");
+  if(importAllData) importAllData.onchange=(e)=>{
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      const res = importAllAppDataFromText(String(reader.result||""));
+      if (res.ok){
+        closeSheet();
+        pushToast("Backup imported", "success");
+        render();
+      } else {
+        pushToast(res.message || "Import failed", "error");
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const confirmDeleteBtn=document.getElementById("confirmDeleteBtn");
+  if(confirmDeleteBtn) confirmDeleteBtn.onclick=()=>{
+    if (state.pendingDelete && state.pendingDelete.type === "userFragrance"){
+      deleteUserFragrance(state.pendingDelete.id);
+      state.selectedFragrance = null;
+      closeSheet();
+      pushToast("Fragrance deleted", "warn");
+      render();
+    }
+  };
+
+  const toggleFavoriteSelected=document.getElementById("toggleFavoriteSelected"); if(toggleFavoriteSelected && state.selectedFragrance){ toggleFavoriteSelected.onclick=()=>{ toggleFavorite(state.selectedFragrance.n); render(); }; }
+  const resetCollection=document.getElementById("resetCollectionFilters"); if(resetCollection) resetCollection.onclick=()=>{ resetCollectionFilters(); render(); };
+  const addFragranceBtn=document.getElementById("addFragranceBtn");
+  if(addFragranceBtn) addFragranceBtn.onclick=()=>{
+    const res = addNewFragranceFromForm();
+    if(!res.ok){
+      alert(res.message);
+      return;
+    }
+    alert(res.message);
+    render();
+  };
+  const resetNewFragranceBtn=document.getElementById("resetNewFragranceBtn");
+  if(resetNewFragranceBtn) resetNewFragranceBtn.onclick=()=>{ resetNewFragranceForm(); render(); };
+  bindValue("collectionTab", v=>{ state.collectionTab=v; render(); });
+  bindValue("collectionHouseFilter", v=>{ state.collectionHouseFilter=v; render(); });
+  bindValue("collectionOccasionFilter", v=>{ state.collectionOccasionFilter=v; render(); });
+  bindValue("collectionDNAFilter", v=>{ state.collectionDNAFilter=v; render(); });
+  bindValue("collectionPlaneFilter", v=>{ state.collectionPlaneFilter=v; render(); });
+  bindValue("collectionInspirationFilter", v=>{ state.collectionInspirationFilter=v; render(); });
+  bindValue("collectionSort", v=>{ state.collectionSort=v; render(); });
+  const themeToggle=document.getElementById("themeToggle");
+  if (themeToggle) themeToggle.onclick=()=>{ state.theme=state.theme==="dark"?"light":"dark"; saveTheme(); render(); };
+
+  bindValue("weatherMode", v=>{ state.weatherPref.mode=v; saveWeatherPref(); loadWeather(); });
+  bindValue("manualCity", v=>{ state.weatherPref.city=v; saveWeatherPref(); });
+  const mc=document.getElementById("manualCity"); if (mc) mc.onchange=()=>loadWeather();
+
+  bindValue("collectionSearch", v=>{ state.collectionSearch=v; render(); });
+
+  bindValue("newFragranceHouse", v=>{ state.newFragrance.house=v; });
+  bindValue("newFragranceName", v=>{ state.newFragrance.name=v; });
+  bindValue("newFragranceInspiration", v=>{ state.newFragrance.inspiration=v; });
+  bindValue("newFragranceDNA", v=>{ state.newFragrance.dna=v; });
+  bindValue("newFragranceOccasions", v=>{ state.newFragrance.occasions=v; });
+  bindValue("newFragranceSeason", v=>{ state.newFragrance.season=v; });
+  bindValue("newFragranceRating", v=>{ state.newFragrance.rating=v; });
+
+  bindValue("newFragHouse", v=>{ state.newFragrance.house=v; });
+  bindValue("newFragName", v=>{ state.newFragrance.name=v; });
+  bindValue("newFragInspiration", v=>{ state.newFragrance.inspiration=v; });
+  bindValue("newFragDNA", v=>{ state.newFragrance.dna=v; });
+  bindValue("newFragOccasions", v=>{ state.newFragrance.occasions=v; });
+  bindValue("newFragSeason", v=>{ state.newFragrance.season=v; });
+  bindValue("newFragRating", v=>{ state.newFragrance.rating=v; });
+  bindValue("homeOccasion", v=>{ state.homeOccasion=v; render(); });
+  bindValue("homeEnvironment", v=>{ state.homeEnvironment=v; render(); });
+
+  bindValue("wearOccasion", v=>{ state.wearOccasion=v; render(); });
+  bindValue("wearEnvironment", v=>{ state.wearEnvironment=v; render(); });
+  bindValue("wearStrategy", v=>{ state.wearStrategy=v; render(); });
+  bindValue("wearMood", v=>{ state.wearMood=v; render(); });
+  bindValue("hobbyMoodSelect", v=>{ state.wearMood=v; render(); });
+  bindValue("wearSelected", v=>{ state.wearSelected=v; render(); });
+  bindValue("wearDate", v=>{ state.wearDate=v; });
+  bindValue("wearAmount", v=>{ state.wearAmount=v; });
+  bindValue("wearNotes", v=>{ state.wearNotes=v; });
+  document.querySelectorAll("[data-apply-pick]").forEach(btn=>btn.onclick=()=>{
+    const f=getAllCollection().find(x=>x.n===btn.dataset.applyPick);
+    if (!f) return;
+    state.wearSelected=f.n;
+    state.wearAmount=getSprayAdvice(f,state.wearOccasion);
+    if (!state.wearNotes) state.wearNotes=`Generated pick for ${state.wearOccasion}.`;
+    render();
+  });
+
+  document.querySelectorAll("[data-apply-layer]").forEach(btn=>btn.onclick=()=>{
+    const parts = btn.dataset.applyLayer.split("||");
+    if (parts.length !== 2) return;
+    state.layerBase = parts[0];
+    state.layerTop = parts[1];
+    render();
+  });
+
+  const toggleAvoidRecent=document.getElementById("toggleAvoidRecent"); if(toggleAvoidRecent) toggleAvoidRecent.onclick=()=>{ state.avoidRecentWear=!state.avoidRecentWear; render(); };
+  const openSelectedFromWear=document.getElementById("openSelectedFromWear");
+  if (openSelectedFromWear) openSelectedFromWear.onclick=()=>{
+    const f=getAllCollection().find(x=>x.n===state.wearSelected);
+    if (!f) return;
+    state.view = "Collection";
+    state.selectedFragrance = f;
+    render();
+  };
+
+  document.querySelectorAll("[data-open-history]").forEach(btn=>btn.onclick=()=>{
+    const idx = Number(btn.dataset.openHistory);
+    const entry = state.wearLog[idx];
+    if (!entry) return;
+    const f = getAllCollection().find(x=>x.n===entry.fragrance);
+    if (f){
+      state.wearSelected = f.n;
+      state.wearOccasion = entry.occasion || state.wearOccasion;
+      state.wearAmount = entry.amount || getSprayAdvice(f, state.wearOccasion);
+      state.wearNotes = entry.notes || "";
+    }
+    render();
+  });
+
+  const analyzeBuy=document.getElementById("analyzeBuySkip");
+  if (analyzeBuy) analyzeBuy.onclick=()=>{
+    state.buy = {...(state.buyDraft||state.buy)};
+    render();
+  };
+
+  const resetBuy=document.getElementById("resetBuyForm");
+  if (resetBuy) resetBuy.onclick=()=>{
+    resetBuyForm();
+    render();
+  };
+
+
+  bindValue("compareA", v=>{ state.compareA=v; render(); });
+  bindValue("compareB", v=>{ state.compareB=v; render(); });
+  bindValue("wishlistName", v=>{ state.wishlistDraft.name=v; });
+  bindValue("wishlistHouse", v=>{ state.wishlistDraft.house=v; });
+  bindValue("wishlistWhy", v=>{ state.wishlistDraft.why=v; });
+  bindValue("wishlistPriority", v=>{ state.wishlistDraft.priority=v; });
+  bindValue("wishlistPrice", v=>{ state.wishlistDraft.price=v; });
+  document.querySelectorAll("[data-delete-wishlist]").forEach(btn=>btn.onclick=()=>{ deleteWishlistItem(btn.dataset.deleteWishlist); pushToast("Wishlist item deleted","warn"); render(); });
+  const addWishlistItemBtn=document.getElementById("addWishlistItem");
+  if(addWishlistItemBtn) addWishlistItemBtn.onclick=()=>{ const res=addWishlistItem(); if(res.ok){ pushToast("Wishlist item added","success"); render(); } else pushToast(res.message || "Could not add wishlist item","error"); };
+  const saveJournalEntryBtn=document.getElementById("saveJournalEntry");
+  if(saveJournalEntryBtn) saveJournalEntryBtn.onclick=()=>{
+    const name = state.selectedFragrance && state.selectedFragrance.n;
+    if(!name) return;
+    setJournalEntry(name,{
+      format:(document.getElementById("journalFormat")||{}).value || "Full Bottle",
+      photo:(document.getElementById("journalPhoto")||{}).value || "",
+      moodTags:(document.getElementById("journalMoodTags")||{}).value || "",
+      scent:(document.getElementById("journalScent")||{}).value || "0",
+      performance:(document.getElementById("journalPerformance")||{}).value || "0",
+      compliments:(document.getElementById("journalCompliments")||{}).value || "0",
+      uniqueness:(document.getElementById("journalUniqueness")||{}).value || "0",
+      comfort:(document.getElementById("journalComfort")||{}).value || "0",
+      complimentContext:(document.getElementById("journalComplimentContext")||{}).value || "",
+      notes:(document.getElementById("journalNotes")||{}).value || ""
+    });
+    pushToast("Journal saved","success");
+    render();
+  };
+
+  const save=document.getElementById("saveWear");
+  if (save) save.onclick=()=>{
+    const f=getAllCollection().find(x=>x.n===state.wearSelected);
+    state.wearLog.unshift({date:state.wearDate || new Date().toISOString().slice(0,10), fragrance:f.n, house:f.h, amount:state.wearAmount||getSprayAdvice(f,state.wearOccasion), occasion:state.wearOccasion, notes:state.wearNotes.trim()});
+    saveWearLog();
+    state.wearNotes="";
+    render();
+  };
+
+  bindValue("layerBase", v=>{ state.layerBase=v; render(); });
+  bindValue("layerTop", v=>{ state.layerTop=v; render(); });
+  bindValue("layerOccasion", v=>{ state.layerOccasion=v; render(); });
+  bindValue("layerProjectionMode", v=>{ state.layerProjectionMode=v; render(); });
+  bindValue("layerComboNote", v=>{ state.layerComboNote=v; });
+  bindValue("layerComboRating", v=>{ state.layerComboRating=v; });
+
+  const layerBaseMinus=document.getElementById("layerBaseMinus");
+  if(layerBaseMinus) layerBaseMinus.onclick=(e)=>{
+    e.preventDefault();
+    state.layerBaseSprays=Math.max(1, Number(state.layerBaseSprays||2)-1);
+    render();
+  };
+  const layerBasePlus=document.getElementById("layerBasePlus");
+  if(layerBasePlus) layerBasePlus.onclick=(e)=>{
+    e.preventDefault();
+    state.layerBaseSprays=Math.min(6, Number(state.layerBaseSprays||2)+1);
+    render();
+  };
+  const layerTopMinus=document.getElementById("layerTopMinus");
+  if(layerTopMinus) layerTopMinus.onclick=(e)=>{
+    e.preventDefault();
+    state.layerTopSprays=Math.max(1, Number(state.layerTopSprays||1)-1);
+    render();
+  };
+  const layerTopPlus=document.getElementById("layerTopPlus");
+  if(layerTopPlus) layerTopPlus.onclick=(e)=>{
+    e.preventDefault();
+    state.layerTopSprays=Math.min(6, Number(state.layerTopSprays||1)+1);
+    render();
+  };
+
+  const generateLayerComboBtn=document.getElementById("generateLayerCombo");
+  if(generateLayerComboBtn) generateLayerComboBtn.onclick=()=>{
+    const combo = generateLayerCombo(getAllCollection(), state.layerOccasion, state.weather);
+    if (!combo) return;
+    state.layerBase = combo.base.n;
+    state.layerTop = combo.top.n;
+    state.layerBaseSprays = 2;
+    state.layerTopSprays = 1;
+    render();
+  };
+  const saveLayerComboBtn=document.getElementById("saveLayerCombo");
+  if(saveLayerComboBtn) saveLayerComboBtn.onclick=()=>{
+    const item = {
+      base: state.layerBase,
+      top: state.layerTop,
+      baseSprays: state.layerBaseSprays,
+      topSprays: state.layerTopSprays,
+      projection: state.layerProjectionMode,
+      occasion: state.layerOccasion
+    };
+    state.savedLayerCombos = state.savedLayerCombos || [];
+    state.savedLayerCombos.unshift(item);
+    state.savedLayerCombos = state.savedLayerCombos.slice(0,12);
+    saveLayerCombos();
+    render();
+  };
+  document.querySelectorAll("[data-load-saved-layer]").forEach(btn=>btn.onclick=()=>{
+    const idx = Number(btn.dataset.loadSavedLayer);
+    const item = (state.savedLayerCombos||[])[idx];
+    if (!item) return;
+    state.layerBase = item.base;
+    state.layerTop = item.top;
+    state.layerBaseSprays = item.baseSprays || 2;
+    state.layerTopSprays = item.topSprays || 1;
+    state.layerProjectionMode = item.projection || "Balanced";
+    state.layerOccasion = item.occasion || "Casual";
+    render();
+  });
+
+  bindValue("seasonMode", v=>{ state.seasonMode=v; render(); });
+  const saveDisplaySnapshotBtn=document.getElementById("saveDisplaySnapshot"); if(saveDisplaySnapshotBtn) saveDisplaySnapshotBtn.onclick=()=>{ const active = state.seasonMode==="Auto" ? getSeasonMode() : state.seasonMode; const sections = getDisplaySections(getAllCollection(), active); saveCurrentDisplaySnapshot(active, sections); render(); };
+  document.querySelectorAll("[data-load-display]").forEach(btn=>btn.onclick=()=>{ const snap=loadDisplaySnapshot(btn.dataset.loadDisplay); if(!snap) return; state.seasonMode=snap.season; render(); });
+
+  bindValue("buyName", v=>{ state.buyDraft.name=v; });
+  bindValue("buyHouse", v=>{ state.buyDraft.house=v; });
+  bindValue("buyInspiration", v=>{ state.buyDraft.inspiration=v; });
+  bindValue("buyDNA", v=>{ state.buyDraft.dna=v; });
+  bindValue("buyOccasions", v=>{ state.buyDraft.occasions=v; });
+  bindValue("buySeason", v=>{ state.buyDraft.season=v; });
+}
+
+async function loadWeather(){
+  state.weather={loading:true,error:"",temp:null,code:null,wind:null,humidity:null,city:state.weatherPref.mode==="manual"?(state.weatherPref.city||"Manual city"):"Your area"};
+  render();
+  state.weather=await fetchWeather(state.weatherPref);
+  render();
+}
+loadWeather();
+render();
+</script>
+</body>
+</html>
