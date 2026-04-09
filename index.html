@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#c7a86a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="The Vault">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <title>The Vault — GitHub-ready AI Analyzer</title>
+  <style>
+    :root{
+      --bg:#0b1220;--bg2:#111827;--panel:rgba(17,24,39,0.78);--panel2:rgba(17,24,39,0.60);
+      --border:rgba(255,255,255,0.09);--text:#f1f5fb;--muted:#8fa3be;--accent:#60a5fa;
+      --accent-soft:rgba(96,165,250,0.14);--good:#4ade80;--warn:#fbbf24;--bad:#f87171;
+      --shadow:0 2px 8px rgba(0,0,0,0.20), 0 14px 36px rgba(0,0,0,0.30);
+      --shadow-lg:0 4px 20px rgba(0,0,0,0.28), 0 28px 64px rgba(0,0,0,0.38);
+      --hero-bg:linear-gradient(180deg,rgba(17,24,39,.88),rgba(17,24,39,.70));
+      --soft-surface:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
+    }
+    :root[data-theme="light"]{
+      --bg:#f2f4f8;--bg2:#e8ecf4;--panel:rgba(255,255,255,0.80);--panel2:rgba(255,255,255,0.64);
+      --border:rgba(15,23,42,0.09);--text:#0f172a;--muted:#5b6880;--accent:#2563eb;
+      --accent-soft:rgba(37,99,235,0.11);--good:#16a34a;--warn:#d97706;--bad:#dc2626;
+      --shadow:0 2px 8px rgba(15,23,42,0.06), 0 12px 32px rgba(15,23,42,0.08);
+      --shadow-lg:0 4px 16px rgba(15,23,42,0.08), 0 24px 56px rgba(15,23,42,0.12);
+      --hero-bg:linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,.65));
+      --soft-surface:linear-gradient(180deg,rgba(255,255,255,.90),rgba(255,255,255,.72));
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{min-height:100%;font-family:Inter,system-ui,-apple-system,sans-serif;background:
+      radial-gradient(ellipse at top left,color-mix(in srgb,var(--accent) 8%,transparent),transparent 40%),
+      linear-gradient(180deg,var(--bg),var(--bg2) 120%);background-attachment:fixed;color:var(--text);-webkit-font-smoothing:antialiased;}
+    body{padding-bottom:env(safe-area-inset-bottom)}
+    .app{max-width:1100px;margin:0 auto;padding:18px 16px 48px}
+    .top{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;margin-bottom:18px;border-radius:28px;background:var(--hero-bg);border:1px solid var(--border);box-shadow:var(--shadow);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brandmark{width:40px;height:40px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 60%,#7dd3fc));color:white;font-weight:800;font-size:18px;box-shadow:0 4px 14px color-mix(in srgb,var(--accent) 30%,transparent)}
+    .brand small{display:block;color:var(--accent);letter-spacing:.18em;text-transform:uppercase;font-size:10px;font-weight:700}
+    .brand h1{font-size:clamp(20px,3vw,34px);font-weight:800;letter-spacing:-0.04em;line-height:1.02}
+    .brand p{color:var(--muted);font-size:14px;margin-top:3px}
+    .card{background:var(--soft-surface);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);box-shadow:var(--shadow);border-radius:26px;padding:20px;position:relative;overflow:hidden}
+    .grid{display:grid;gap:14px}.cols-2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}.cols-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}.field{display:flex;flex-direction:column;gap:6px;min-width:180px;flex:1}
+    label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:700}
+    input,select,textarea,button{font:inherit;-webkit-tap-highlight-color:transparent}
+    input,select,textarea{width:100%;padding:12px 14px;border-radius:16px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text)}
+    :root[data-theme="light"] input,:root[data-theme="light"] select,:root[data-theme="light"] textarea{background:rgba(255,255,255,.78)}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+    textarea{min-height:104px;resize:vertical;line-height:1.5}
+    button{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 16px;min-height:42px;border-radius:18px;border:1px solid var(--border);background:rgba(255,255,255,.07);color:var(--text);font-weight:700;font-size:14px;cursor:pointer;transition:.14s ease}
+    :root[data-theme="light"] button{background:rgba(255,255,255,.80)}
+    button:hover{transform:translateY(-1px)} button:active{transform:scale(.98)} button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+    .primary{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+    .kicker{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700}
+    h2,h3{letter-spacing:-0.03em;line-height:1.1} h2{font-size:1.45rem;margin:.25rem 0 .2rem} h3{font-size:1.02rem;margin:.2rem 0 .1rem}
+    .muted{color:var(--muted)} .small{font-size:12px}
+    .pill{display:inline-flex;align-items:center;padding:5px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:700;margin:2px 4px 2px 0}
+    .analyzer-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:14px}
+    .analyzer-box{border:1px solid var(--border);border-radius:22px;padding:16px;background:rgba(255,255,255,.04)}
+    :root[data-theme="light"] .analyzer-box{background:rgba(255,255,255,.22)}
+    .analyzer-note{color:var(--muted);font-size:13px;margin-top:8px;line-height:1.5}
+    .analyzer-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .status{margin-top:10px;padding:10px 12px;border-radius:16px;border:1px solid var(--border);background:rgba(255,255,255,.04);font-size:13px}
+    .source-list{display:grid;gap:8px;margin-top:12px}
+    .source-link{display:inline-flex;align-items:center;gap:6px;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:inherit;text-decoration:none}
+    .codebox{margin-top:12px;padding:12px;border-radius:18px;border:1px solid var(--border);background:rgba(0,0,0,.18);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;white-space:pre-wrap;word-break:break-word}
+    :root[data-theme="light"] .codebox{background:rgba(15,23,42,.04)}
+    .list{display:grid;gap:10px}.listbtn{width:100%;text-align:left;padding:14px;border-radius:22px;border:1px solid var(--border);background:rgba(255,255,255,.05);color:var(--text);font-size:14px}
+    :root[data-theme="light"] .listbtn{background:rgba(255,255,255,.72)}
+    .toast-wrap{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:10px;pointer-events:none;align-items:center}
+    .toast{min-width:220px;max-width:min(92vw,400px);background:var(--hero-bg);border:1px solid var(--border);box-shadow:var(--shadow-lg);border-radius:18px;padding:12px 16px;color:var(--text);font-weight:600}
+    .empty{text-align:center;padding:20px 16px;border:1px dashed var(--border);border-radius:22px;color:var(--muted);background:rgba(255,255,255,.03)}
+    @media (max-width:760px){.app{padding:12px 12px 32px}.top{padding:12px;border-radius:22px}.analyzer-grid,.cols-2,.cols-3{grid-template-columns:1fr}.brand h1{font-size:22px}}
+  </style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const STORAGE_KEY = "vault_ai_demo_user_fragrances";
+const THEME_KEY = "vault_ai_demo_theme";
+const ALLOWED_DNA = ["fresh","citrus","aquatic","blue","green","woody","vetiver / earthy","fougere","musk / powdery","amber","sweet","spicy","gourmand","oud","tobacco","leather"];
+const ALLOWED_OCCASIONS = ["Office","Casual","Date","Evening","Gym","Plane"];
+const ALLOWED_SEASONS = ["Spring · Summer","Fall · Winter","Year-round"];
+const state = {
+  theme: localStorage.getItem(THEME_KEY) || "dark",
+  analyzerLoading: false,
+  analyzerStatus: "Ready",
+  analyzerMode: "Backend-ready",
+  analyzerConfidence: "Waiting",
+  analyzerPrompt: "",
+  analyzerDraft: { house:"", name:"", inspiration:"", notes:"" },
+  backendConfig: { endpoint:"/api/analyze-fragrance" },
+  newFragrance: { house:"", name:"", inspiration:"", dna:"", occasions:"", season:"Year-round", rating:"4" },
+  userFragrances: loadUserFragrances(),
+  toasts: []
+};
+function esc(value){ return String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;"); }
+function uniqueList(arr){ return [...new Set((arr || []).filter(Boolean))]; }
+function norm(v){ return String(v || "").toLowerCase().trim(); }
+function loadUserFragrances(){ try{ const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); return Array.isArray(raw) ? raw : []; }catch{ return []; } }
+function saveUserFragrances(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.userFragrances)); }
+function saveTheme(){ localStorage.setItem(THEME_KEY, state.theme); }
+function pushToast(message){ const id = "t_" + Date.now(); state.toasts = [...state.toasts, {id,message}].slice(-3); render(); setTimeout(()=>{ state.toasts = state.toasts.filter(t=>t.id!==id); render(); }, 2200); }
+function splitToTags(value){ return uniqueList(String(value || "").split(/,|\n|\/|\|/).map(v => v.trim()).filter(Boolean)); }
+function clampRating(value){ const n = Number(value); return String(Number.isFinite(n) ? Math.max(1, Math.min(5, Math.round(n))) : 4); }
+function normalizeSeason(value){ const v = norm(value); if (v.includes("year")) return "Year-round"; if ((v.includes("spring") || v.includes("summer")) && !(v.includes("fall") || v.includes("winter"))) return "Spring · Summer"; if ((v.includes("fall") || v.includes("winter")) && !(v.includes("spring") || v.includes("summer"))) return "Fall · Winter"; return "Year-round"; }
+function normalizeOccasions(values){ return uniqueList((values || []).map(v => { const x = String(v || "").trim().toLowerCase(); if (x.includes("office")) return "Office"; if (x.includes("casual")) return "Casual"; if (x.includes("date")) return "Date"; if (x.includes("evening") || x.includes("night")) return "Evening"; if (x.includes("gym") || x.includes("sport")) return "Gym"; if (x.includes("plane") || x.includes("flight") || x.includes("travel")) return "Plane"; return ""; }).filter(v => ALLOWED_OCCASIONS.includes(v))); }
+function normalizeDNA(values){ return uniqueList((values || []).map(v => String(v || "").trim().toLowerCase()).filter(v => ALLOWED_DNA.includes(v))); }
+function inferInspiredByStyle(name, house, notes){
+  const bag = `${name} ${house} ${notes}`.toLowerCase();
+  const mappings = [
+    [/bleu de chanel|bdc|bleu/, "Bleu de Chanel style"], [/sauvage/, "Dior Sauvage style"], [/ysl y| y edp| y parfum|myslf/, "YSL Y style"],
+    [/aventus|poseidon|hacivat/, "Creed Aventus / Hacivat style"], [/imagination/, "Louis Vuitton Imagination style"], [/afternoon swim/, "Louis Vuitton Afternoon Swim style"],
+    [/pacific chill/, "Louis Vuitton Pacific Chill style"], [/green irish tweed/, "Creed Green Irish Tweed style"], [/terre d.?herm[eè]s|terre/, "Terre d’Hermès style"],
+    [/percival/, "Parfums de Marly Percival style"], [/layton/, "Parfums de Marly Layton style"], [/tuxedo|suits/, "YSL Tuxedo style"],
+    [/br540|baccarat|casino/, "Baccarat Rouge 540 style"], [/reflection/, "Amouage Reflection Man style"], [/pegasus/, "Parfums de Marly Pegasus style"],
+    [/1 million|million/, "Paco Rabanne 1 Million style"], [/tobacco vanille|tobacco touch/, "Tom Ford Tobacco Vanille style"], [/angel.?s share|kismet angel/, "Kilian Angel’s Share style"],
+    [/musk therapy/, "Initio Musk Therapy style"], [/foug[eè]re|barbershop/, "Classic fougère / barbershop style"]
+  ];
+  for (const [rx,label] of mappings){ if (rx.test(bag)) return label; }
+  if (/fresh|blue|clean|office/.test(bag)) return "Fresh blue office style";
+  if (/amber|sweet|gourmand|date|evening/.test(bag)) return "Warm amber evening style";
+  if (/green|vetiver|woody|classy|refined/.test(bag)) return "Green woody refined style";
+  if (/aquatic|marine|summer|citrus/.test(bag)) return "Fresh aquatic citrus style";
+  return "Original / custom style";
+}
+function inferDNAFromProfile(name, inspiration, notes){
+  const bag = `${name} ${inspiration} ${notes}`.toLowerCase(); const dna = [];
+  const rules = [["fresh",/fresh|cologne|clean|shower|soapy/],["citrus",/citrus|bergamot|lemon|orange|grapefruit|neroli/],["aquatic",/aquatic|marine|ocean|water|wave/],["blue",/blue|bleu|sauvage|percival|allure homme sport|adg|acqua/],["green",/green|herbal|grass|leaf|fig|tea/],["woody",/woody|cedar|sandal|wood/],["vetiver / earthy",/vetiver|earth|terre/],["fougere",/fougere|barbershop|lavender|aromatic/],["musk / powdery",/musk|powder|iris|clean musk/],["amber",/amber|resin|benzoin/],["sweet",/sweet|vanilla|tonka|sugar/],["spicy",/spicy|pepper|cardamom|cinnamon/],["gourmand",/gourmand|dessert|caramel|chocolate|coffee|praline/],["oud",/oud/],["tobacco",/tobacco/],["leather",/leather/]];
+  rules.forEach(([label,rx])=>{ if (rx.test(bag)) dna.push(label); });
+  return normalizeDNA(dna.length ? dna : ["woody","fresh"]);
+}
+function inferOccasionsFromProfile(dna, notes, inspiration){
+  const bag = `${dna.join(" ")} ${notes} ${inspiration}`.toLowerCase(); const occ = [];
+  if (/office|clean|fresh|woody|fougere|vetiver|musk|classy|refined/.test(bag)) occ.push("Office");
+  if (/casual|easy|fresh|blue|green|aquatic|daily/.test(bag)) occ.push("Casual");
+  if (/date|seductive|amber|sweet|gourmand|spicy|evening/.test(bag)) occ.push("Date");
+  if (/evening|oud|amber|gourmand|spicy|elixir|intense|tobacco|leather/.test(bag)) occ.push("Evening");
+  if (/gym|sport|aquatic|citrus|fresh/.test(bag)) occ.push("Gym");
+  if (/plane|flight|travel|clean|light|musk|fresh/.test(bag)) occ.push("Plane");
+  return normalizeOccasions(occ.length ? occ : ["Casual","Office"]);
+}
+function inferSeasonFromProfile(dna, occasions, notes){
+  const bag = `${dna.join(" ")} ${occasions.join(" ")} ${notes}`.toLowerCase();
+  if (/year round|year-round|all season/.test(bag)) return "Year-round";
+  if (/gourmand|amber|oud|spicy|tobacco|leather|sweet/.test(bag)) return "Fall · Winter";
+  if (/fresh|aquatic|citrus|green|blue|gym/.test(bag)) return "Spring · Summer";
+  return "Year-round";
+}
+function inferRatingFromProfile(dna, occasions, season, inspiration, notes){
+  let score = 3.5; const bag = `${dna.join(" ")} ${occasions.join(" ")} ${season} ${inspiration} ${notes}`.toLowerCase();
+  if (/elixir|parfum|intense|reserve|extrait|royale|royal|absolu|absolute/.test(bag)) score += 0.7;
+  if (/oud|amber|gourmand|spicy|woody|tobacco|leather/.test(bag)) score += 0.4;
+  if (/fresh|aquatic|cologne|sport|light/.test(bag)) score -= 0.2;
+  return clampRating(score);
+}
+function applyAnalyzerResult(result){
+  state.newFragrance.house = state.analyzerDraft.house || state.newFragrance.house || "";
+  state.newFragrance.name = state.analyzerDraft.name || state.newFragrance.name || "";
+  state.newFragrance.inspiration = result.inspiration || "Original / custom style";
+  state.newFragrance.dna = normalizeDNA(result.dna || []).join(", ");
+  state.newFragrance.occasions = normalizeOccasions(result.occasions || []).join(", ");
+  state.newFragrance.season = normalizeSeason(result.season);
+  state.newFragrance.rating = clampRating(result.rating);
+}
+function analyzeFragranceDraftLocal(){
+  const draft = state.analyzerDraft; const inferredStyle = draft.inspiration?.trim() || inferInspiredByStyle(draft.name, draft.house, draft.notes);
+  const dna = inferDNAFromProfile(draft.name, inferredStyle, draft.notes);
+  const occasions = inferOccasionsFromProfile(dna, draft.notes, inferredStyle);
+  const season = inferSeasonFromProfile(dna, occasions, draft.notes);
+  const rating = inferRatingFromProfile(dna, occasions, season, inferredStyle, draft.notes);
+  applyAnalyzerResult({ inspiration: inferredStyle, dna, occasions, season, rating });
+  state.analyzerMode = "Local fallback"; state.analyzerConfidence = "Estimated"; state.analyzerStatus = "Used safe local fallback. Review before saving.";
+}
+function buildAnalyzerPrompt(){
+  const draft = state.analyzerDraft || { house:"", name:"", inspiration:"", notes:"" };
+  return ["Analyze this fragrance and return only valid JSON.","","Schema:","{",'  "inspiration": "short style description",','  "dna": ["fresh", "woody"],','  "occasions": ["Office", "Casual"],','  "season": "Year-round",','  "rating": 4',"}","","Allowed DNA values:",ALLOWED_DNA.join(", "),"","Allowed occasions:",ALLOWED_OCCASIONS.join(", "),"","Allowed seasons:",ALLOWED_SEASONS.join(", "),"",`House: ${draft.house || "Unknown"}`,`Name: ${draft.name || "Unknown"}`,`Inspired by / style hint: ${draft.inspiration || "None"}`,`Extra notes: ${draft.notes || "None"}`].join("\n");
+}
+async function analyzeFragranceDraftAI(){
+  const draft = state.analyzerDraft || { house:"", name:"", inspiration:"", notes:"" };
+  if (!draft.name.trim() && !draft.house.trim()){ pushToast("Enter at least a fragrance name or house"); return; }
+  state.analyzerPrompt = buildAnalyzerPrompt(); state.analyzerLoading = true; state.analyzerStatus = "Calling backend analyzer…"; render();
+  try{
+    const response = await fetch(state.backendConfig.endpoint, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ house:draft.house, name:draft.name, styleHint:draft.inspiration, notes:draft.notes }) });
+    const data = await response.json();
+    if (!response.ok || !data?.ok || !data?.result) throw new Error(data?.error || "Analyzer request failed");
+    applyAnalyzerResult(data.result); state.analyzerMode = "Backend AI"; state.analyzerConfidence = "Structured"; state.analyzerStatus = "Backend analyzer filled the fields."; pushToast("AI analyzer filled the fragrance fields");
+  }catch(error){
+    console.error(error); analyzeFragranceDraftLocal(); pushToast("Backend unavailable — used local fallback");
+  }finally{ state.analyzerLoading = false; render(); }
+}
+async function copyPrompt(){
+  const prompt = buildAnalyzerPrompt(); state.analyzerPrompt = prompt;
+  try{ await navigator.clipboard.writeText(prompt); pushToast("Analyzer prompt copied"); }catch{ pushToast("Prompt generated below"); }
+  render();
+}
+function addFragrance(){
+  const item = { id:"uf_" + Date.now(), house:state.newFragrance.house.trim(), name:state.newFragrance.name.trim(), inspiration:state.newFragrance.inspiration.trim() || "Original / custom style", dna:splitToTags(state.newFragrance.dna).join(", "), occasions:normalizeOccasions(splitToTags(state.newFragrance.occasions)).join(", "), season:normalizeSeason(state.newFragrance.season), rating:clampRating(state.newFragrance.rating) };
+  if (!item.house || !item.name){ pushToast("House and name are required"); return; }
+  if (!item.dna){ pushToast("DNA is required"); return; }
+  state.userFragrances.unshift(item); saveUserFragrances(); pushToast("Fragrance added");
+  state.newFragrance = { house:"", name:"", inspiration:"", dna:"", occasions:"", season:"Year-round", rating:"4" };
+  state.analyzerDraft = { house:"", name:"", inspiration:"", notes:"" }; state.analyzerPrompt = ""; state.analyzerStatus = "Ready"; state.analyzerMode = "Backend-ready"; state.analyzerConfidence = "Waiting"; render();
+}
+function deleteFragrance(id){ state.userFragrances = state.userFragrances.filter(x => x.id !== id); saveUserFragrances(); pushToast("Fragrance deleted"); render(); }
+function bindValue(id, fn){ const el = document.getElementById(id); if (!el) return; el.oninput = el.onchange = e => fn(e.target.value); }
+function toastView(){ if (!state.toasts.length) return ""; return `<div class="toast-wrap">${state.toasts.map(t => `<div class="toast">${esc(t.message)}</div>`).join("")}</div>`; }
+function render(){
+  document.documentElement.setAttribute("data-theme", state.theme);
+  document.getElementById("app").innerHTML = `
+    <div class="top">
+      <div class="brand"><div class="brandmark">V</div><div><small>The Vault</small><h1>GitHub-ready AI Analyzer</h1><p>Frontend for GitHub Pages now. Safe backend hookup later.</p></div></div>
+      <button id="themeToggle">${state.theme === "dark" ? "Light Mode" : "Dark Mode"}</button>
+    </div>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="kicker">Analyzer architecture</div><h2>Production-ready flow</h2>
+        <div class="analyzer-note">This version is designed for GitHub Pages. It supports a real backend AI analyzer at <strong>${esc(state.backendConfig.endpoint)}</strong>, and it falls back safely to local inference if the backend is not connected yet.</div>
+        <div class="analyzer-grid" style="margin-top:14px">
+          <div class="analyzer-box">
+            <div class="kicker">Analyzer</div><h3>AI input</h3>
+            <div class="analyzer-note">Enter house, name, optional hint, and notes. Click <strong>Analyze with AI</strong>. If your backend is live, it fills the fields using real AI. If not, it falls back locally.</div>
+            <div class="grid cols-2" style="margin-top:12px">
+              <div class="field"><label>House</label><input id="analyzerHouse" value="${esc(state.analyzerDraft.house)}" placeholder="The Dua Brand"></div>
+              <div class="field"><label>Name</label><input id="analyzerName" value="${esc(state.analyzerDraft.name)}" placeholder="Bleu de Dua Attar"></div>
+            </div>
+            <div class="field" style="margin-top:12px"><label>Inspired by / style hint</label><input id="analyzerInspiration" value="${esc(state.analyzerDraft.inspiration)}" placeholder="Optional hint"></div>
+            <div class="field" style="margin-top:12px"><label>Extra notes</label><textarea id="analyzerNotes" placeholder="fresh blue office scent, smoother parfum style">${esc(state.analyzerDraft.notes)}</textarea></div>
+            <div class="field" style="margin-top:12px"><label>Backend endpoint</label><input id="backendEndpoint" value="${esc(state.backendConfig.endpoint)}" placeholder="/api/analyze-fragrance"></div>
+            <div class="analyzer-actions" style="margin-top:12px">
+              <button id="runAnalyzer" class="primary" type="button" ${state.analyzerLoading ? "disabled" : ""}>${state.analyzerLoading ? "Analyzing…" : "Analyze with AI"}</button>
+              <button id="copyPrompt" type="button">Copy backend prompt</button>
+            </div>
+            <div class="status"><div><strong>Status:</strong> ${esc(state.analyzerStatus)}</div><div class="small muted" style="margin-top:6px">Mode: ${esc(state.analyzerMode)} · Confidence: ${esc(state.analyzerConfidence)}</div></div>
+            <div class="source-list">
+              <a class="source-link" href="https://www.google.com/search?q=${encodeURIComponent(`${state.analyzerDraft.house} ${state.analyzerDraft.name} fragrance`)}" target="_blank" rel="noopener noreferrer">Search web</a>
+              <a class="source-link" href="https://www.google.com/search?q=${encodeURIComponent(`${state.analyzerDraft.house} ${state.analyzerDraft.name} site:fragrantica.com`)}" target="_blank" rel="noopener noreferrer">Search Fragrantica</a>
+              <a class="source-link" href="https://www.google.com/search?q=${encodeURIComponent(`${state.analyzerDraft.house} ${state.analyzerDraft.name} site:parfumo.com`)}" target="_blank" rel="noopener noreferrer">Search Parfumo</a>
+            </div>
+            ${state.analyzerPrompt ? `<div class="codebox">${esc(state.analyzerPrompt)}</div>` : ``}
+          </div>
+          <div class="analyzer-box">
+            <div class="kicker">Manual override</div><h3>Review and edit</h3>
+            <div class="analyzer-note">AI fills these fields, but you stay in control. Edit anything before saving.</div>
+            <div class="field" style="margin-top:12px"><label>House</label><input id="newHouse" value="${esc(state.newFragrance.house)}"></div>
+            <div class="field" style="margin-top:12px"><label>Name</label><input id="newName" value="${esc(state.newFragrance.name)}"></div>
+            <div class="field" style="margin-top:12px"><label>Inspired by / style</label><input id="newInspiration" value="${esc(state.newFragrance.inspiration)}"></div>
+            <div class="field" style="margin-top:12px"><label>DNA (comma separated)</label><input id="newDNA" value="${esc(state.newFragrance.dna)}" placeholder="fresh, blue, woody"></div>
+            <div class="field" style="margin-top:12px"><label>Occasions (comma separated)</label><input id="newOccasions" value="${esc(state.newFragrance.occasions)}" placeholder="Office, Casual"></div>
+            <div class="field" style="margin-top:12px"><label>Season</label><select id="newSeason">${ALLOWED_SEASONS.map(x => `<option ${state.newFragrance.season === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+            <div class="field" style="margin-top:12px"><label>Rating</label><select id="newRating">${["1","2","3","4","5"].map(x => `<option ${state.newFragrance.rating === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+            <div class="analyzer-actions" style="margin-top:12px"><button id="saveFragrance" type="button">Add fragrance</button><button id="clearForm" type="button">Clear</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="kicker">Deployment notes</div><h2>How to use this on GitHub</h2>
+        <div class="list" style="margin-top:12px">
+          <div class="listbtn"><strong>Use it now on GitHub Pages</strong><div class="muted" style="margin-top:6px">The local fallback works immediately, so the page is usable even before you add a backend.</div></div>
+          <div class="listbtn"><strong>Hook up real AI later</strong><div class="muted" style="margin-top:6px">Deploy a backend endpoint like <code>/api/analyze-fragrance</code> on Vercel, Netlify, or your own server.</div></div>
+          <div class="listbtn"><strong>Keep manual override</strong><div class="muted" style="margin-top:6px">Even with real AI, the manual column stays editable, which matches what you wanted.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="kicker">Saved fragrances</div><h2>Local browser storage</h2>
+      <div class="analyzer-note">These are saved in local storage on this device. This keeps the GitHub version simple and usable immediately.</div>
+      <div class="grid cols-3" style="margin-top:14px">
+        ${state.userFragrances.length ? state.userFragrances.map(item => `<div class="analyzer-box"><div class="row" style="justify-content:space-between;align-items:start"><div><strong>${esc(item.name)}</strong><div class="muted">${esc(item.house)}</div></div><button data-delete="${esc(item.id)}" type="button">Delete</button></div><div style="margin-top:10px"><span class="pill">${esc(item.inspiration)}</span></div><div style="margin-top:10px"><strong>DNA:</strong> ${esc(item.dna)}</div><div class="small muted" style="margin-top:6px"><strong>Occasions:</strong> ${esc(item.occasions)}</div><div class="small muted" style="margin-top:6px"><strong>Season:</strong> ${esc(item.season)} · <strong>Rating:</strong> ${esc(item.rating)}</div></div>`).join("") : `<div class="empty">No fragrances saved yet.</div>`}
+      </div>
+    </div>
+    ${toastView()}
+  `;
+  bindEvents();
+}
+function bindEvents(){
+  const themeToggle = document.getElementById("themeToggle"); if (themeToggle) themeToggle.onclick = () => { state.theme = state.theme === "dark" ? "light" : "dark"; saveTheme(); render(); };
+  bindValue("analyzerHouse", v => { state.analyzerDraft.house = v; }); bindValue("analyzerName", v => { state.analyzerDraft.name = v; }); bindValue("analyzerInspiration", v => { state.analyzerDraft.inspiration = v; }); bindValue("analyzerNotes", v => { state.analyzerDraft.notes = v; }); bindValue("backendEndpoint", v => { state.backendConfig.endpoint = v; });
+  bindValue("newHouse", v => { state.newFragrance.house = v; }); bindValue("newName", v => { state.newFragrance.name = v; }); bindValue("newInspiration", v => { state.newFragrance.inspiration = v; }); bindValue("newDNA", v => { state.newFragrance.dna = v; }); bindValue("newOccasions", v => { state.newFragrance.occasions = v; }); bindValue("newSeason", v => { state.newFragrance.season = v; }); bindValue("newRating", v => { state.newFragrance.rating = v; });
+  const runAnalyzer = document.getElementById("runAnalyzer"); if (runAnalyzer) runAnalyzer.onclick = () => analyzeFragranceDraftAI();
+  const copyPromptBtn = document.getElementById("copyPrompt"); if (copyPromptBtn) copyPromptBtn.onclick = () => copyPrompt();
+  const saveFragranceBtn = document.getElementById("saveFragrance"); if (saveFragranceBtn) saveFragranceBtn.onclick = () => addFragrance();
+  const clearFormBtn = document.getElementById("clearForm"); if (clearFormBtn) clearFormBtn.onclick = () => { state.analyzerDraft = { house:"", name:"", inspiration:"", notes:"" }; state.newFragrance = { house:"", name:"", inspiration:"", dna:"", occasions:"", season:"Year-round", rating:"4" }; state.analyzerPrompt = ""; state.analyzerStatus = "Ready"; state.analyzerMode = "Backend-ready"; state.analyzerConfidence = "Waiting"; render(); };
+  document.querySelectorAll("[data-delete]").forEach(btn => { btn.onclick = () => deleteFragrance(btn.dataset.delete); });
+}
+render();
+</script>
+</body>
+</html>
